@@ -7,6 +7,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = keys.SECRET_KEY
 DEBUG = True
 
+if SECRET_KEY == '123':
+    raise Exception("Please set a secure SECRET_KEY.")
+
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
