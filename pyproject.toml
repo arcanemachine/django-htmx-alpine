@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "django-htmx"
+version = "0.1.0"
+description = "A sandbox for using Django with HTMX"
+authors = ["Nicholas Moen <arcanemachine@tutanota.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+Django = "^3.2.2"
+ipython = "^7.23.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

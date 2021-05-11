@@ -1,0 +1,3 @@
+#!/bin/bash
+
+export PROJECT_ROOT=/home/serv/code/django/django-htmx
