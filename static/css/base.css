@@ -16,8 +16,13 @@ body {
   font-weight: bold;
 }
 
-.input-text-unstyled {
-  border: 1px solid black;
+.unstyled-button {
+  border: 1px solid gray;
+  padding: 0 0.5rem;
+}
+
+.unstyled-input-text {
+  border: 1px solid gray;
   padding: 0;
 }
 

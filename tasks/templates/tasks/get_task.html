@@ -13,21 +13,28 @@
         hx-swap="outerHTML">
     &times; <!-- Delete -->
   </span>
-  <span id="update-span-{{ task.id }}" class="no-display">
+  <span id="update-span-{{ task.id }}" class="no-display update-span">
       <input type="text"
              id="update-input-text-{{ task.id }}"
-             value="{{ task.description }}"
-             class="input-text-unstyled">
-      <span class="p-2 cursor-url font-weight-bold"
-            id="update-confirm-{{ task.id }}"
-            hx-put="{% url 'tasks:task_update' task_id=task.id %}"
-            hx-vals='javascript:{
-              "description": updateConfirm({{ task.id }})}'
-            hx-target="#list-item-{{ task.id }}"
-            hx-swap="outerHTML"
-            title="Confirm">
+             class="unstyled-input-text update-input-text"
+             value="{{ task.description }}">
+      <button class="unstyled-button"
+              id="update-confirm-button-{{ task.id }}"
+              hx-put="{% url 'tasks:task_update' task_id=task.id %}"
+              hx-vals='javascript:{"description": updateConfirm({{ task.id }})}'
+              hx-target="#list-item-{{ task.id }}"
+              hx-swap="outerHTML"
+              title="Confirm">
         &check; <!-- Confirm -->
-      </span> 
+      </button>
+      <script>
+        document.querySelector(`#update-input-text-{{ task.id }}`)
+          .addEventListener('keyup', (e) => {
+            if (e.code === 'Enter') {
+              document.querySelector('#update-confirm-button-{{ task.id }}').click();
+            }
+          })
+      </script>
     </form>
   </span>
 </li>
