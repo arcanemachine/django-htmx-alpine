@@ -33,14 +33,23 @@ def task_update(request, task_id):
 
     params = request.body.decode('utf-8')
     parsed_params = dict([item.split('=') for item in params.split('&')])
+
     updated_task_description = \
-        urllib_parse_unquote(parsed_params.get('description', None))
+        urllib_parse_unquote(parsed_params.get('description', ''))
+    updated_task_is_complete = \
+        urllib_parse_unquote(parsed_params.get('is_complete', ''))
 
     if updated_task_description \
             and updated_task_description != task.description:
-        # update description if param is valid and different from old value
         task.description = updated_task_description
         task.save()
+    elif updated_task_is_complete:
+        if updated_task_is_complete == 'true':
+            task.is_complete = True
+            task.save()
+        elif updated_task_is_complete == 'false':
+            task.is_complete = False
+            task.save()
     else:
         response = HttpResponse()
         response.status_code = 400
@@ -54,6 +63,7 @@ def task_update(request, task_id):
 def task_delete(request, task_id):
     task = get_object_or_404(Task, id=task_id)
     task.delete()
+    return HttpResponse('')
     context = {
         'tasks': Task.objects.all(),
         'task_count': Task.objects.count()}

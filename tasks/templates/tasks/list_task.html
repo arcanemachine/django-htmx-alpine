@@ -1,21 +1,16 @@
-<ol id="tasks">
+<ul id="tasks" class="unstyled-list">
   {% for task in tasks %}
     {% include 'tasks/get_task.html' %}
   {% endfor %}
 
   <script>
-    function updateToggle(id) {
+    function updateSpanToggle(id) {
       let updateSpan = document.querySelector(`#update-span-${id}`);
       updateSpan.classList.toggle('no-display');
       if (!updateSpan.classList.contains('no-display')) {
         // select the text input
         document.querySelector(`#update-input-text-${id}`).select();
       }
-    }
-
-    function updateSpanHide(id) {
-      let updateSpan = document.querySelector(`#update-span-${id}`);
-      updateSpan.classList.add('no-display');
     }
 
     function updateConfirm(id) {
@@ -28,4 +23,4 @@
     }
   </script>
 
-</ol>
+</ul>

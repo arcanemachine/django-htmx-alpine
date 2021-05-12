@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %}Task List{% endblock title %}
+{% block title %}Todo List{% endblock title %}
 
-{% block body_title %}Task List{% endblock body_title %}
+{% block body_title %}Todo List{% endblock body_title %}
 {% block body_subheading %}{% endblock body_subheading %}
 
 {% block content %}
@@ -10,17 +10,19 @@
 <h4>Create New Task</h4>
 
 <form hx-post="{% url 'tasks:task_create' %}"
-      hx-vals='javascript:{"description": taskAdd()}'
+      hx-vals='javascript:{"description": taskCreate()}'
       hx-target="#tasks"
       hx-swap="beforeend">
-  <input type="text" id="new-task-text">
+  <input type="text" id="new-task-input-text">
   <input type="submit" value="Create">
 </form>
 <br>
 
 <script>
-  function taskAdd() {
-    let el = document.querySelector("#new-task-text");
+  function taskCreate() {
+    // get the value of the text input, clear it,
+    // and return the value that was in the form
+    let el = document.querySelector("#new-task-input-text");
     let result = el.value;
     el.value = '';
     return result;
@@ -31,9 +33,9 @@
 {% if tasks %}
   {% include 'tasks/list_task.html' %}
 {% else %}
-<p>
-  <em>No tasks created</em>
-</p>
+  <p>
+    <em>No tasks created</em>
+  </p>
 {% endif %}
 
 {% endblock content %}

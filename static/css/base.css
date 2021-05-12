@@ -1,13 +1,13 @@
 body {
   margin: 1rem;
+}
+
+.dark-mode {
   color: white;
   background-color: black;
 }
 
-.text-center {
-  text-align: center;
-}
-
+/* text */
 .cursor-url {
   cursor: pointer;
 }
@@ -16,6 +16,16 @@ body {
   font-weight: bold;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.text-strikethrough {
+  text-decoration: line-through;
+}
+
+
+/* element styling */
 .unstyled-button {
   border: 1px solid gray;
   padding: 0 0.5rem;
@@ -26,12 +36,26 @@ body {
   padding: 0;
 }
 
-.no-display {
+.unstyled-list {
+  list-style-type: none;
+}
+
+.display-none {
   display: none;
+}
+
+
+/* spacing */
+.m-0 {
+  margin: 0;
 }
 
 .m-2 {
   margin: 0.5rem;
+}
+
+.p-0 {
+  padding: 0;
 }
 
 .p-2 {

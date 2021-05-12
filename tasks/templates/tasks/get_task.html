@@ -1,19 +1,38 @@
-<li id="list-item-{{ task.id }}" class="p-2">
-  <span title="Task ID#: {{ task.id }}">{{ task.description }}</span>
-  <span class="m-2 p-2 cursor-url font-weight-bold"
-        onclick="updateToggle({{ task.id }})"
-        title="Edit">
-    &#9998; <!-- Edit -->
+<li id="list-item-{{ task.id }}" class="p-2 list-item">
+
+  <!-- task completion checkbox -->
+  <span>
+    <input type="checkbox" {{ task.is_complete|yesno:"checked," }}
+           id="checkbox-task-complete-{{ task.id }}"
+           hx-put="{% url 'tasks:task_update' task_id=task.id %}"
+           hx-vals='javascript:{"is_complete": "{{ task.is_complete|yesno:"false,true" }}"}'
+           hx-target="#list-item-{{ task.id }}"
+           hx-swap="outerHTML">
   </span>
-  <span class="p-2 cursor-url font-weight-bold"
+
+  <!-- task description -->
+  <span id="text-item-description-{{ task.id }}"
+        title="Task ID#: {{ task.id }}">{{ task.description }}</span>
+
+  <!-- task edit/delete icons -->
+  <span id="icon-task-edit-{{ task.id }}"
+        class="m-2 p-2 cursor-url font-weight-bold"
+        onclick="updateSpanToggle({{ task.id }})"
+        title="Edit">
+    &#9998; <!-- edit icon -->
+  </span>
+  <span id="icon-task-delete-{{ task.id }}"
+        class="p-2 cursor-url font-weight-bold"
         title="Delete"
         hx-delete="{% url 'tasks:task_delete' task_id=task.id %}"
         hx-confirm="Are you sure you want to delete this item?"
-        hx-target="#tasks"
+        hx-target="#list-item-{{ task.id }}"
         hx-swap="outerHTML">
-    &times; <!-- Delete -->
+    &times; <!-- delete icon -->
   </span>
-  <span id="update-span-{{ task.id }}" class="no-display update-span">
+
+  <!-- task update span -->
+  <span id="update-span-{{ task.id }}" class="display-none update-span">
     <form style="display: inline"
           hx-put="{% url 'tasks:task_update' task_id=task.id %}"
           hx-vals='javascript:{"description": updateConfirm({{ task.id }})}'
@@ -26,7 +45,17 @@
       <input type="submit" class="unstyled-button"
              id="update-confirm-button-{{ task.id }}"
              title="Confirm"
-             value="&check;"> <!-- Confirm -->
+             value="&check;"> <!-- confirm icon -->
     </form>
   </span>
+
+  <script>
+    // if checkbox is ticked, strike out the text
+    if (document.querySelector('#checkbox-task-complete-{{ task.id }}').checked) {
+      let itemDescription = document.querySelector('#text-item-description-{{ task.id }}');
+      itemDescription.classList.add('text-strikethrough');
+    }
+  </script>
+
+
 </li>
