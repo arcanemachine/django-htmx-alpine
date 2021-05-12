@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Task List{% endblock title %}
+
+{% block body_title %}Task List{% endblock body_title %}
+{% block body_subheading %}{% endblock body_subheading %}
+
+{% block content %}
+
+<h4>Your Tasks:</h4>
+{% if tasks %}
+<ul>
+  <li>{{ forloop.counter }}. {{ task.description }}</li>
+</ul>
+{% else %}
+<p>
+  <em>No tasks created</em>
+</p>
+{% endif %}
+
+{% endblock content %}

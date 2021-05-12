@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 if [[ -z "${VIRTUAL_ENV}" ]]; then
   printf "Please activate your virtualenv before continuing.\n"
@@ -8,6 +8,5 @@ elif [[ -z "${PROJECT_ROOT}" ]]; then
   exit 1
 fi
 
-printf "\nYour project's root directory is ${PROJECT_ROOT}\n\n"
-stty sane  # prevent garbled text over ssh
-$PROJECT_ROOT/manage.py runserver 0.0.0.0:8000
+$PROJECT_ROOT/manage.py makemigrations
+$PROJECT_ROOT/manage.py migrate

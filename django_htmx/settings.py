@@ -1,14 +1,9 @@
-from pathlib import Path
-
 from django_htmx import keys, server_config
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = server_config.BASE_DIR
 
 SECRET_KEY = keys.SECRET_KEY
 DEBUG = True
-
-if SECRET_KEY == '123':
-    raise Exception("Please set a secure SECRET_KEY.")
 
 ALLOWED_HOSTS = ['*']
 
@@ -18,7 +13,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles']
+    'django.contrib.staticfiles',
+    # local
+    'tasks.apps.TasksConfig',
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -62,5 +60,9 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# static
+STATIC_URL = server_config.STATIC_URL
+STATICFILES_DIRS = server_config.STATICFILES_DIRS
+STATIC_ROOT = server_config.STATIC_ROOT
