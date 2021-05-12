@@ -14,27 +14,19 @@
     &times; <!-- Delete -->
   </span>
   <span id="update-span-{{ task.id }}" class="no-display update-span">
+    <form style="display: inline"
+          hx-put="{% url 'tasks:task_update' task_id=task.id %}"
+          hx-vals='javascript:{"description": updateConfirm({{ task.id }})}'
+          hx-target="#list-item-{{ task.id }}"
+          hx-swap="outerHTML">
       <input type="text"
              id="update-input-text-{{ task.id }}"
              class="unstyled-input-text update-input-text"
              value="{{ task.description }}">
-      <button class="unstyled-button"
-              id="update-confirm-button-{{ task.id }}"
-              hx-put="{% url 'tasks:task_update' task_id=task.id %}"
-              hx-vals='javascript:{"description": updateConfirm({{ task.id }})}'
-              hx-target="#list-item-{{ task.id }}"
-              hx-swap="outerHTML"
-              title="Confirm">
-        &check; <!-- Confirm -->
-      </button>
-      <script>
-        document.querySelector(`#update-input-text-{{ task.id }}`)
-          .addEventListener('keyup', (e) => {
-            if (e.code === 'Enter') {
-              document.querySelector('#update-confirm-button-{{ task.id }}').click();
-            }
-          })
-      </script>
+      <input type="submit" class="unstyled-button"
+             id="update-confirm-button-{{ task.id }}"
+             title="Confirm"
+             value="&check;"> <!-- Confirm -->
     </form>
   </span>
 </li>
