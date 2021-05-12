@@ -1,4 +1,4 @@
-from django_htmx import keys, server_config
+from project_folder import keys, server_config
 
 BASE_DIR = server_config.BASE_DIR
 

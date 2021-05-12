@@ -1,0 +1,33 @@
+<li id="list-item-{{ task.id }}" class="p-2">
+  <span title="Task ID#: {{ task.id }}">{{ task.description }}</span>
+  <span class="m-2 p-2 cursor-url font-weight-bold"
+        onclick="updateToggle({{ task.id }})"
+        title="Edit">
+    &#9998; <!-- Edit -->
+  </span>
+  <span class="p-2 cursor-url font-weight-bold"
+        title="Delete"
+        hx-delete="{% url 'tasks:task_delete' task_id=task.id %}"
+        hx-confirm="Are you sure you want to delete this item?"
+        hx-target="#tasks"
+        hx-swap="outerHTML">
+    &times; <!-- Delete -->
+  </span>
+  <span id="update-span-{{ task.id }}" class="no-display">
+      <input type="text"
+             id="update-input-text-{{ task.id }}"
+             value="{{ task.description }}"
+             class="input-text-unstyled">
+      <span class="p-2 cursor-url font-weight-bold"
+            id="update-confirm-{{ task.id }}"
+            hx-put="{% url 'tasks:task_update' task_id=task.id %}"
+            hx-vals='javascript:{
+              "description": updateConfirm({{ task.id }})}'
+            hx-target="#list-item-{{ task.id }}"
+            hx-swap="outerHTML"
+            title="Confirm">
+        &check; <!-- Confirm -->
+      </span> 
+    </form>
+  </span>
+</li>

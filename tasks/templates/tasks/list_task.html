@@ -1,0 +1,27 @@
+<ol id="tasks">
+  {% for task in tasks %}
+    {% include 'tasks/get_task.html' %}
+  {% endfor %}
+
+  <script>
+    function updateToggle(id) {
+      let updateSpan = document.querySelector(`#update-span-${id}`);
+      updateSpan.classList.toggle('no-display');
+    }
+
+    function updateSpanHide(id) {
+      let updateSpan = document.querySelector(`#update-span-${id}`);
+      updateSpan.classList.add('no-display');
+    }
+
+    function updateConfirm(id) {
+      let input = document.querySelector(`#update-input-text-${id}`);
+      let updateSpan = document.querySelector(`#update-span-${id}`)
+      updateSpan.classList.add('no-display');
+      let result = input.value;
+      input.value = '';
+      return result;
+    }
+  </script>
+
+</ol>

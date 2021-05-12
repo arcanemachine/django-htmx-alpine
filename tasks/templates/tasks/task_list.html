@@ -7,11 +7,29 @@
 
 {% block content %}
 
+<h4>Create New Task</h4>
+
+<form hx-post="{% url 'tasks:task_create' %}"
+      hx-vals='javascript:{"description": taskAdd()}'
+      hx-target="#tasks"
+      hx-swap="beforeend">
+  <input type="text" id="new-task-text">
+  <input type="submit" value="Create">
+</form>
+<br>
+
+<script>
+  function taskAdd() {
+    let el = document.querySelector("#new-task-text");
+    let result = el.value;
+    el.value = '';
+    return result;
+  }
+</script>
+
 <h4>Your Tasks:</h4>
 {% if tasks %}
-<ul>
-  <li>{{ forloop.counter }}. {{ task.description }}</li>
-</ul>
+  {% include 'tasks/list_task.html' %}
 {% else %}
 <p>
   <em>No tasks created</em>
