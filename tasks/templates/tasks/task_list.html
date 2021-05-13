@@ -1,50 +1,99 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Todo List{% endblock title %}
+{% block title %}Your Todo Items{% endblock title %}
 
-{% block body_title %}Todo List{% endblock body_title %}
-{% block body_subheading %}{% endblock body_subheading %}
-
-{% block head_script %}
-  <script src="{% static 'js/htmx.min.js' %}"></script>
-{% endblock head_script %}
+{% block body_title %}Your Todo Items{% endblock body_title %}
+{% block body_subtitle %}{% endblock body_subtitle %}
 
 {% block content %}
 
-<h4>Create New Task</h4>
+<div class="box has-text-centered">
+  <div class="is-size-4">Create New Task</div>
 
-<form hx-post="{% url 'tasks:task_create' %}"
-      hx-vals='javascript:{"description": taskCreate()}'
-      hx-target="#tasks"
-      hx-swap="beforeend">
-  <input type="text" id="new-task-input-text">
-  <input type="submit" value="Create">
-</form>
-<br>
+  <form class="mt-4"
+        id="form-new-task"
+        hx-post="{% url 'tasks:task_create' %}"
+        hx-vals='javascript:{"description": taskCreate()}'
+        hx-target="#tasks"
+        hx-swap="beforeend">
 
-<script>
-  function taskCreate() {
-    // get the value of the text input, clear it,
-    // and return the value that was in the form
-    let el = document.querySelector("#new-task-input-text");
-    let result = el.value;
-    el.value = '';
-    return result;
-  }
-</script>
+        <input type="search"
+               id="new-task-input-text"
+               class="mr-0 input is-medium"
+               placeholder="Your Todo Item...">
+        <button type="submit"
+                id="new-task-button-submit"
+                class="ml-0 button is-info is-medium">
+          Create
+        </button>
 
-<h4>Your Tasks:</h4>
-{% if tasks %}
-  {% include 'tasks/list_task.html' %}
-{% else %}
-  <p>
-    <em>No tasks created</em>
-  </p>
-{% endif %}
+  </form>
+
+  <script>
+    function taskCreate() {
+      // get the value of the text input, clear it,
+      // and return the value that was in the form
+      let el = document.querySelector("#new-task-input-text");
+      let result = el.value;
+      el.value = '';
+      return result;
+    }
+  </script>
+</div>
+
+<div class="mt-4 has-text-centered">
+  <div class="is-size-4">Your Tasks</div>
+
+  {% if tasks %}
+    {% include 'tasks/list_task.html' %}
+  {% else %}
+    <p>
+      <em>No tasks created</em>
+    </p>
+  {% endif %}
+
+</div>
 
 {% endblock content %}
 
-{% block body_end_script %}
-  {% include 'htmx_csrf.html' %}
-{% endblock %}
+{% block style %}
+
+#form-new-task {
+  display: flex;
+  justify-content: center;
+}
+
+#new-task-input-text {
+  width: 30rem;
+  max-width: 50vw;
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+
+#new-task-button-submit {
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.todo-item-container-parent {
+  display: flex;
+  width: 100%;
+  max-width: 40rem;
+  min-height: 2.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todo-item-container-checkbox {
+  width: 5rem;
+}
+
+.todo-item-container-icons {
+  display: flex;
+  width: 5rem;
+  justify-self: end;
+  justify-content: center;
+}
+
+{% endblock style %}

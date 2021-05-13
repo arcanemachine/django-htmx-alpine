@@ -1,39 +1,25 @@
-<li id="list-item-{{ task.id }}" class="p-2 list-item">
+<li id="list-item-{{ task.id }}"
+    class="todo-item-container-parent">
 
   <!-- task completion checkbox -->
-  <span>
+  <div class="todo-item-container-checkbox">
     <input type="checkbox" {{ task.is_complete|yesno:'checked="true",' }}
+           class="p-2 checkbox is-medium"
            autocomplete="off"
            id="checkbox-task-complete-{{ task.id }}"
            hx-put="{% url 'tasks:task_update' task_id=task.id %}"
            hx-vals='{"is_complete": "{{ task.is_complete|yesno:'false,true' }}"}'
            hx-target="#list-item-{{ task.id }}"
            hx-swap="outerHTML">
-  </span>
+  </div>
 
   <!-- task description -->
-  <span id="text-item-description-{{ task.id }}"
-        title="Task ID#: {{ task.id }}">{{ task.description }}</span>
+  <div id="text-item-description-{{ task.id }}"
+       class="todo-item-container-description"
+       title="Task ID#: {{ task.id }}">{{ task.description }}</div>
 
-  <!-- task edit/delete icons -->
-  <span id="icon-task-edit-{{ task.id }}"
-        class="m-2 p-2 cursor-url font-weight-bold"
-        onclick="updateSpanToggle({{ task.id }})"
-        title="Edit">
-    &#9998; <!-- edit icon -->
-  </span>
-  <span id="icon-task-delete-{{ task.id }}"
-        class="p-2 cursor-url font-weight-bold"
-        title="Delete"
-        hx-delete="{% url 'tasks:task_delete' task_id=task.id %}"
-        hx-confirm="Are you sure you want to delete this item?"
-        hx-target="#list-item-{{ task.id }}"
-        hx-swap="outerHTML">
-    &times; <!-- delete icon -->
-  </span>
-
-  <!-- task update span -->
-  <span id="update-span-{{ task.id }}" class="display-none update-span">
+  <!-- task update div -->
+  <div id="update-div-{{ task.id }}" class="display-none">
     <form style="display: inline"
           hx-put="{% url 'tasks:task_update' task_id=task.id %}"
           hx-vals='javascript:{"description": updateConfirm({{ task.id }})}'
@@ -48,7 +34,26 @@
              title="Confirm"
              value="&check;"> <!-- confirm icon -->
     </form>
-  </span>
+  </div>
+
+  <!-- task edit/delete icons -->
+  <div class="todo-item-container-icons is-size-4">
+    <div id="icon-task-edit-{{ task.id }}"
+          class="p-2 cursor-url font-weight-bold"
+          onclick="updateDivToggle({{ task.id }})"
+          title="Edit">
+      &#9998; <!-- edit icon -->
+    </div>
+    <div id="icon-task-delete-{{ task.id }}"
+          class="ml-2 p-2 cursor-url font-weight-bold"
+          title="Delete"
+          hx-delete="{% url 'tasks:task_delete' task_id=task.id %}"
+          hx-confirm="Are you sure you want to delete this item?"
+          hx-target="#list-item-{{ task.id }}"
+          hx-swap="outerHTML">
+      &times; <!-- delete icon -->
+    </div>
+  </div>
 
   <script>
     // if checkbox is ticked, strike out the text

@@ -1,13 +1,15 @@
-<ul id="tasks" class="unstyled-list">
+<ul id="tasks" class="mt-6">
   {% for task in tasks %}
     {% include 'tasks/get_task.html' %}
   {% endfor %}
 
   <script>
-    function updateSpanToggle(id) {
-      let updateSpan = document.querySelector(`#update-span-${id}`);
-      updateSpan.classList.toggle('display-none');
-      if (!updateSpan.classList.contains('display-none')) {
+    function updateDivToggle(id) {
+      let updateDiv = document.querySelector(`#update-div-${id}`);
+      let descriptionDiv = document.querySelector(`#text-item-description-${id}`);
+      updateDiv.classList.toggle('display-none');
+      descriptionDiv.classList.toggle('display-none');
+      if (!updateDiv.classList.contains('display-none')) {
         // select the text input
         document.querySelector(`#update-input-text-${id}`).select();
       }
@@ -15,8 +17,10 @@
 
     function updateConfirm(id) {
       let input = document.querySelector(`#update-input-text-${id}`);
-      let updateSpan = document.querySelector(`#update-span-${id}`)
-      updateSpan.classList.add('no-display');
+      let updateDiv = document.querySelector(`#update-div-${id}`)
+      let descriptionDiv = document.querySelector(`#text-item-description-${id}`);
+      updateDiv.classList.add('no-display');
+      descriptionDiv.classList.remove('no-display');
       let result = input.value;
       input.value = '';
       return result;

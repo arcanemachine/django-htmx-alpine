@@ -1,11 +1,30 @@
+html {
+  overflow-y: auto; /* bulma compatibility */
+}
+
 body {
-  margin: 1rem;
+  min-height: 100vh;
+  min-width: 100vw;
 }
 
 .dark-mode {
   color: white;
   background-color: black;
 }
+
+
+.navbar-title-container {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+
+.navbar-burger-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
 
 /* text */
 .cursor-url {
@@ -42,22 +61,4 @@ body {
 
 .display-none {
   display: none;
-}
-
-
-/* spacing */
-.m-0 {
-  margin: 0;
-}
-
-.m-2 {
-  margin: 0.5rem;
-}
-
-.p-0 {
-  padding: 0;
-}
-
-.p-2 {
-  padding: 0.5rem;
 }

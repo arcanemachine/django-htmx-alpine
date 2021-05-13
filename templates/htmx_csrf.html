@@ -1,8 +1,0 @@
-<!-- load htmx -->
-<!-- script src="https://unpkg.com/htmx.org@1.3.3"></script -->
-<script>
-  document.body.addEventListener('htmx:configRequest', (event) => {
-    event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
-  })
-</script>
-<!-- END load htmx -->
