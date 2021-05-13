@@ -27,7 +27,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware']
 
-ROOT_URLCONF = 'django_htmx.urls'
+ROOT_URLCONF = 'django_htmx_alpine.urls'
 
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -40,7 +40,7 @@ TEMPLATES = [{
             'django.contrib.auth.context_processors.auth',
             'django.contrib.messages.context_processors.messages']}}]
 
-WSGI_APPLICATION = 'django_htmx.wsgi.application'
+WSGI_APPLICATION = 'django_htmx_alpine.wsgi.application'
 
 DATABASES = {
     'default': {

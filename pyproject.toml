@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "django-htmx"
+name = "django-htmx-alpine"
 version = "0.1.0"
 description = "A sandbox for using Django with HTMX"
 authors = ["Nicholas Moen <arcanemachine@tutanota.com>"]
