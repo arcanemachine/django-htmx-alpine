@@ -2,7 +2,7 @@
 
   <!-- task completion checkbox -->
   <span>
-    <input type="checkbox" {{ task.is_complete|yesno:"checked," }}
+    <input type="checkbox" {{ task.is_complete|yesno:'checked="true",' }}
            id="checkbox-task-complete-{{ task.id }}"
            hx-put="{% url 'tasks:task_update' task_id=task.id %}"
            hx-vals='{"is_complete": "{{ task.is_complete|yesno:'false,true' }}"}'

@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup as BS
+from bs4 import BeautifulSoup as BS  # noqa
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, render
@@ -9,7 +9,8 @@ from .models import Task
 
 def task_list(request):
     tasks = Task.objects.all()
-    return render(request, 'tasks/task_list.html', {'tasks': tasks})
+    response = render(request, 'tasks/task_list.html', {'tasks': tasks})
+    return response
 
 
 @require_http_methods(['POST'])
