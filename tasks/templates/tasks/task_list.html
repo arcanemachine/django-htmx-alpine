@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Todo List{% endblock title %}
 
 {% block body_title %}Todo List{% endblock body_title %}
 {% block body_subheading %}{% endblock body_subheading %}
+
+{% block head_script %}
+  <script src="{% static 'js/htmx.min.js' %}"></script>
+{% endblock head_script %}
 
 {% block content %}
 
@@ -39,3 +44,7 @@
 {% endif %}
 
 {% endblock content %}
+
+{% block body_end_script %}
+  {% include 'htmx_csrf.html' %}
+{% endblock %}

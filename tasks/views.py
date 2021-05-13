@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup as BS
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, render
@@ -56,7 +57,8 @@ def task_update(request, task_id):
         return response
 
     context = {'task': task}
-    return render(request, 'tasks/get_task.html', context)
+    response = render(request, 'tasks/get_task.html', context)
+    return response
 
 
 @require_http_methods(['DELETE'])

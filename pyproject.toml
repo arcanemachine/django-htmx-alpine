@@ -9,6 +9,7 @@ license = "MIT"
 python = "^3.8"
 Django = "^3.2.2"
 ipython = "^7.23.1"
+beautifulsoup4 = "^4.9.3"
 
 [tool.poetry.dev-dependencies]
 

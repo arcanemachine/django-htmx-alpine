@@ -6,8 +6,8 @@
   <script>
     function updateSpanToggle(id) {
       let updateSpan = document.querySelector(`#update-span-${id}`);
-      updateSpan.classList.toggle('no-display');
-      if (!updateSpan.classList.contains('no-display')) {
+      updateSpan.classList.toggle('display-none');
+      if (!updateSpan.classList.contains('display-none')) {
         // select the text input
         document.querySelector(`#update-input-text-${id}`).select();
       }
