@@ -22,8 +22,9 @@
   </div>
 
   <div id="navbarMain"
-       class="navbar-menu"
-       x-bind:class="{ 'is-active': navbarIsActive }">
+       class="navbar-menu navbar-menu-main is-active"
+       x-show.transition.opacity.duration.500ms="navbarIsActive"
+       x-cloak>
 
     <div class="navbar-end has-text-centered">
       <a class="navbar-item">Sign In</a>

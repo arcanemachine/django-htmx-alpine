@@ -13,6 +13,10 @@ body {
   background-color: black;
 }
 
+.navbar-menu-main.is-active {
+  position: absolute;
+  width: 100vw;
+}
 
 .navbar-title-container {
   display: flex;
