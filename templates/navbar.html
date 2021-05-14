@@ -1,4 +1,5 @@
-<nav id="navbar-main"
+<nav x-data="{ navbarIsActive: false }"
+     id="navbar-main"
      class="navbar has-background-grey-lighter"
      role="navigation"
      aria-label="main navigation">
@@ -7,11 +8,12 @@
       Todo List
     </a>
 
-    <div class="pr-2 navbar-burger-container">
+    <div class="navbar-burger-container">
       <a role="button"
          class="navbar-burger"
          aria-label="menu" aria-expanded="false"
-         data-target="navbarMain">
+         data-target="navbarMain"
+         @click="navbarIsActive = !navbarIsActive">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -19,7 +21,9 @@
     </div>
   </div>
 
-  <div id="navbarMain" class="navbar-menu">
+  <div id="navbarMain"
+       class="navbar-menu"
+       x-bind:class="{ 'is-active': navbarIsActive }">
 
     <div class="navbar-end has-text-centered">
       <a class="navbar-item">Sign In</a>
@@ -28,31 +32,3 @@
 
   </div>
 </nav>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-
-    // Get all "navbar-burger" elements
-    const navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-    // Check if there are any navbar burgers
-    if (navbarBurgers.length > 0) {
-
-      // Add a click event on each of them
-      navbarBurgers.forEach( el => {
-        el.addEventListener('click', () => {
-
-          // Get the target from the "data-target" attribute
-          const target = el.dataset.target;
-          const $target = document.getElementById(target);
-
-          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-          el.classList.toggle('is-active');
-          $target.classList.toggle('is-active');
-
-        });
-      });
-    }
-
-  });
-</script>
