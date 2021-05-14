@@ -1,4 +1,4 @@
-<ul id="tasks" class="mt-6">
+<ul id="tasks">
   {% for task in tasks %}
     {% include 'tasks/get_task.html' %}
   {% endfor %}
@@ -9,14 +9,19 @@
       let descriptionDiv = document.querySelector(`#text-item-description-${id}`);
       updateDiv.classList.toggle('display-none');
       descriptionDiv.classList.toggle('display-none');
+
       if (!updateDiv.classList.contains('display-none')) {
-        // select the text input
-        document.querySelector(`#update-input-text-${id}`).select();
+        // select the text input when showing the div
+        document.querySelector(`#task-update-input-text-${id}`).select();
+      } else {
+        // reset the text input when hiding the div
+        document.querySelector(`#task-update-form-${id}`).reset();
       }
+
     }
 
     function updateConfirm(id) {
-      let input = document.querySelector(`#update-input-text-${id}`);
+      let input = document.querySelector(`#task-update-input-text-${id}`);
       let updateDiv = document.querySelector(`#update-div-${id}`)
       let descriptionDiv = document.querySelector(`#text-item-description-${id}`);
       updateDiv.classList.add('no-display');

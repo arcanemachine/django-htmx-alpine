@@ -3,6 +3,7 @@ html {
 }
 
 body {
+  background-color: #eee;
   min-height: 100vh;
   min-width: 100vw;
 }
@@ -43,6 +44,11 @@ body {
   text-decoration: line-through;
 }
 
+/* element positioning */
+.is-absolute {
+  position: absolute;
+}
+
 
 /* element styling */
 .unstyled-button {
@@ -61,4 +67,8 @@ body {
 
 .display-none {
   display: none;
+}
+
+::placeholder {
+  opacity: 1;
 }

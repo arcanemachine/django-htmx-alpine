@@ -32,7 +32,7 @@
     </div>
 
     <div class="container">
-      <div class="mb-0 pb-0 section has-text-centered">
+      <div class="mb-0 pb-0 has-text-centered">
         <div class="title">
           {% block body_title %}{% endblock body_title %}
         </div>
@@ -41,7 +41,7 @@
           </div>
       </div>
 
-      <div class="content-container section">
+      <div class="pt-4 content-container section">
         {% block content %}{% endblock content %}
       </div>
     </div>
@@ -51,6 +51,7 @@
     <!-- js -->
     <!-- script src="https://unpkg.com/htmx.org@1.3.3"></script -->
     <script src="{% static 'js/htmx@1.3.3.min.js' %}"></script>
+    <script src="{% static 'js/alpine@2.8.2.min.js' %}"></script>
 
     <!-- add CSRFToken to HTMX headers -->
     <script>

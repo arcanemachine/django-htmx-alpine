@@ -3,12 +3,24 @@
 
 {% block title %}Your Todo Items{% endblock title %}
 
-{% block body_title %}Your Todo Items{% endblock body_title %}
-{% block body_subtitle %}{% endblock body_subtitle %}
-
 {% block content %}
 
-<div class="box has-text-centered">
+<div class="has-text-centered">
+
+  <div class="py-4 is-size-4">Your Todo List</div>
+  {% if tasks %}
+    <div class="mt-4 box">
+      {% include 'tasks/list_task.html' %}
+    </div>
+  {% else %}
+    <p>
+      <em>No items created</em>
+    </p>
+  {% endif %}
+
+</div>
+
+<div class="mt-6 has-text-centered">
   <div class="is-size-4">Create New Task</div>
 
   <form class="mt-4"
@@ -20,11 +32,10 @@
 
         <input type="search"
                id="new-task-input-text"
-               class="mr-0 input is-medium"
+               class="input is-medium button-group-left-side"
                placeholder="Your Todo Item...">
         <button type="submit"
-                id="new-task-button-submit"
-                class="ml-0 button is-info is-medium">
+                class="button is-info is-medium button-group-right-side">
           Create
         </button>
 
@@ -42,18 +53,6 @@
   </script>
 </div>
 
-<div class="mt-4 has-text-centered">
-  <div class="is-size-4">Your Tasks</div>
-
-  {% if tasks %}
-    {% include 'tasks/list_task.html' %}
-  {% else %}
-    <p>
-      <em>No tasks created</em>
-    </p>
-  {% endif %}
-
-</div>
 
 {% endblock content %}
 
@@ -67,14 +66,17 @@
 #new-task-input-text {
   width: 30rem;
   max-width: 50vw;
+}
+
+.button-group-left-side {
   border-radius: 0.5rem 0 0 0.5rem;
 }
 
-#new-task-button-submit {
+.button-group-right-side {
   border-radius: 0 0.5rem 0.5rem 0;
 }
 
-.todo-item-container-parent {
+.task-item-container-parent {
   display: flex;
   width: 100%;
   max-width: 40rem;
@@ -85,11 +87,15 @@
   align-items: center;
 }
 
-.todo-item-container-checkbox {
+.task-item-container-checkbox {
   width: 5rem;
 }
 
-.todo-item-container-icons {
+.task-item-container-description {
+  transition: color 0.5s;
+}
+
+.task-item-container-icons {
   display: flex;
   width: 5rem;
   justify-self: end;
