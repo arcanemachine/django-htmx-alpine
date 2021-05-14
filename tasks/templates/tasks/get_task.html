@@ -26,18 +26,17 @@
 
   <!-- task update div -->
   <div id="update-div-{{ task.id }}" class="display-none">
-    <form style="display: inline-block"
-          id="task-update-form-{{ task.id }}"
+    <form id="task-update-form-{{ task.id }}"
           hx-put="{% url 'tasks:task_update' task_id=task.id %}"
           hx-vals='javascript:{"description": updateConfirm({{ task.id }})}'
           hx-target="#list-item-{{ task.id }}"
           hx-swap="outerHTML">
       <input type="text"
              id="task-update-input-text-{{ task.id }}"
-             class="input is-small button-group-left-side"
+             class="mr-0 input is-small is-inline button-group-left-side"
              value="{{ task.description }}">
       <input type="submit"
-             class="button is-info is-small button-group-right-side"
+             class="ml-0 button is-info is-inline is-small button-group-right-side"
              id="update-confirm-button-{{ task.id }}"
              title="Confirm"
              value="&check;"> <!-- confirm icon -->

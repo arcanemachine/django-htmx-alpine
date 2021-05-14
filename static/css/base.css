@@ -44,7 +44,7 @@ body {
   text-decoration: line-through;
 }
 
-/* element positioning */
+/* display and positioning */
 .is-absolute {
   position: absolute;
 }
