@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Register New User{% endblock %}
+{% block body_title %}Register New User{% endblock %}
+
+{% block content %}
+
+{% include 'base_form.html' %}
+
+<ul class="bottom-links">
+  <li><a href="{% url 'users:login' %}">Login to an existing account</a></li>
+  <li class="mt-4"><a href="{% url 'users:user_activation_email_resend' %}">Didn't receive your activation email?</a></li>
+</ul>
+
+{% endblock content %}

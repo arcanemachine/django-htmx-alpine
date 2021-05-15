@@ -1,28 +1,26 @@
 <div id="navbar-and-auth-modals"
      x-data="{ navbarIsActive: false,
-               loginModalIsActive: false,
-               registerModalIsActive: false}">
+               loginModalIsActive: true,
+               registerModalIsActive: false,
+               logoutModalIsActive: false }">
 
   <nav id="navbar-main"
-       class="navbar has-background-grey-lighter"
+       class="navbar navbar-main-background"
        role="navigation"
        aria-label="main navigation">
     <div class="navbar-brand">
       <a class="navbar-item brand-text is-size-4" href="/">
         Todo List
       </a>
-
-      <div class="navbar-burger-container">
-        <a role="button"
-           class="navbar-burger"
-           aria-label="menu" aria-expanded="false"
-           data-target="navbarMain"
-           @click="navbarIsActive = !navbarIsActive">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
+      <a role="button"
+         class="navbar-burger"
+         aria-label="menu" aria-expanded="false"
+         data-target="navbarMain"
+         @click="navbarIsActive = !navbarIsActive">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
     </div>
 
     <div id="navbarMain"
@@ -31,7 +29,6 @@
          x-cloak>
 
       {% if user.is_authenticated %}
-        <div class="navbar-end has-text-centered">
           <a class="navbar-item"
              href="#">
             Your Account
@@ -44,7 +41,7 @@
       {% else %}
         <div class="navbar-end has-text-centered">
           <a class="navbar-item"
-             @click="loginModalIsActive = true; navbarIsActive = false">
+             @click="loginModalIsActive = true; navbarIsActive = false;">
             Sign In
           </a>
           <a class="navbar-item"
@@ -83,6 +80,14 @@
                          id="login-input-password"
                          class="input is-large"
                          placeholder="Password">
+                </div>
+                <div class="mt-4 control">
+                    <div id="login-captcha">hey</div>
+                    <button hx-get="{% url 'users:login' %}"
+                            hx-target="#login-captcha"
+                            hx-swap="outerHTML">
+                      Click me
+                    </button>
                 </div>
               </div>
               <button id="login-button-submit"
@@ -187,7 +192,7 @@
                       class="mt-4 button is-block is-info is-large is-fullwidth">
                 Logout
               </button>
-              <button id="logout-button-submit"
+              <button id="logout-button-cancel"
                       class="mt-4 button is-block is-secondary is-large is-fullwidth">
                 Cancel
               </button>

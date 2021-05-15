@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Account - {{ user.username }}{% endblock %}
+{% block body_title %}Your Account{% endblock %}
+{% block body_subheading %}{{ user.username }}{% endblock %}
+
+{% block body_start_script %}
+function showApiKey() {
+  let userToken = '{{ request.user.auth_token }}'
+  if (userToken) {
+    alert(`Your API key is '${userToken}'`);
+  }
+}
+{% endblock body_start_script %}
+{% block content %}
+
+<hr class="m-5" />
+
+{% include 'users/user_account_status_template.html' %}
+
+<div class="bottom-links">
+  <p>
+    <a href="{% url 'stores:jsonstore_list' %}">View your JSON stores</a>
+  </p>
+</div>
+
+<hr class="m-5" />
+
+<h2 class="mt-4">Account Settings</h2>
+
+<div class="mt-4 bottom-links">
+  <p class="mt-4">
+    <span class="unstyled-link" onclick="showApiKey()">Show your API key</span>
+  </p>
+  <p>
+    <a href="{% url 'users:user_update_api_key' %}">Get a new API key</a>
+  </p>
+  <p class="mt-4">
+    <a href="{% url 'users:user_update' %}">Update account settings</a>
+  </p>
+  <p>
+    <a href="{% url 'users:user_detail_public' username=user.username %}">
+      View your public profile{% if not user.profile.is_public %} (currently disabled){% endif %}
+    </a>
+  </p>
+</div>
+
+{% endblock content %}

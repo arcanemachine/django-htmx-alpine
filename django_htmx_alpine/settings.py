@@ -16,6 +16,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # local
     'tasks.apps.TasksConfig',
+    'users.apps.UsersConfig',
+    # third-party
+    'captcha',
     ]
 
 MIDDLEWARE = [
@@ -61,6 +64,11 @@ USE_L10N = True
 USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# auth
+LOGIN_URL = 'users:login'
+LOGIN_REDIRECT_URL = 'users:user_detail_me'
+LOGOUT_REDIRECT_URL = 'project_root'
 
 # static
 STATIC_URL = server_config.STATIC_URL

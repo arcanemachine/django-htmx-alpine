@@ -17,21 +17,28 @@ body {
   background-color: black;
 }
 
+
+/* bulma stuff */
+.navbar-main-background {
+  height: 4rem;
+  background: linear-gradient(to bottom, #ddd 75%, #eee);
+}
+
+.navbar-brand {
+  height: 3rem;
+}
+
 .navbar-menu-main.is-active {
   position: absolute;
   width: 100vw;
+  min-height: 3rem;
+  font-size: 1.25rem;
 }
 
 .navbar-title-container {
   display: flex;
   flex-direction: row;
   align-content: center;
-}
-
-.navbar-burger-container {
-  display: flex;
-  width: 100%;
-  align-items: center;
 }
 
 

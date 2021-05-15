@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Your Account{% endblock %}
+
+{% block body_title %}Manage Your Account{% endblock %}
+
+{% block content %}
+
+<div class="bottom-links">
+  <p><a href="{% url 'users:user_update_email' %}">Change your email address</a></p>
+  <p class="mt-5"><a href="{% url 'users:password_change' %}">Change your password</a></p>
+  <p><a href="{% url 'users:user_update_is_public' %}">Change profile visibility</a></p>
+  <p class="mt-5">
+    <a class="text-danger" href="{% url 'users:user_delete' %}">
+      Delete your account
+    </a>
+  </p>
+  <p class="mt-5">
+    <a href="{% url 'users:user_detail_me' %}">
+      Return to your profile
+    </a>
+  </p>
+</div>
+
+{% endblock content %}
