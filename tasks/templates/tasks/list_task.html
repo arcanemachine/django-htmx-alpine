@@ -7,10 +7,10 @@
     function updateDivToggle(id) {
       let updateDiv = document.querySelector(`#update-div-${id}`);
       let descriptionDiv = document.querySelector(`#text-item-description-${id}`);
-      updateDiv.classList.toggle('display-none');
-      descriptionDiv.classList.toggle('display-none');
+      updateDiv.classList.toggle('is-hidden');
+      descriptionDiv.classList.toggle('is-hidden');
 
-      if (!updateDiv.classList.contains('display-none')) {
+      if (!updateDiv.classList.contains('is-hidden')) {
         // select the text input when showing the div
         document.querySelector(`#task-update-input-text-${id}`).select();
       } else {
@@ -24,8 +24,8 @@
       let input = document.querySelector(`#task-update-input-text-${id}`);
       let updateDiv = document.querySelector(`#update-div-${id}`)
       let descriptionDiv = document.querySelector(`#text-item-description-${id}`);
-      updateDiv.classList.add('no-display');
-      descriptionDiv.classList.remove('no-display');
+      updateDiv.classList.add('is-hidden');
+      descriptionDiv.classList.remove('is-hidden');
       let result = input.value;
       input.value = '';
       return result;

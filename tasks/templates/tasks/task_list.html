@@ -9,9 +9,9 @@
 
   <div class="py-4 is-size-4">Your Todo List</div>
   {% if tasks %}
-    <div class="mt-4 box">
+    <ul class="mt-4 box">
       {% include 'tasks/list_task.html' %}
-    </div>
+    </ul>
   {% else %}
     <p>
       <em>No items created</em>

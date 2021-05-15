@@ -8,6 +8,10 @@ body {
   min-width: 100vw;
 }
 
+[x-cloak] {
+  display: none !important;
+}
+
 .dark-mode {
   color: white;
   background-color: black;
@@ -36,10 +40,6 @@ body {
   cursor: pointer;
 }
 
-.font-weight-bold {
-  font-weight: bold;
-}
-
 .text-center {
   text-align: center;
 }
@@ -53,24 +53,17 @@ body {
   position: absolute;
 }
 
+.w-max-content {
+  width: max-content;
+}
 
 /* element styling */
-.unstyled-button {
-  border: 1px solid gray;
-  padding: 0 0.5rem;
+.opacity-0 {
+  opacity: 0;
 }
 
-.unstyled-input-text {
-  border: 1px solid gray;
-  padding: 0;
-}
-
-.unstyled-list {
-  list-style-type: none;
-}
-
-.display-none {
-  display: none;
+.opacity-1 {
+  opacity: 1;
 }
 
 ::placeholder {
