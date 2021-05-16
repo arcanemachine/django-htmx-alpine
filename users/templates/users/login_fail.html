@@ -1,0 +1,17 @@
+<div id="login-form-response-text"
+     class="has-text-danger transition-opacity-500 opacity-0"
+     hx-get="{% url 'users:login' %}"
+     hx-trigger="load"
+     hx-target="#login-captcha-img-container">
+  {{ form_errors|safe }}
+</div>
+<script>
+
+  // reset the login button
+  loginModalSubmitButton.classList.remove('is-loading');
+
+  // fade in the form response text
+  document.querySelector('#login-form-response-text')
+    .classList.remove('opacity-0');
+
+</script>

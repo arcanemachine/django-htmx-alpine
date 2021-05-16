@@ -1,10 +1,13 @@
+from captcha import helpers as captcha_helpers, models as captcha_models
 from django.contrib import messages
 from django.conf import settings
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth import logout as auth_logout, get_user_model
+from django.contrib.auth import login as auth_login, logout as auth_logout, \
+    get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
+from django.template.loader import render_to_string
 from django.views.decorators.cache import never_cache
 # from django.views.decorators.http import require_http_methods
 from django.views.generic import CreateView, DeleteView, DetailView
@@ -32,24 +35,51 @@ class UserRegisterView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 
 
+def login(request):
+    form_class = forms.UserAuthenticationForm
+
+    if request.method == 'GET':
+        form = form_class()
+        captcha_key = captcha_models.CaptchaStore.pick()
+        captcha_img_url = captcha_helpers.captcha_image_url(captcha_key)
+        context = {'captcha_key': captcha_key,
+                   'captcha_img_url': captcha_img_url}
+        return render(request, 'users/login.html', context)
+    elif request.method == 'POST':
+        form = form_class(data=request.POST)
+        if form.is_valid():
+            return HttpResponse('success')
+        else:
+            response_string = \
+                f"Error: {', '.join([err for err in form.errors])}"
+            response = HttpResponse(response_string)
+            return response
+
+
 class UserLoginView(LoginView):
     form_class = forms.UserAuthenticationForm
-    template_name = 'users/login.html'
+    template_name = 'placeholder.html'
 
-    def render_to_response(self, context, **response_kwargs):
-        response_kwargs.setdefault('content_type', self.content_type)
-        response = self.response_class(
-            request=self.request,
-            template=self.get_template_names(),
-            context=context,
-            using=self.template_engine,
-            **response_kwargs)
-        breakpoint()
-        response.render()
-        form = response.context_data['form']
-        captcha_field = form.fields['captcha']
-        context = {'captcha_img_url': captcha_field.widget.image_url()}
-        return render(self.request, self.template_name, context)
+    def dispatch(self, request, *args, **kwargs):
+        if request.method == 'GET':
+            # generate captcha
+            captcha_key = captcha_models.CaptchaStore.pick()
+            captcha_img_url = captcha_helpers.captcha_image_url(captcha_key)
+            context = {'captcha_key': captcha_key,
+                       'captcha_img_url': captcha_img_url}
+            return render(request, 'users/login.html', context)
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_invalid(self, form):
+        form_errors = \
+            ', <br> '.join([''.join(val) for val in form.errors.values()]) \
+            .replace('. ', '. <br> ')
+        context = {'form_errors': form_errors}
+        return render(self.request, 'users/login_fail.html', context)
+
+    def form_valid(self, form):
+        auth_login(self.request, form.get_user())
+        return render(self.request, 'users/login_success.html')
 
 
 class UserLogoutView(LogoutView):

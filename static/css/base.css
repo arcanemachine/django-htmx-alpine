@@ -18,20 +18,33 @@ body {
 }
 
 
-/* bulma stuff */
+/* bulma */
+.box {
+  max-width: 90vw;
+}
+
+.navbar-brand {
+  height: 2.5rem;
+}
+
+/* navbar */
+.login-captcha-img {
+  height: 2.5em;
+  width: 7em;
+}
+
 .navbar-main-background {
   height: 4rem;
   background: linear-gradient(to bottom, #ddd 75%, #eee);
 }
 
-.navbar-brand {
-  height: 3rem;
-}
-
 .navbar-menu-main.is-active {
   position: absolute;
   width: 100vw;
-  min-height: 3rem;
+  min-height: 3.5rem;
+}
+
+.navbar-menu.is-hidden-desktop {
   font-size: 1.25rem;
 }
 
@@ -60,6 +73,10 @@ body {
   position: absolute;
 }
 
+.is-fullwidth {
+  width: 100%;
+}
+
 .w-max-content {
   width: max-content;
 }
@@ -71,6 +88,14 @@ body {
 
 .opacity-1 {
   opacity: 1;
+}
+
+.transition-opacity-500 {
+  transition: opacity 0.5s;
+}
+
+.transition-opacity-1000 {
+  transition: opacity 1s;
 }
 
 ::placeholder {

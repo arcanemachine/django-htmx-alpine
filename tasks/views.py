@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, render
 from urllib.parse import unquote as urllib_parse_unquote
 
 from .models import Task
+from project_folder import helpers as h
 
 
 def task_list(request):
@@ -33,8 +34,7 @@ def task_create(request):
 def task_update(request, task_id):
     task = get_object_or_404(Task, id=task_id)
 
-    params = request.body.decode('utf-8')
-    parsed_params = dict([item.split('=') for item in params.split('&')])
+    parsed_params = h.get_parsed_params(request)
 
     updated_task_description = \
         urllib_parse_unquote(parsed_params.get('description', ''))

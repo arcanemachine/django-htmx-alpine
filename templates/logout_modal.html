@@ -1,0 +1,26 @@
+<div class="modal is-active"
+     x-ref="logoutModal"
+     x-show.transition.opacity.duration.500ms="logoutModalIsActive"
+     x-cloak>
+  <div class="modal-background"></div>
+  <div class="modal-content w-max-content">
+    <div class="section">
+      <div @click.away="logoutModalIsActive = false"
+           class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column is-justify-content-center is-align-items-center has-text-centered">
+        <div class="my-5 subtitle">Account Logout</div>
+        <div class="is-size-5">
+          Are you sure you want to logout?
+        </div>
+        <button id="logout-button-submit"
+                class="mt-4 button is-block is-info is-medium is-fullwidth">
+          Logout
+        </button>
+        <button id="logout-button-cancel"
+                class="mt-4 button is-block is-secondary is-medium is-fullwidth">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>

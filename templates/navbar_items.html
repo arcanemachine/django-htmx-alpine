@@ -1,0 +1,29 @@
+{% if not user.is_authenticated %}
+  <div class="navbar-end has-text-centered">
+    <a class="navbar-item"
+       hx-trigger="click"
+       hx-get="{% url 'users:login' %}"
+       hx-target="#login-captcha-img-container"
+       @click="loginModalIsActive = true; navbarIsActive = false;">
+      Sign In
+    </a>
+    <a class="navbar-item"
+       @click="registerModalIsActive = true; navbarIsActive = false">
+      Register
+    </a>
+  </div>
+{% elif user.is_authenticated %}
+  <div class="navbar-end has-text-centered">
+    <a class="navbar-item"
+       href="#">
+      Your Account
+    </a>
+    <a class="navbar-item" href="{% url 'users:logout' %}">
+      Logout
+    </a>
+    <!--a class="navbar-item"
+       @click="logoutModalIsActive = true; navbarIsActive = false">
+      Logout
+    </a-->
+  </div>
+{% endif %}

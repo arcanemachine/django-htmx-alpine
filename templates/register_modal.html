@@ -1,0 +1,51 @@
+<div class="modal is-active"
+     x-ref="registerModal"
+     x-show.transition.opacity.duration.500ms="registerModalIsActive"
+     x-cloak>
+  <div class="modal-background"></div>
+  <div class="modal-content w-max-content">
+    <div class="section">
+      <div @click.away="registerModalIsActive = false"
+           class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column is-justify-content-center is-align-items-center has-text-centered">
+        <div class="my-5 subtitle">Register New Account</div>
+        <form class="mt-3"
+              hx-post>
+          <div class="field">
+            <div class="control">
+              <input type="text"
+                     id="register-input-username"
+                     class="input"
+                     placeholder="Username">
+            </div>
+            <div class="mt-4 control">
+              <input type="password"
+                     id="register-input-password1"
+                     class="input"
+                     placeholder="Password">
+            </div>
+            <div class="mt-4 control">
+              <input type="password"
+                     id="register-input-password2"
+                     class="input"
+                     placeholder="Confirm password">
+            </div>
+          </div>
+          <button id="register-button-submit"
+                  class="mt-4 button is-block is-info is-medium is-fullwidth">
+            Register
+          </button>
+        </form>
+        <div class="my-4">
+          <span id="register-status-text"
+                x-ref="registerStatusText">
+            &nbsp;
+          </span>
+        </div>
+        <p class="mt-5">
+          <a href="registerUrl">Login to an existing account</a>
+        </p>
+      </div>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>

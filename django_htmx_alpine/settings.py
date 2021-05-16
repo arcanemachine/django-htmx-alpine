@@ -3,7 +3,7 @@ from project_folder import keys, server_config
 BASE_DIR = server_config.BASE_DIR
 
 SECRET_KEY = keys.SECRET_KEY
-DEBUG = True
+DEBUG = server_config.DEBUG
 
 ALLOWED_HOSTS = ['*']
 
@@ -41,7 +41,8 @@ TEMPLATES = [{
             'django.template.context_processors.debug',
             'django.template.context_processors.request',
             'django.contrib.auth.context_processors.auth',
-            'django.contrib.messages.context_processors.messages']}}]
+            'django.contrib.messages.context_processors.messages',
+            'project_folder.context_processors.helpers']}}]
 
 WSGI_APPLICATION = 'django_htmx_alpine.wsgi.application'
 
@@ -69,6 +70,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'users:user_detail_me'
 LOGOUT_REDIRECT_URL = 'project_root'
+
+# captcha
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
+CAPTCHA_LENGTH = 5
+CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)
+CAPTCHA_LETTER_ROTATION = (-15, 20)
+CAPTCHA_TIMEOUT = 3
 
 # static
 STATIC_URL = server_config.STATIC_URL

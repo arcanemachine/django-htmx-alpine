@@ -19,9 +19,7 @@ class NewUserCreationForm(UserCreationForm):
 
 
 class UserAuthenticationForm(AuthenticationForm):
-    captcha = CaptchaField(label="CAPTCHA")
-    # captcha = CaptchaField(
-    #     label="CAPTCHA", help_text=c.FORM_FIELD_CAPTCHA_HELP_TEXT)
+    captcha = CaptchaField()
 
     def clean_username(self):
         return self.data['username'].lower()

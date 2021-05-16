@@ -1,6 +1,7 @@
-<div id="navbar-and-auth-modals"
+<div id="navbar-main-container"
+     x-ref="navbarMainContainer"
      x-data="{ navbarIsActive: false,
-               loginModalIsActive: true,
+               loginModalIsActive: false,
                registerModalIsActive: false,
                logoutModalIsActive: false }">
 
@@ -23,186 +24,25 @@
       </a>
     </div>
 
+    <!-- mobile navbar -->
     <div id="navbarMain"
-         class="navbar-menu navbar-menu-main is-active"
+         class="navbar-menu navbar-menu-main is-active is-hidden-desktop"
          x-show.transition.opacity.duration.500ms="navbarIsActive"
          x-cloak>
-
-      {% if user.is_authenticated %}
-          <a class="navbar-item"
-             href="#">
-            Your Account
-          </a>
-          <a class="navbar-item"
-             @click="logoutModalIsActive = true; logoutIsActive = false">
-            Logout
-          </a>
-        </div>
-      {% else %}
-        <div class="navbar-end has-text-centered">
-          <a class="navbar-item"
-             @click="loginModalIsActive = true; navbarIsActive = false;">
-            Sign In
-          </a>
-          <a class="navbar-item"
-             @click="registerModalIsActive = true; navbarIsActive = false">
-            Register
-          </a>
-        </div>
-      {% endif %}
-
+      {% include 'navbar_items.html' %}
     </div>
+
+    <!-- desktop navbar -->
+    <div id="navbarMain"
+         class="navbar-menu navbar-menu-main is-active is-hidden-mobile">
+      {% include 'navbar_items.html' %}
+    </div>
+
   </nav>
 
   {% if not user.is_authenticated %}
-    <div class="modal is-active"
-         x-ref="loginModal"
-         x-show.transition.opacity.duration.500ms="loginModalIsActive">
-      <div class="modal-background"></div>
-      <div class="modal-content w-max-content">
-        <div class="section">
-          <div @click.away="loginModalIsActive = false"
-               class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column is-justify-content-center is-align-items-center has-text-centered">
-            <div class="my-5 title">Account Login</div>
-            <form class="mt-3">
-              <div class="field">
-                <div class="control">
-                  <input type="text"
-                         v-model="form.username"
-                         id="login-input-username"
-                         class="input is-large"
-                         placeholder="Username"
-                         autofocus>
-                </div>
-                <div class="mt-4 control">
-                  <input type="password"
-                         v-model="form.password"
-                         id="login-input-password"
-                         class="input is-large"
-                         placeholder="Password">
-                </div>
-                <div class="mt-4 control">
-                    <div id="login-captcha">hey</div>
-                    <button hx-get="{% url 'users:login' %}"
-                            hx-target="#login-captcha"
-                            hx-swap="outerHTML">
-                      Click me
-                    </button>
-                </div>
-              </div>
-              <button id="login-button-submit"
-                      class="mt-4 button is-block is-info is-large is-fullwidth">
-                Login
-              </button>
-            </form>
-            <p class="mt-5 is-size-5">
-              <a href="registerUrl">Register a new account</a>
-            </p>
-          </div>
-        </div>
-      </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-
-    <div class="modal is-active"
-         x-ref="registerModal"
-         x-show.transition.opacity.duration.500ms="registerModalIsActive">
-      <div class="modal-background"></div>
-      <div class="modal-content w-max-content">
-        <div class="section">
-          <div @click.away="registerModalIsActive = false"
-               class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column is-justify-content-center is-align-items-center has-text-centered">
-            <div class="my-5 title">Register New Account</div>
-            <form class="mt-3"
-                  hx-post>
-              <div class="field">
-                <div class="control">
-                  <input type="text"
-                         v-model="form.username"
-                         id="register-input-username"
-                         class="input is-large"
-                         placeholder="Username"
-                         autofocus>
-                </div>
-                <div class="mt-4 control">
-                  <input type="password"
-                         v-model="form.password"
-                         id="register-input-password1"
-                         class="input is-large"
-                         placeholder="Password">
-                </div>
-                <div class="mt-4 control">
-                  <input type="password"
-                         v-model="form.password"
-                         id="register-input-password2"
-                         class="input is-large"
-                         placeholder="Confirm password">
-                </div>
-              </div>
-              <button id="register-button-submit"
-                      class="mt-4 button is-block is-info is-large is-fullwidth">
-                Register
-              </button>
-            </form>
-            <div class="my-4">
-              <span id="register-status-text"
-                    x-ref="registerStatusText">
-                &nbsp;
-              </span>
-            </div>
-            <div class="is-size-5">
-              <a href="registerUrl">Login to an existing account</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-
-  {% else %}
-
-    <div class="modal is-active"
-         x-ref="logoutModal"
-         x-show.transition.opacity.duration.500ms="logoutModalIsActive">
-      <div class="modal-background"></div>
-      <div class="modal-content w-max-content">
-        <div class="section">
-          <div @click.away="logoutModalIsActive = false"
-               class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column is-justify-content-center is-align-items-center has-text-centered">
-            <div class="my-5 title">Account Logout</div>
-            <form class="mt-3">
-              <div class="field">
-                <div class="control">
-                  <input type="text"
-                         v-model="form.username"
-                         id="logout-input-username"
-                         class="input is-large"
-                         placeholder="Username"
-                         autofocus>
-                </div>
-                <div class="mt-4 control">
-                  <input type="password"
-                         v-model="form.password"
-                         id="logout-input-password"
-                         class="input is-large"
-                         placeholder="Password">
-                </div>
-              </div>
-              <button id="logout-button-submit"
-                      class="mt-4 button is-block is-info is-large is-fullwidth">
-                Logout
-              </button>
-              <button id="logout-button-cancel"
-                      class="mt-4 button is-block is-secondary is-large is-fullwidth">
-                Cancel
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-
+    {% include 'login_modal.html' %}
+    {% include 'register_modal.html' %}
   {% endif %}
 
 </div>

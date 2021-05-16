@@ -1,0 +1,15 @@
+<div id="login-form-response-text"
+     class="has-text-success transition-opacity-500 opacity-0">
+  Login successful!
+</div>
+<script>
+  // reset the login button
+  loginModalSubmitButton.classList.remove('is-loading');
+
+  // fade in the form response text
+  document.querySelector('#login-form-response-text')
+    .classList.remove('opacity-0');
+
+  // reload the page
+  setTimeout(() => window.location.reload(), 1000)
+</script>

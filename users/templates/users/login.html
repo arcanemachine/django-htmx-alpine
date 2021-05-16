@@ -1,3 +1,7 @@
-<div id="login-captcha">
-  <img src="{{ SERVER_URL }}{{ captcha_img_url }}">
-</div>
+<img id="login-captcha-img"
+		 class="login-captcha-img"
+		 src="{{ server_config.SERVER_URL }}{{ captcha_img_url }}">
+<input type="hidden"
+       name="captcha_0"
+       id="captcha-key"
+       value="{{ captcha_key }}">
