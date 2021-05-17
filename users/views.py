@@ -78,7 +78,7 @@ class UserLoginView(LoginView):
         return render(self.request, 'users/login_fail.html', context)
 
     def form_valid(self, form):
-        auth_login(self.request, form.get_user())
+        # auth_login(self.request, form.get_user())
         return render(self.request, 'users/login_success.html')
 
 

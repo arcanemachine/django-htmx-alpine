@@ -6,12 +6,5 @@
   {{ form_errors|safe }}
 </div>
 <script>
-
-  // reset the login button
-  loginModalSubmitButton.classList.remove('is-loading');
-
-  // fade in the form response text
-  document.querySelector('#login-form-response-text')
-    .classList.remove('opacity-0');
-
+  hDispatch('login-submit-button-disable');
 </script>

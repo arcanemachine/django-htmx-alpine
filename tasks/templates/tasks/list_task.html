@@ -6,7 +6,8 @@
   <script>
     function updateDivToggle(id) {
       let updateDiv = document.querySelector(`#update-div-${id}`);
-      let descriptionDiv = document.querySelector(`#text-item-description-${id}`);
+      let descriptionDiv = document
+        .querySelector(`#text-item-description-${id}`);
       updateDiv.classList.toggle('is-hidden');
       descriptionDiv.classList.toggle('is-hidden');
 
@@ -23,7 +24,8 @@
     function updateConfirm(id) {
       let input = document.querySelector(`#task-update-input-text-${id}`);
       let updateDiv = document.querySelector(`#update-div-${id}`)
-      let descriptionDiv = document.querySelector(`#text-item-description-${id}`);
+      let descriptionDiv = document
+        .querySelector(`#text-item-description-${id}`);
       updateDiv.classList.add('is-hidden');
       descriptionDiv.classList.remove('is-hidden');
       let result = input.value;

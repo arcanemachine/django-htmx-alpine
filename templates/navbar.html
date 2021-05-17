@@ -1,9 +1,29 @@
+<script>
+  function navbarMainContainer() {
+    return {
+      // data
+      navbarIsActive: false,
+      loginModalIsActive: false,
+      loginSubmitButtonIsLoading: false,
+      registerModalIsActive: false,
+      logoutModalIsActive: false,
+      // methods
+      navbarClearAll() {
+        this.navbarIsActive = false;
+        this.loginModalIsActive = false;
+        this.loginSubmitButtonIsLoading = false;
+        this.registerModalIsActive = false;
+        this.logoutModalIsActive = false;
+      }
+    }
+  }
+</script>
+
 <div id="navbar-main-container"
+     x-data="navbarMainContainer()"
      x-ref="navbarMainContainer"
-     x-data="{ navbarIsActive: false,
-               loginModalIsActive: false,
-               registerModalIsActive: false,
-               logoutModalIsActive: false }">
+     @login-submit-button-enable.window="loginSubmitButtonIsLoading = false"
+     @login-submit-button-disable.window="loginSubmitButtonIsLoading = true">
 
   <nav id="navbar-main"
        class="navbar navbar-main-background"

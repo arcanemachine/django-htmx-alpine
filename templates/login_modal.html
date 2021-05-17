@@ -1,19 +1,21 @@
-<div class="modal is-active"
+<div id="login-modal"
+     class="modal is-active"
      x-ref="loginModal"
      x-show.transition.opacity.duration.500ms="loginModalIsActive"
-     x-init="() => {console.log('hello')}"
      x-cloak>
   <div class="modal-background"></div>
   <div class="modal-content w-max-content">
     <div class="section">
       <div @click.away="loginModalIsActive = false"
            id="navbar-modal-box-login"
-           class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column is-justify-content-center is-align-items-center has-text-centered">
+           class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
+                  is-justify-content-center is-align-items-center
+                  has-text-centered">
         <div class="my-5 is-size-4">Account Login</div>
         <form class="mt-3"
               hx-post="{% url 'users:login' %}"
               hx-target="#login-form-response"
-              @submit="loginModalSubmitButton.classList.add('is-loading')">
+              @submit="loginSubmitButtonIsLoading = true">
           <div class="field">
             <div class="control">
               <input type="text"
@@ -54,14 +56,11 @@
             </div>
           </div>
           <button type="submit"
-                 id="login-button-submit"
-                 class="mt-4 button is-block is-info is-medium is-fullwidth">
+                  id="login-button-submit"
+                  class="mt-4 button is-block is-info is-medium is-fullwidth"
+                  :class="{ 'is-loading': loginSubmitButtonIsLoading }">
             Login
           </button>
-          <script>
-            const loginModalSubmitButton = document
-              .querySelector('#login-button-submit');
-          </script>
 
         </form>
         <div id="login-form-response"
