@@ -5,7 +5,7 @@
      x-cloak>
   <div class="modal-background"></div>
   <div class="modal-content w-max-content">
-    <div class="section">
+    <div class="p-0 section">
       <div @click.away="loginModalIsActive = false"
            id="navbar-modal-box-login"
            class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
@@ -63,15 +63,14 @@
           </button>
 
         </form>
-        <div id="login-form-response"
-             class="my-3 is-size-5 has-text-weight-bold">
-          &nbsp;
+        <div class="pt-4 pb-3 is-size-5">
+          &nbsp;<span id="login-form-response"></span>
         </div>
-        <p>
+        <div class="pb-2">
           <a href="registerUrl" class="is-size-5">
             Register a new account
           </a>
-        </p>
+        </div>
       </div>
     </div>
   </div>

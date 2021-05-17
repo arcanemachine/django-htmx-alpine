@@ -1,10 +1,16 @@
-<div id="login-form-response-text"
-     class="has-text-danger transition-opacity-500 opacity-0"
+<span id="login-form-response-text"
+     class="has-text-danger has-text-weight-bold"
      hx-get="{% url 'users:login' %}"
      hx-trigger="load"
-     hx-target="#login-captcha-img-container">
-  {{ form_errors|safe }}
-</div>
-<script>
-  hDispatch('login-submit-button-disable');
-</script>
+     hx-target="#login-captcha-img-container"
+     x-data="{ show: false }"
+     x-show.transition.opacity.duration.500ms="show"
+     x-init="() => { show = true }; setTimeout(() => { show = false }, 4000)">
+
+  Login failed. Please try again.
+
+  <script>
+    hDispatch('login-submit-button-enable');
+  </script>
+
+</span>
