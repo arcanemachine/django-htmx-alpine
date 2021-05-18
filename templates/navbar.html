@@ -36,8 +36,8 @@
   </nav>
 
   {% if not user.is_authenticated %}
-    {% include 'login_modal.html' %}
-    {% include 'register_modal.html' %}
+    {% include 'modal_login.html' %}
+    {% include 'modal_register.html' %}
   {% endif %}
 
 </div>
