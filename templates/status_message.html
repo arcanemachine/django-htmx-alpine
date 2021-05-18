@@ -5,6 +5,7 @@
        x-data="statusMessageNotification()"
        x-show.transition.opacity.duration.500ms="show"
        x-text="statusMessageText"
+       x-cloak
        @status-message-display.window="receiveStatusMessageDisplay($event)">
   </div>
 </div>
