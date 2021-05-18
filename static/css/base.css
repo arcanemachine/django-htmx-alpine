@@ -18,17 +18,21 @@ body {
 }
 
 
-/* bulma */
+/* BULMA */
 .navbar-brand {
   height: 2.5rem;
 }
 
-/* navbar */
+
+/* UI ELEMENTS */
+
+/* login modal */
 .login-captcha-img {
   height: 2.5em;
   width: 7em;
 }
 
+/* navbar */
 .navbar-main-background {
   height: 4rem;
   background: linear-gradient(to bottom, #ddd 75%, #eee);
@@ -50,9 +54,35 @@ body {
   align-content: center;
 }
 
+/* status message notification */
+.status-message-notification-container {
+  display: flex;
+  position: fixed;
+  top: 5rem;
+  left: 0;
+  width: 100vw;
 
-/* text */
-.cursor-url {
+  justify-content: center;
+}
+
+.status-message-notification {
+  max-width: 30rem;
+
+  padding: 0.75rem 1rem;
+
+  font-size: 1.3rem;
+  color: white;
+  text-align: center;
+
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  z-index: 100;
+}
+
+
+/* TYPOGRAPHY */
+.cursor-pointer {
   cursor: pointer;
 }
 
@@ -64,7 +94,8 @@ body {
   text-decoration: line-through;
 }
 
-/* display and positioning */
+
+/* DISPLAY AND POSitioning */
 .is-absolute {
   position: absolute;
 }
@@ -81,7 +112,7 @@ body {
   width: max-content;
 }
 
-/* element styling */
+/* ELEMENT STYLING */
 .d-none {
   display: none;
 }

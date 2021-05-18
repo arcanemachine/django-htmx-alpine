@@ -15,7 +15,7 @@
 
   <!-- task description -->
   <div id="text-item-description-{{ task.id }}"
-       class="task-item-container-description cursor-url{{ task.is_complete|yesno:' text-strikethrough has-text-grey-light, ' }}"
+       class="task-item-container-description cursor-pointer{{ task.is_complete|yesno:' text-strikethrough has-text-grey-light, ' }}"
        title="Task ID#: {{ task.id }}"
        hx-put="{% url 'tasks:task_update' task_id=task.id %}"
        hx-vals='{"is_complete": "{{ task.is_complete|yesno:'false,true' }}"}'
@@ -46,13 +46,13 @@
   <!-- task edit/delete icons -->
   <div class="task-item-container-icons is-size-4">
     <div id="icon-task-edit-{{ task.id }}"
-          class="p-2 cursor-url has-text-weight-bold"
+          class="p-2 cursor-pointer has-text-weight-bold"
           onclick="updateDivToggle({{ task.id }})"
           title="Edit">
       &#9998; <!-- edit icon -->
     </div>
     <div id="icon-task-delete-{{ task.id }}"
-          class="ml-2 p-2 cursor-url has-text-weight-bold"
+          class="ml-2 p-2 cursor-pointer has-text-weight-bold"
           title="Delete"
           hx-delete="{% url 'tasks:task_delete' task_id=task.id %}"
           hx-confirm="Are you sure you want to delete this item?"

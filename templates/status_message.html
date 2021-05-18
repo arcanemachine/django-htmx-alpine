@@ -1,0 +1,56 @@
+<div class="status-message-notification-container">
+  <div id="status-message-notification"
+       class="has-background-info status-message-notification"
+       @click="statusMessageClear"
+       x-data="statusMessageNotification()"
+       x-show.transition.opacity.duration.500ms="show"
+       x-text="statusMessageText"
+       @status-message-display.window="receiveStatusMessageDisplay($event)">
+  </div>
+</div>
+
+<script>
+  function statusMessageNotification() {
+    return {
+      // data
+      show: false,
+      statusMessageText: '',
+      statusMessageTimeout: undefined,
+
+      // methods
+      statusMessageDisplay(message, timeout=undefined) {
+        // if a status message is already present, clear it
+        if (this.statusMessageText) {
+          this.statusMessageClear();
+        }
+
+        clearTimeout(this.statusMessageTimeout);
+        if (timeout === undefined) {
+          // if no timeout is given, display the message for 4 seconds
+          timeout = 4000;
+        } else if (timeout === -1) {
+          // if timeout == -1, display the message forever
+          timeout = 9999999;
+        }
+
+        this.show = true;
+        this.statusMessageText = message;
+        this.statusMessageTimeout = setTimeout(() => { this.statusMessageClear() }, timeout);
+      },
+
+      statusMessageClear() {
+        clearTimeout(this.statusMessageTimeout);
+        this.show = false;
+      },
+
+      receiveStatusMessageDisplay(event) {
+        if (typeof(event.detail) === 'string') {
+          this.statusMessageDisplay(event.detail);
+        } else {
+          this.statusMessageDisplay(event.detail.message, event.detail.timeout);
+        }
+      }
+    }
+  }
+</script>
+
