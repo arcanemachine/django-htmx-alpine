@@ -34,27 +34,6 @@ class UserRegisterView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 
 
-def login(request):
-    form_class = forms.UserAuthenticationForm
-
-    if request.method == 'GET':
-        form = form_class()
-        captcha_key = captcha_models.CaptchaStore.pick()
-        captcha_img_url = captcha_helpers.captcha_image_url(captcha_key)
-        context = {'captcha_key': captcha_key,
-                   'captcha_img_url': captcha_img_url}
-        return render(request, 'users/login.html', context)
-    elif request.method == 'POST':
-        form = form_class(data=request.POST)
-        if form.is_valid():
-            return HttpResponse('success')
-        else:
-            response_string = \
-                f"Error: {', '.join([err for err in form.errors])}"
-            response = HttpResponse(response_string)
-            return response
-
-
 class UserLoginView(LoginView):
     form_class = forms.UserAuthenticationForm
     template_name = 'placeholder.html'
