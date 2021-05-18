@@ -7,6 +7,6 @@
 <script>
   // reload shortly after successful login
   setTimeout(() => {
-    window.location.reload();
+    location.assign('{% url settings.LOGIN_REDIRECT_URL %}');
   }, 500)
 </script>

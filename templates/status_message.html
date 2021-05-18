@@ -1,13 +1,13 @@
 <div class="status-message-notification-container">
-  <div id="status-message-notification"
-       class="has-background-info status-message-notification"
-       @click="statusMessageClear"
-       x-data="statusMessageNotification()"
-       x-show.transition.opacity.duration.500ms="show"
-       x-text="statusMessageText"
-       x-cloak
-       @status-message-display.window="receiveStatusMessageDisplay($event)">
-  </div>
+  <button id="status-message-notification"
+          class="status-message-notification"
+          @click="statusMessageClear"
+          x-data="statusMessageNotification()"
+          x-show.transition.opacity.duration.500ms="show"
+          x-text="statusMessageText"
+          x-cloak
+          @status-message-display.window="receiveStatusMessageDisplay($event)">
+  </button>
 </div>
 
 
@@ -20,7 +20,30 @@
       statusMessageTimeout: undefined,
 
       // methods
-      statusMessageDisplay(message, timeout=undefined) {
+      getColors(messageType) {
+        let background = '';
+        let text = '';
+        if (messageType === '20') {
+          background = 'info';
+          text = 'white';
+        } else if (messageType === '25') {
+          background = 'success';
+          text = 'white';
+        } else if (messageType === '30') {
+          background = 'warning';
+          text = 'black';
+        } else if (messageType === '40') {
+          background = 'danger';
+          text = 'white';
+        }
+        if (background) {
+          return { background, text };
+        } else {
+          return undefined;
+        }
+      },
+
+      statusMessageDisplay(message, timeout=undefined, messageType=undefined) {
         // if a status message is already present,
         // then clear it and display a new one
         if (this.statusMessageText) {
@@ -40,9 +63,30 @@
           timeout = 9999999;
         }
 
+        // apply colors, if applicable
+        let colors = {};
+        let currentEl = document.querySelector('#status-message-notification');
+        if (messageType) {
+          colors = this.getColors(messageType);
+          if (currentEl) {
+            // add colors
+            currentEl.classList.add(`has-background-${colors.background}`);
+            currentEl.classList.add(`has-text-${colors.text}`);
+            // remove colors
+            setTimeout(() => {
+              currentEl.classList.remove(`has-background-${colors.background}`);
+              currentEl.classList.remove(`has-text-${colors.text}`);
+            }, timeout + 500)
+          }
+        }
+
+        // display the message
         this.show = true;
         this.statusMessageText = message;
-        this.statusMessageTimeout = setTimeout(() => { this.statusMessageClear() }, timeout);
+        this.statusMessageTimeout = setTimeout(() => {
+          // clear the message and remove the colorClass
+          this.statusMessageClear();
+        }, timeout);
       },
 
       statusMessageClear() {
@@ -55,7 +99,8 @@
         if (typeof(event.detail) === 'string') {
           this.statusMessageDisplay(event.detail);
         } else {
-          this.statusMessageDisplay(event.detail.message, event.detail.timeout);
+          this.statusMessageDisplay(event.detail.message,
+            event.detail.timeout, event.detail.messageType);
         }
       }
     }
@@ -65,29 +110,37 @@
 
 <style>
 
-.status-message-notification-container {
-  display: flex;
-  position: fixed;
-  top: 5rem;
-  left: 0;
-  width: 100vw;
-
-  justify-content: center;
-}
-
 .status-message-notification {
-  max-width: 30rem;
+  position: fixed;
+  max-width: 25rem;
+  max-width: max-content;
+  top: 0.35rem;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
 
-  padding: 0.75rem 1rem;
-
-  font-size: 1.3rem;
-  color: white;
+  font-size: 1.2rem;
+  color: black;
   text-align: center;
 
   cursor: pointer;
-  border: 1px solid black;
+  border: none;
   border-radius: 0.5rem;
   z-index: 100;
 }
 
 </style>
+
+<script>
+{% if messages %}
+  {% for message in messages %}
+    window.addEventListener("load", () => {
+      hDispatch('status-message-display', {
+        message: "{{ message }}",
+        messageType: '{{ message.level }}'
+      })
+    });
+  {% endfor %}
+{% endif %}
+</script>

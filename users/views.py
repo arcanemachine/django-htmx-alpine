@@ -57,6 +57,8 @@ class UserLoginView(LoginView):
 
     def form_valid(self, form):
         auth_login(self.request, form.get_user())
+        messages.success(
+            self.request, 'Login successful', extra_tags='alert alert-success')
         return render(self.request, 'users/login_success.html')
 
 
@@ -67,17 +69,6 @@ class UserLogoutView(LogoutView):
     def dispatch(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
         return super().dispatch(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            response = HttpResponse()
-            response.status_code = 401
-            return response
-        elif request.user.is_authenticated:
-            auth_logout(request)
-            response = HttpResponse()
-            response.status_code = 200
-            return response
 
 
 class UserDetailMeView(LoginRequiredMixin, DetailView):

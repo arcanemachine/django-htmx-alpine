@@ -68,7 +68,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # auth
 LOGIN_URL = 'users:login'
-LOGIN_REDIRECT_URL = 'users:user_detail_me'
+LOGIN_REDIRECT_URL = 'project_root'
 LOGOUT_REDIRECT_URL = 'project_root'
 
 # captcha
