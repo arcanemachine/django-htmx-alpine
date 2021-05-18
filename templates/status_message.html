@@ -10,6 +10,7 @@
   </div>
 </div>
 
+
 <script>
   function statusMessageNotification() {
     return {
@@ -20,9 +21,14 @@
 
       // methods
       statusMessageDisplay(message, timeout=undefined) {
-        // if a status message is already present, clear it
+        // if a status message is already present,
+        // then clear it and display a new one
         if (this.statusMessageText) {
           this.statusMessageClear();
+          setTimeout(() => {
+            this.statusMessageDisplay(message, timeout);
+          }, 500);
+          return false;
         }
 
         clearTimeout(this.statusMessageTimeout);
@@ -42,6 +48,7 @@
       statusMessageClear() {
         clearTimeout(this.statusMessageTimeout);
         this.show = false;
+        setTimeout(() => { this.statusMessageText = ''; }, 500)
       },
 
       receiveStatusMessageDisplay(event) {
@@ -55,3 +62,32 @@
   }
 </script>
 
+
+<style>
+
+.status-message-notification-container {
+  display: flex;
+  position: fixed;
+  top: 5rem;
+  left: 0;
+  width: 100vw;
+
+  justify-content: center;
+}
+
+.status-message-notification {
+  max-width: 30rem;
+
+  padding: 0.75rem 1rem;
+
+  font-size: 1.3rem;
+  color: white;
+  text-align: center;
+
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  z-index: 100;
+}
+
+</style>
