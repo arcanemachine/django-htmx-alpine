@@ -39,7 +39,10 @@
         if (background) {
           return { background, text };
         } else {
-          return undefined;
+          return {
+            background: 'info',
+            text: 'white'
+          };
         }
       },
 
@@ -50,14 +53,14 @@
           this.statusMessageClear();
           setTimeout(() => {
             this.statusMessageDisplay(message, timeout);
-          }, 500);
+          }, defaultTransitionLength);
           return false;
         }
 
         clearTimeout(this.statusMessageTimeout);
         if (timeout === undefined) {
           // if no timeout is given, display the message for 4 seconds
-          timeout = 4000;
+          timeout = defaultMessageTimeout;
         } else if (timeout === -1) {
           // if timeout == -1, display the message forever
           timeout = 9999999;
@@ -76,7 +79,7 @@
             setTimeout(() => {
               currentEl.classList.remove(`has-background-${colors.background}`);
               currentEl.classList.remove(`has-text-${colors.text}`);
-            }, timeout + 500)
+            }, timeout + defaultTransitionLength)
           }
         }
 
@@ -92,7 +95,9 @@
       statusMessageClear() {
         clearTimeout(this.statusMessageTimeout);
         this.show = false;
-        setTimeout(() => { this.statusMessageText = ''; }, 500)
+        setTimeout(() => {
+          this.statusMessageText = '';
+        }, defaultTransitionLength)
       },
 
       receiveStatusMessageDisplay(event) {
@@ -111,8 +116,8 @@
 <style>
 
 .status-message-notification {
-  position: fixed;
   background-color: #3298DC;
+  position: fixed;
   max-width: 25rem;
   max-width: max-content;
   top: 0.35rem;
@@ -136,12 +141,12 @@
 <script>
 {% if messages %}
   {% for message in messages %}
-    window.addEventListener("load", () => {
+    setTimeout(() => {
       hDispatch('status-message-display', {
         message: "{{ message }}",
         messageType: '{{ message.level }}'
       })
-    });
+    }, {{ forloop.counter0 }} * defaultMessageTimeout);
   {% endfor %}
 {% endif %}
 </script>

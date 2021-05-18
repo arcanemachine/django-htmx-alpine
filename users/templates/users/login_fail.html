@@ -1,11 +1,12 @@
 <span id="login-form-response-text"
-     class="has-text-danger has-text-weight-bold"
+     class="has-text-danger"
      hx-get="{% url 'users:login' %}"
      hx-trigger="load"
      hx-target="#login-captcha-img-container"
      x-data="{ show: false }"
      x-show.transition.opacity.duration.500ms="show"
-     x-init="() => { show = true }; setTimeout(() => { show = false }, 4000)">
+     x-init="() => {show = true };
+             setTimeout(() => { show = false }, defaultMessageTimeout)">
 
   Login failed. Please try again.
 

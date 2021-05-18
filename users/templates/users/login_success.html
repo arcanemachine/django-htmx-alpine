@@ -1,12 +1,15 @@
-<div id="login-form-response-text"
+<span id="login-form-response-text"
      class="has-text-success"
-     x-transition>
-  Login successful!
-</div>
+     x-data="{ show: false }"
+     x-show.transition.opacity.duration.500ms="show"
+     x-init="() => { show = true; }">
+  Success!
 
-<script>
-  // reload shortly after successful login
-  setTimeout(() => {
-    location.assign('{% url settings.LOGIN_REDIRECT_URL %}');
-  }, 500)
-</script>
+  <script>
+    // reload shortly after successful login
+    setTimeout(() => {
+      location.assign('{% url settings.LOGIN_REDIRECT_URL %}');
+    }, 1000)
+  </script>
+
+</span>

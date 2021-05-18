@@ -63,7 +63,7 @@
           </button>
 
         </form>
-        <div class="pt-4 pb-3 is-size-5">
+        <div class="pt-4 pb-3 is-size-5 has-text-weight-bold">
           &nbsp;<span id="login-form-response"></span>
         </div>
         <div class="pb-2">
@@ -71,6 +71,11 @@
             Register a new account
           </a>
         </div>
+
+        <div @click="loginSubmitButtonIsLoading = false">
+          deleteme
+        </div>
+
       </div>
     </div>
   </div>

@@ -57,8 +57,9 @@ class UserLoginView(LoginView):
 
     def form_valid(self, form):
         auth_login(self.request, form.get_user())
-        messages.success(
-            self.request, 'Login successful', extra_tags='alert alert-success')
+        messages.success(self.request,
+                         'You are now logged in.',
+                         extra_tags='alert alert-success')
         return render(self.request, 'users/login_success.html')
 
 
