@@ -7,7 +7,6 @@ from django.contrib.auth import login as auth_login, logout as auth_logout, \
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
-from django.template.loader import render_to_string
 from django.views.decorators.cache import never_cache
 # from django.views.decorators.http import require_http_methods
 from django.views.generic import CreateView, DeleteView, DetailView
@@ -78,7 +77,7 @@ class UserLoginView(LoginView):
         return render(self.request, 'users/login_fail.html', context)
 
     def form_valid(self, form):
-        # auth_login(self.request, form.get_user())
+        auth_login(self.request, form.get_user())
         return render(self.request, 'users/login_success.html')
 
 
