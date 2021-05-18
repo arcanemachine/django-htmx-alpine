@@ -52,10 +52,6 @@ def task_update(request, task_id):
         elif updated_task_is_complete == 'false':
             task.is_complete = False
             task.save()
-    else:
-        response = HttpResponse()
-        response.status_code = 400
-        return response
 
     context = {'task': task}
     response = render(request, 'tasks/get_task.html', context)

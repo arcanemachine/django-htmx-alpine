@@ -8,14 +8,18 @@
            autocomplete="off"
            id="checkbox-task-complete-{{ task.id }}"
            hx-put="{% url 'tasks:task_update' task_id=task.id %}"
-           hx-vals='{"is_complete": "{{ task.is_complete|yesno:'false,true' }}"}'
+           hx-vals='{
+             "is_complete": "{{ task.is_complete|yesno:"false,true" }}"}'
            hx-target="#list-item-{{ task.id }}"
            hx-swap="outerHTML">
   </div>
 
   <!-- task description -->
   <div id="text-item-description-{{ task.id }}"
-       class="task-item-container-description cursor-pointer{{ task.is_complete|yesno:' text-strikethrough has-text-grey-light, ' }}"
+       class="task-item-container-description cursor-pointer 
+              {% if task.is_complete %}
+                text-strikethrough has-text-grey-light
+              {% endif %}"
        title="Task ID#: {{ task.id }}"
        hx-put="{% url 'tasks:task_update' task_id=task.id %}"
        hx-vals='{"is_complete": "{{ task.is_complete|yesno:'false,true' }}"}'
@@ -36,7 +40,8 @@
              class="mr-0 input is-small is-inline button-group-left-side"
              value="{{ task.description }}">
       <input type="submit"
-             class="ml-0 button is-info is-inline is-small button-group-right-side"
+             class="ml-0 button is-info is-inline is-small
+                    button-group-right-side"
              id="update-confirm-button-{{ task.id }}"
              title="Confirm"
              value="&check;"> <!-- confirm icon -->
