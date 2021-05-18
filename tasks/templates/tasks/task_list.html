@@ -5,52 +5,53 @@
 
 {% block content %}
 
-<div class="pt-0 section has-text-centered">
+<div class="pt-0">
 
-  <div class="py-4 is-size-4">Your Todo List</div>
-  {% if tasks %}
-    <ul class="mt-4 box">
-      {% include 'tasks/list_task.html' %}
-    </ul>
-  {% else %}
-    <p>
-      <em>No items created</em>
-    </p>
-  {% endif %}
+  <div class="has-text-centered">
+  <div class="is-size-4 has-text-centered">Your Todo List</div>
 
-</div>
+  <div class="mw-35rem mx-auto">
+    <form class="mt-4"
+          id="form-new-task"
+          hx-post="{% url 'tasks:task_create' %}"
+          hx-vals='javascript:{"description": taskCreate()}'
+          hx-target="#tasks"
+          hx-swap="afterbegin">
 
-<div class="mt-6 has-text-centered">
-  <div class="is-size-4">Create New Task</div>
+          <input type="search"
+                 id="new-task-input-text"
+                 class="input is-medium button-group-left-side"
+                 placeholder="Enter new task...">
+          <button type="submit"
+                  class="button is-info is-medium button-group-right-side">
+            Create
+          </button>
 
-  <form class="mt-4"
-        id="form-new-task"
-        hx-post="{% url 'tasks:task_create' %}"
-        hx-vals='javascript:{"description": taskCreate()}'
-        hx-target="#tasks"
-        hx-swap="beforeend">
+    </form>
 
-        <input type="search"
-               id="new-task-input-text"
-               class="input is-medium button-group-left-side"
-               placeholder="Enter new task...">
-        <button type="submit"
-                class="button is-info is-medium button-group-right-side">
-          Create
-        </button>
+    <script>
+      function taskCreate() {
+        // get the value of the text input, clear it,
+        // and pass the old input to the hx form submission
+        let el = document.querySelector("#new-task-input-text");
+        let result = el.value;
+        el.value = '';
+        return result;
+      }
+    </script>
 
-  </form>
+    {% if tasks %}
+        <ul id="tasks"
+            class="mt-4 box">
+          {% include 'tasks/list_task.html' %}
+        </ul>
+    {% else %}
+      <p>
+        <em>No items created</em>
+      </p>
+    {% endif %}
+  </div>
 
-  <script>
-    function taskCreate() {
-      // get the value of the text input, clear it,
-      // and return the value that was in the form
-      let el = document.querySelector("#new-task-input-text");
-      let result = el.value;
-      el.value = '';
-      return result;
-    }
-  </script>
 </div>
 
 
@@ -79,10 +80,8 @@
 .task-item-container-parent {
   display: flex;
   width: 100%;
-  max-width: 40rem;
   min-height: 2.5rem;
-  margin-left: auto;
-  margin-right: auto;
+
   justify-content: space-between;
   align-items: center;
 }

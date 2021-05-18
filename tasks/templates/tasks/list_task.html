@@ -1,4 +1,4 @@
-<ul id="tasks">
+<ul>
   {% for task in tasks %}
     {% include 'tasks/get_task.html' %}
   {% endfor %}
@@ -32,6 +32,7 @@
       input.value = '';
       return result;
     }
+
   </script>
 
 </ul>

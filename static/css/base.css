@@ -31,27 +31,6 @@ body {
   width: 7em;
 }
 
-/* navbar */
-.navbar-background-gradient-placeholder {
-  height: 4rem;
-  background: linear-gradient(to bottom, #ddd 75%, #eee);
-}
-
-.navbar-menu-main.is-hidden-touch {
-  padding-top: 0;
-}
-
-.navbar-menu-main.is-hidden-desktop {
-  position: absolute;
-  width: 100vw;
-  min-height: 3.5rem;
-}
-
-.navbar-title-container {
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-}
 
 /* TYPOGRAPHY */
 .cursor-pointer {
@@ -66,8 +45,12 @@ body {
   text-decoration: line-through;
 }
 
+.word-break-break-word {
+  word-break: break-word;
+}
 
-/* DISPLAY AND POSitioning */
+
+/* DISPLAY AND POSITIONING */
 .is-absolute {
   position: absolute;
 }
@@ -84,9 +67,38 @@ body {
   width: max-content;
 }
 
-/* ELEMENT STYLING */
+/* UTILITY */
 .d-none {
   display: none;
+}
+
+.mw-20rem {
+  max-width: 20rem;
+}
+
+.mw-25rem {
+  max-width: 25rem;
+}
+
+.mw-30rem {
+  max-width: 30rem;
+}
+
+.mw-35rem {
+  max-width: 35rem;
+}
+
+.mw-40rem {
+  max-width: 40rem;
+}
+
+.mw-40vw {
+  max-width: 40vw;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .opacity-0 {
@@ -97,11 +109,11 @@ body {
   opacity: 1;
 }
 
-.transition-opacity-500 {
+.trans-opacity-500 {
   transition: opacity 0.5s;
 }
 
-.transition-opacity-1000 {
+.trans-opacity-1000 {
   transition: opacity 1s;
 }
 

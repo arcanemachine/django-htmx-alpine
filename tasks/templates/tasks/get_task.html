@@ -1,5 +1,8 @@
 <li id="list-item-{{ task.id }}"
-    class="task-item-container-parent">
+    class="mx-auto task-item-container-parent"
+    x-data="{ show: false }"
+    x-init="() => { show = true; }"
+    x-show.transition="show">
 
   <!-- task completion checkbox -->
   <div class="task-item-container-checkbox">
@@ -16,10 +19,10 @@
 
   <!-- task description -->
   <div id="text-item-description-{{ task.id }}"
-       class="task-item-container-description cursor-pointer 
-              {% if task.is_complete %}
-                text-strikethrough has-text-grey-light
-              {% endif %}"
+       class="mw-20rem task-item-container-description cursor-pointer
+            {% if task.is_complete %}
+              text-strikethrough has-text-grey-light
+            {% endif %}"
        title="Task ID#: {{ task.id }}"
        hx-put="{% url 'tasks:task_update' task_id=task.id %}"
        hx-vals='{"is_complete": "{{ task.is_complete|yesno:'false,true' }}"}'
@@ -32,7 +35,7 @@
   <div id="update-div-{{ task.id }}" class="is-hidden">
     <form id="task-update-form-{{ task.id }}"
           hx-put="{% url 'tasks:task_update' task_id=task.id %}"
-          hx-vals='javascript:{"description": updateConfirm({{ task.id }})}'
+          hx-vals="javascript:{'description': updateConfirm({{ task.id }})}"
           hx-target="#list-item-{{ task.id }}"
           hx-swap="outerHTML">
       <input type="text"

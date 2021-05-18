@@ -28,6 +28,7 @@ def task_create(request):
     context = {
         'task': task,
         'task_count': tasks.count()}
+
     return render(request, 'tasks/get_task.html', context)
 
 
@@ -56,6 +57,7 @@ def task_update(request, task_id):
 
     context = {'task': task}
     response = render(request, 'tasks/get_task.html', context)
+
     return response
 
 
@@ -64,7 +66,3 @@ def task_delete(request, task_id):
     task = get_object_or_404(Task, id=task_id)
     task.delete()
     return HttpResponse('')
-    context = {
-        'tasks': Task.objects.all(),
-        'task_count': Task.objects.count()}
-    return render(request, 'tasks/list_task.html', context)

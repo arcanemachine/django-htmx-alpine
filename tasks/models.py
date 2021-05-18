@@ -6,7 +6,7 @@ class Task(models.Model):
     is_complete = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ('id',)
+        ordering = ('-id',)
 
     def __str__(self):
         return f"{self.description}, is_complete={self.is_complete}"
