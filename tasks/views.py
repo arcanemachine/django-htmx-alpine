@@ -10,7 +10,10 @@ from project_folder import helpers as h
 
 
 def task_list(request):
-    tasks = Task.objects.filter(user=request.user)
+    if request.user.is_authenticated:
+        tasks = Task.objects.filter(user=request.user)
+    else:
+        tasks = Task.objects.none()
     response = render(request, 'tasks/task_list.html', {'tasks': tasks})
     return response
 
