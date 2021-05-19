@@ -9,26 +9,45 @@ from .models import Task
 from project_folder import helpers as h
 
 
+def authorization_required_old(request):
+    return HttpResponse(
+        '<script>'
+        '  hDispatch('
+        '    `status-message-display`, "You must create an account first."'
+        '  );'
+        '</script>')
+
+
+def authorization_required(request):
+    response = HttpResponse()
+    response.status_code = 304  # HTMX does not change content if 304 returned
+    return response
+
+
 def task_list(request):
-    if request.user.is_authenticated:
-        tasks = Task.objects.filter(user=request.user)
-    else:
+    if not request.user.is_authenticated:
         tasks = Task.objects.none()
+    else:
+        tasks = Task.objects.filter(user=request.user)
     response = render(request, 'tasks/task_list.html', {'tasks': tasks})
     return response
 
 
-@login_required
 @require_http_methods(['POST'])
 def task_create(request):
+    if not request.user.is_authenticated:
+        return authorization_required(request)
     if request.POST.get('description', None):
         task = Task.objects.create(
             user=request.user,
             description=request.POST['description'])
     else:
-        response = HttpResponse()
-        response.status_code = 400
-        return response
+        return HttpResponse(
+            '<script>'
+            '  hDispatch('
+            '    `status-message-display`, "Description must not be empty."'
+            '  );'
+            '</script>')
 
     tasks = Task.objects.filter(user=request.user)
     context = {'tasks': tasks,
@@ -37,9 +56,10 @@ def task_create(request):
     return render(request, 'tasks/list_task.html', context)
 
 
-@login_required
 @require_http_methods(['PUT'])
 def task_update(request, task_id):
+    if not request.user.is_authenticated:
+        return authorization_required(request)
     task = get_object_or_404(Task, id=task_id, user=request.user)
 
     parsed_params = h.get_parsed_params(request)
@@ -70,6 +90,8 @@ def task_update(request, task_id):
 @login_required
 @require_http_methods(['DELETE'])
 def task_delete(request, task_id):
+    if not request.user.is_authenticated:
+        return authorization_required(request)
     task = get_object_or_404(Task, id=task_id, user=request.user)
     task.delete()
 
