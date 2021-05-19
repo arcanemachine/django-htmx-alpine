@@ -27,7 +27,7 @@
 </style>
 
 <script>
-  function navbarMainContainer() {
+  function navbarMainContainerData() {
     return {
       // data
       navbarIsActive: false,
@@ -45,14 +45,11 @@
         this.registerSubmitButtonIsLoading = false;
         this.logoutModalIsActive = false;
       },
-      registerFormSubmit() {
-        console.log('hello');
-      }
     }
   }
 </script>
 
-<div x-data="navbarMainContainer()"
+<div x-data="navbarMainContainerData()"
      @login-submit-button-enable.window="loginSubmitButtonIsLoading = false"
      @register-submit-button-enable.window="
        registerSubmitButtonIsLoading = false">

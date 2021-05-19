@@ -10,12 +10,42 @@
   <div class="is-size-4 has-text-centered">Your Todo List</div>
 
   <div class="mw-35rem mx-auto">
-    <form class="mt-4"
-          id="form-new-task"
+
+<script>
+
+function confirmUserIsAuthenticated() {
+  console.log('confirmUserIsAuthenticated() is running');
+  // if user does not have an account, tell them to create one
+  if ({{ user.is_authenticated|yesno:'false,true' }}) {
+    hDispatch(
+      'status-message-display',
+      "You must create an account first."
+    );
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+function getTaskText() {
+  // get the value of the text input, then clear it
+  let textInput = document.querySelector("#new-task-input-text");
+  let result = textInput.value;
+  textInput.value = '';
+  return result;
+}
+
+</script>
+
+    <div id="create-new-task"
+         class="is-hidden">
+    </div>
+    <form id="form-new-task"
+          class="mt-4"
           hx-post="{% url 'tasks:task_create' %}"
-          hx-vals='javascript:{"description": taskCreate()}'
           hx-target="#tasks"
-          hx-swap="afterbegin">
+          hx-vals="javascript:{description: getTaskText()}">
 
           <input type="text"
                  id="new-task-input-text"
@@ -28,29 +58,11 @@
 
     </form>
 
-    <script>
-      function taskCreate() {
-        // get the value of the text input, clear it,
-        // and pass the old input to the hx form submission
-        let el = document.querySelector("#new-task-input-text");
-        let result = el.value;
-        el.value = '';
-        return result;
-      }
-    </script>
+    <div id="tasks">
+      {% include 'tasks/list_task.html' %}
+    </div>
 
-    {% if tasks %}
-        <ul id="tasks"
-            class="mt-4 box">
-          {% include 'tasks/list_task.html' %}
-        </ul>
-    {% else %}
-      <p>
-        <em>No items created</em>
-      </p>
-    {% endif %}
   </div>
-
 </div>
 
 

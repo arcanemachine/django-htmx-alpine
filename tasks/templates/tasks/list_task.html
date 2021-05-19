@@ -1,38 +1,44 @@
-<ul>
-  {% for task in tasks %}
-    {% include 'tasks/get_task.html' %}
-  {% endfor %}
+{% if tasks %}
+  <ul class="mt-4 box">
+    {% for task in tasks %}
+      {% include 'tasks/get_task.html' %}
+    {% endfor %}
 
-  <script>
-    function updateDivToggle(id) {
-      let updateDiv = document.querySelector(`#update-div-${id}`);
-      let descriptionDiv = document
-        .querySelector(`#text-item-description-${id}`);
-      updateDiv.classList.toggle('is-hidden');
-      descriptionDiv.classList.toggle('is-hidden');
+    <script>
+      function updateDivToggle(id) {
+        let updateDiv = document.querySelector(`#update-div-${id}`);
+        let descriptionDiv = document
+          .querySelector(`#text-item-description-${id}`);
+        updateDiv.classList.toggle('is-hidden');
+        descriptionDiv.classList.toggle('is-hidden');
 
-      if (!updateDiv.classList.contains('is-hidden')) {
-        // select the text input when showing the div
-        document.querySelector(`#task-update-input-text-${id}`).select();
-      } else {
-        // reset the text input when hiding the div
-        document.querySelector(`#task-update-form-${id}`).reset();
+        if (!updateDiv.classList.contains('is-hidden')) {
+          // select the text input when showing the div
+          document.querySelector(`#task-update-input-text-${id}`).select();
+        } else {
+          // reset the text input when hiding the div
+          document.querySelector(`#task-update-form-${id}`).reset();
+        }
+
       }
 
-    }
+      function updateConfirm(id) {
+        let input = document.querySelector(`#task-update-input-text-${id}`);
+        let updateDiv = document.querySelector(`#update-div-${id}`)
+        let descriptionDiv = document
+          .querySelector(`#text-item-description-${id}`);
+        updateDiv.classList.add('is-hidden');
+        descriptionDiv.classList.remove('is-hidden');
+        let result = input.value;
+        input.value = '';
+        return result;
+      }
 
-    function updateConfirm(id) {
-      let input = document.querySelector(`#task-update-input-text-${id}`);
-      let updateDiv = document.querySelector(`#update-div-${id}`)
-      let descriptionDiv = document
-        .querySelector(`#text-item-description-${id}`);
-      updateDiv.classList.add('is-hidden');
-      descriptionDiv.classList.remove('is-hidden');
-      let result = input.value;
-      input.value = '';
-      return result;
-    }
+    </script>
 
-  </script>
-
-</ul>
+  </ul>
+{% else %}
+  <div class="mt-6">
+    <em>No items created</em>
+  </div>
+{% endif %}

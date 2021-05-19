@@ -1,8 +1,33 @@
+<style>
+
+.status-message-notification {
+  background-color: #3298DC;
+  position: fixed;
+  max-width: 75vw;
+  top: 0.35rem;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+
+  font-size: 1.2rem;
+  color: white;
+  text-align: center;
+
+  cursor: pointer;
+  border: none;
+  border-radius: 0.5rem;
+  z-index: 100;
+}
+
+</style>
+
+
 <div class="status-message-notification-container">
   <button id="status-message-notification"
           class="status-message-notification"
           @click="statusMessageClear"
-          x-data="statusMessageNotification()"
+          x-data="statusMessageNotificationData()"
           x-show.transition.opacity.duration.500ms="show"
           x-text="statusMessageText"
           x-cloak
@@ -12,7 +37,7 @@
 
 
 <script>
-  function statusMessageNotification() {
+  function statusMessageNotificationData() {
     return {
       // data
       show: false,
@@ -112,30 +137,6 @@
   }
 </script>
 
-
-<style>
-
-.status-message-notification {
-  background-color: #3298DC;
-  position: fixed;
-  max-width: 75vw;
-  top: 0.35rem;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  padding: 0.5rem 1rem;
-
-  font-size: 1.2rem;
-  color: white;
-  text-align: center;
-
-  cursor: pointer;
-  border: none;
-  border-radius: 0.5rem;
-  z-index: 100;
-}
-
-</style>
 
 <script>
 {% if messages %}
