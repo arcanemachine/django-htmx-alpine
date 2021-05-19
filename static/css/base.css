@@ -18,14 +18,22 @@ body {
 
 
 /* BULMA */
-.navbar-brand {
-  font-size: 1.5rem;
+.button.is-light {
+  background-color: #ddd;
+}
+
+.button.is-light:hover {
+  background-color: #d4d4d4;
 }
 
 .modal-content {
   max-height: 95vh;
   max-width: 90vw;
   max-width: max-content;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
 }
 
 

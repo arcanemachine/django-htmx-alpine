@@ -15,15 +15,8 @@
     </a>
   {% elif user.is_authenticated %}
     <a class="navbar-item"
-       href="#">
-      Your Account
-    </a>
-    <a class="navbar-item" href="{% url 'users:logout' %}">
-      Logout
-    </a>
-    <!--a class="navbar-item"
        @click="logoutModalIsActive = true; navbarIsActive = false">
       Logout
-    </a-->
+    </a>
   {% endif %}
 </div>

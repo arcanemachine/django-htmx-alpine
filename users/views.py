@@ -99,7 +99,7 @@ class UserLoginView(LoginView):
 
 
 class UserLogoutView(LogoutView):
-    success_message = _("Logout successful")
+    success_message = _("You have been logged out.")
 
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
