@@ -25,7 +25,7 @@ body {
 .modal-content {
   max-height: 95vh;
   max-width: 90vw;
-  max-width: fit-content;
+  max-width: max-content;
 }
 
 
