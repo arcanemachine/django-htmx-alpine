@@ -7,12 +7,10 @@ UserModel = get_user_model()
 
 class NewUserCreationForm(UserCreationForm):
     captcha = CaptchaField(label="CAPTCHA")
-    # captcha = CaptchaField(
-    #     label="CAPTCHA", help_text=c.FORM_FIELD_CAPTCHA_HELP_TEXT)
 
     class Meta:
         model = UserModel
-        fields = UserCreationForm.Meta.fields + ('email',)
+        fields = UserCreationForm.Meta.fields
 
     def clean_username(self):
         return self.data['username'].lower()

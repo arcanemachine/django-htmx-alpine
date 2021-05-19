@@ -1,7 +1,46 @@
-<img id="login-captcha-img"
-		 class="login-captcha-img"
-		 src="{{ server_config.SERVER_URL }}{{ captcha_img_url }}">
-<input type="hidden"
-       name="captcha_0"
-       id="captcha-key"
-       value="{{ captcha_key }}">
+{% if request.method == 'GET' %}
+
+  <img id="login-captcha-img"
+       class="captcha-img"
+       src="{{ server_config.SERVER_URL }}{{ captcha_img_url }}">
+  <input type="hidden"
+         name="captcha_0"
+         id="login-captcha-key"
+         value="{{ captcha_key }}">
+
+{% elif login_fail %}
+
+  <span id="login-form-response-text"
+       class="has-text-danger"
+       hx-get="{% url 'users:login' %}"
+       hx-trigger="load"
+       hx-target="#login-captcha-img-container"
+       x-data="{ show: false }"
+       x-show.transition.opacity.duration.500ms="show"
+       x-init="() => {show = true }">
+
+    {{ form_errors }}
+
+    <script>
+      hDispatch('login-submit-button-enable');
+    </script>
+
+  </span>
+
+{% elif login_success %}
+
+  <span id="login-form-response-text"
+       class="has-text-success"
+       x-data="{ show: false }"
+       x-show.transition.opacity.duration.500ms="show"
+       x-init="() => { show = true; }">
+    Success!
+
+    <script>
+      // reload shortly after successful login
+      setTimeout(() => { location.reload(); }, 1000)
+    </script>
+
+  </span>
+
+{% endif %}

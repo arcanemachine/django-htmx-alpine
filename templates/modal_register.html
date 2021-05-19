@@ -1,50 +1,86 @@
-<div class="modal is-active"
-     x-ref="registerModal"
+<div id="register-modal"
+     class="modal is-active"
      x-show.transition.opacity.duration.500ms="registerModalIsActive"
      x-cloak>
   <div class="modal-background"></div>
-  <div class="modal-content w-max-content">
-    <div class="section">
+  <div class="modal-content">
+    <div class="p-0 section">
       <div @click.away="registerModalIsActive = false"
-           class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
+           class="mw-20rem px-5 pt-2 pb-5 box is-flex is-flex-direction-column
                   is-justify-content-center is-align-items-center
                   has-text-centered">
-        <div class="my-5 subtitle">Register New Account</div>
-        <form class="mt-3">
+        <div class="my-3 is-size-4">Register New Account</div>
+        <form class="mt-3"
+              hx-post="{% url 'users:register' %}"
+              hx-target="#register-form-response"
+              @submit="registerSubmitButtonIsLoading = true">
           <div class="field">
             <div class="control">
               <input type="text"
-                     id="register-input-username"
+                     name="username"
                      class="input"
-                     placeholder="Username">
+                     autocorrect="off"
+                     autocapitalize="none"
+                     placeholder="Username"
+                     required>
+              <input type="hidden"
+                     name="name"
+                     required>
             </div>
             <div class="mt-4 control">
               <input type="password"
-                     id="register-input-password1"
+                     name="password1"
                      class="input"
-                     placeholder="Password">
+                     placeholder="Password"
+                     required>
             </div>
             <div class="mt-4 control">
               <input type="password"
-                     id="register-input-password2"
+                     name="password2"
                      class="input"
-                     placeholder="Confirm password">
+                     placeholder="Confirm password"
+                     required>
+            </div>
+            <div class="mt-4 control">
+              <div class="is-flex">
+                <div id="register-captcha-container"
+                     class="is-flex-grow-1">
+                  <div id="register-captcha-img-container">
+                    <input type="hidden"
+                           name="captcha_0"
+                           id="register-captcha-key"
+                           value="">
+                  </div>
+                </div>
+                <input type="text"
+                       name="captcha_1"
+                       id="register-input-captcha"
+                       class="ml-2 input"
+                       placeholder="Human test"
+                       required>
+              </div>
             </div>
           </div>
-          <button id="register-button-submit"
-                  class="mt-4 button is-block is-info is-medium is-fullwidth">
+          <button type="submit"
+                  id="register-button-submit"
+                  class="mt-4 button is-block is-info is-medium is-fullwidth"
+                  :class="{ 'is-loading': registerSubmitButtonIsLoading }">
             Register
           </button>
+
         </form>
-        <div class="my-4">
-          <span id="register-status-text"
-                x-ref="registerStatusText">
-            &nbsp;
-          </span>
+        <div class="pt-4 pb-3 is-size-6 has-text-weight-bold">
+          &nbsp;<span id="register-form-response"></span>
         </div>
-        <p class="mt-5">
-          <a href="registerUrl">Login to an existing account</a>
-        </p>
+        <div>
+          <a class="is-size-5 is-clickable"
+             hx-get="{% url 'users:login' %}"
+             hx-target="#login-captcha-img-container"
+             @click="registerModalIsActive = false; loginModalIsActive = true">
+            Login to an existing account
+          </a>
+        </div>
+
       </div>
     </div>
   </div>

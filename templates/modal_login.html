@@ -1,17 +1,15 @@
 <div id="login-modal"
      class="modal is-active"
-     x-ref="loginModal"
      x-show.transition.opacity.duration.500ms="loginModalIsActive"
      x-cloak>
   <div class="modal-background"></div>
-  <div class="modal-content w-max-content">
+  <div class="modal-content">
     <div class="p-0 section">
       <div @click.away="loginModalIsActive = false"
-           id="navbar-modal-box-login"
-           class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
+           class="mw-25rem px-5 pt-2 pb-5 box is-flex is-flex-direction-column
                   is-justify-content-center is-align-items-center
                   has-text-centered">
-        <div class="my-5 is-size-4">Account Login</div>
+        <div class="my-3 is-size-4">Account Login</div>
         <form class="mt-3"
               hx-post="{% url 'users:login' %}"
               hx-target="#login-form-response"
@@ -19,7 +17,6 @@
           <div class="field">
             <div class="control">
               <input type="text"
-                     id="login-input-username"
                      name="username"
                      class="input"
                      autocorrect="off"
@@ -29,7 +26,6 @@
             </div>
             <div class="mt-4 control">
               <input type="password"
-                     id="login-input-password"
                      name="password"
                      class="input"
                      placeholder="Password"
@@ -42,7 +38,6 @@
                   <div id="login-captcha-img-container">
                     <input type="hidden"
                            name="captcha_0"
-                           id="captcha-key"
                            value="">
                   </div>
                 </div>
@@ -63,17 +58,16 @@
           </button>
 
         </form>
-        <div class="pt-4 pb-3 is-size-5 has-text-weight-bold">
+        <div class="pt-4 pb-3 is-size-6 has-text-weight-bold">
           &nbsp;<span id="login-form-response"></span>
         </div>
-        <div class="pb-2">
-          <a href="registerUrl" class="is-size-5">
+        <div>
+          <a class="is-size-5 is-clickable"
+             hx-get="{% url 'users:register' %}"
+             hx-target="#register-captcha-img-container"
+             @click="loginModalIsActive = false; registerModalIsActive = true">
             Register a new account
           </a>
-        </div>
-
-        <div @click="loginSubmitButtonIsLoading = false">
-          deleteme
         </div>
 
       </div>

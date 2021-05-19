@@ -22,15 +22,14 @@ body {
   font-size: 1.5rem;
 }
 
-
-/* UI ELEMENTS */
-
-/* login modal */
-.login-captcha-img {
-  height: 2.5em;
-  width: 7em;
+.modal-content {
+  max-height: 95vh;
+  max-width: 90vw;
+  max-width: fit-content;
 }
 
+
+/* UI ELEMENTS */
 
 /* TYPOGRAPHY */
 .cursor-pointer {

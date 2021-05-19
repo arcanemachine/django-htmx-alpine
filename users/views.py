@@ -1,22 +1,30 @@
 from captcha import helpers as captcha_helpers, models as captcha_models
 from django.contrib import messages
-from django.conf import settings
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth import login as auth_login, logout as auth_logout, \
-    get_user_model
+from django.contrib.auth import authenticate, login as auth_login, \
+    logout as auth_logout, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect  # , HttpResponse
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 # from django.views.decorators.http import require_http_methods
 from django.views.generic import CreateView, DeleteView, DetailView
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 
 from . import forms
 
 UserModel = get_user_model()
+
+
+def get_form_errors(form):
+    for key, values in form.errors.items():
+        for value in values:
+            if key == '__all__':
+                return value
+            else:
+                return f"{key}: {value}"
 
 
 def users_root(request):
@@ -26,17 +34,6 @@ def users_root(request):
 class UserRegisterView(CreateView):
     form_class = forms.NewUserCreationForm
     template_name = 'users/register.html'
-    success_url = reverse_lazy(settings.LOGIN_URL)
-
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return HttpResponseRedirect(self.success_url)
-        return super().dispatch(request, *args, **kwargs)
-
-
-class UserLoginView(LoginView):
-    form_class = forms.UserAuthenticationForm
-    template_name = 'placeholder.html'
 
     def dispatch(self, request, *args, **kwargs):
         if request.method == 'GET':
@@ -45,26 +42,64 @@ class UserLoginView(LoginView):
             captcha_img_url = captcha_helpers.captcha_image_url(captcha_key)
             context = {'captcha_key': captcha_key,
                        'captcha_img_url': captcha_img_url}
-            return render(request, 'users/login.html', context)
+            return render(request, self.template_name, context)
         return super().dispatch(request, *args, **kwargs)
 
     def form_invalid(self, form):
-        form_errors = \
-            ', <br> '.join([''.join(val) for val in form.errors.values()]) \
-            .replace('. ', '. <br> ')
-        context = {'form_errors': form_errors}
-        return render(self.request, 'users/login_fail.html', context)
+        form_errors = get_form_errors(form)
+
+        context = {'register_fail': True,
+                   'form_errors': form_errors}
+        return render(self.request, self.template_name, context)
+
+    def form_valid(self, form):
+        context = {'register_success': True}
+
+        # do not process form if honeypot field filled
+        if form.cleaned_data.get('name', None):
+            return render(self.request, self.template_name, context)
+
+        self.object = form.save()
+        self.object.save()
+
+        messages.success(
+            self.request,
+            _("Registration successful. You have been logged in."))
+        new_user = authenticate(username=form.cleaned_data['username'],
+                                password=form.cleaned_data['password1'])
+        auth_login(self.request, new_user)
+        return render(self.request, self.template_name, context)
+
+
+class UserLoginView(LoginView):
+    form_class = forms.UserAuthenticationForm
+    template_name = 'users/login.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.method == 'GET':
+            # generate captcha
+            captcha_key = captcha_models.CaptchaStore.pick()
+            captcha_img_url = captcha_helpers.captcha_image_url(captcha_key)
+            context = {'captcha_key': captcha_key,
+                       'captcha_img_url': captcha_img_url}
+            return render(request, self.template_name, context)
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_invalid(self, form):
+        form_errors = get_form_errors(form)
+        context = {'login_fail': True,
+                   'form_errors': form_errors}
+        return render(self.request, self.template_name, context)
 
     def form_valid(self, form):
         auth_login(self.request, form.get_user())
-        messages.success(self.request,
-                         'You are now logged in.',
-                         extra_tags='alert alert-success')
-        return render(self.request, 'users/login_success.html')
+        messages.success(self.request, _('You are now logged in.'))
+        context = {'login_success': True}
+        return render(self.request, self.template_name, context)
 
 
 class UserLogoutView(LogoutView):
-    success_message = _("You are now logged out.")
+    success_message = _("Logout successful")
 
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):

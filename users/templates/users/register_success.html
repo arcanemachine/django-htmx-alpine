@@ -1,0 +1,15 @@
+<span id="register-form-response-text"
+     class="has-text-success"
+     x-data="{ show: false }"
+     x-show.transition.opacity.duration.500ms="show"
+     x-init="() => { show = true; }">
+  Success!
+
+  <script>
+    // reload shortly after successful login
+    setTimeout(() => {
+      location.assign('{% url settings.LOGIN_REDIRECT_URL %}');
+    }, 1000)
+  </script>
+
+</span>

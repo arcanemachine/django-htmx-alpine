@@ -1,15 +1,46 @@
-{% extends 'base.html' %}
+{% if request.method == 'GET' %}
 
-{% block title %}Register New User{% endblock %}
-{% block body_title %}Register New User{% endblock %}
+  <img id="register-captcha-img"
+       class="captcha-img"
+       src="{{ server_config.SERVER_URL }}{{ captcha_img_url }}">
+  <input type="hidden"
+         name="captcha_0"
+         id="register-captcha-key"
+         value="{{ captcha_key }}">
 
-{% block content %}
+{% elif register_fail %}
 
-{% include 'base_form.html' %}
+  <span id="register-form-response-text"
+       class="has-text-danger"
+       hx-get="{% url 'users:login' %}"
+       hx-trigger="load"
+       hx-target="#register-captcha-img-container"
+       x-data="{ show: false }"
+       x-show.transition.opacity.duration.500ms="show"
+       x-init="() => {show = true }">
 
-<ul class="bottom-links">
-  <li><a href="{% url 'users:login' %}">Login to an existing account</a></li>
-  <li class="mt-4"><a href="{% url 'users:user_activation_email_resend' %}">Didn't receive your activation email?</a></li>
-</ul>
+    {{ form_errors|safe }}
 
-{% endblock content %}
+    <script>
+      hDispatch('register-submit-button-enable');
+    </script>
+
+  </span>
+
+{% elif register_success %}
+
+  <span id="register-form-response-text"
+       class="has-text-success"
+       x-data="{ show: false }"
+       x-show.transition.opacity.duration.500ms="show"
+       x-init="() => { show = true; }">
+    Success!
+
+    <script>
+      // reload shortly after successful registration
+      setTimeout(() => { location.reload(); }, 1000)
+    </script>
+
+  </span>
+
+{% endif %}

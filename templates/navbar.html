@@ -1,4 +1,9 @@
 <style>
+.captcha-img {
+  height: 2.5em;
+  width: 7em;
+}
+
 .navbar-background-gradient-placeholder {
   height: 4rem;
   background: linear-gradient(to bottom, #ddd 75%, #eee);
@@ -22,8 +27,37 @@
 </style>
 
 
+<script>
+  function navbarMainContainer() {
+    return {
+      // data
+      navbarIsActive: false,
+      loginModalIsActive: false,
+      loginSubmitButtonIsLoading: false,
+      registerModalIsActive: false,
+      registerSubmitButtonIsLoading: false,
+      logoutModalIsActive: false,
+      // methods
+      navbarClearAll() {
+        this.navbarIsActive = false;
+        this.loginModalIsActive = false;
+        this.loginSubmitButtonIsLoading = false;
+        this.registerModalIsActive = false;
+        this.registerSubmitButtonIsLoading = false;
+        this.logoutModalIsActive = false;
+      },
+      registerFormSubmit() {
+        console.log('hello');
+      }
+    }
+  }
+</script>
+
+
 <div x-data="navbarMainContainer()"
-     @login-submit-button-enable.window="loginSubmitButtonIsLoading = false">
+     @login-submit-button-enable.window="loginSubmitButtonIsLoading = false"
+     @register-submit-button-enable.window="
+       registerSubmitButtonIsLoading = false">
 
   <nav id="navbar-main"
        class="navbar has-background-grey-lighter"
@@ -64,25 +98,11 @@
     {% include 'modal_register.html' %}
   {% endif %}
 
+  <div style="position: fixed; z-index: 1000; bottom: 1rem; left: 1rem;">
+    <button @click="this.registerSubmitButtonIsLoading = false; this.loginSubmitButtonIsLoading = false">
+      deleteme
+    </button>
+  </div>
+  
 </div>
 
-<script>
-  function navbarMainContainer() {
-    return {
-      // data
-      navbarIsActive: false,
-      loginModalIsActive: false,
-      loginSubmitButtonIsLoading: false,
-      registerModalIsActive: false,
-      logoutModalIsActive: false,
-      // methods
-      navbarClearAll() {
-        this.navbarIsActive = false;
-        this.loginModalIsActive = false;
-        this.loginSubmitButtonIsLoading = false;
-        this.registerModalIsActive = false;
-        this.logoutModalIsActive = false;
-      }
-    }
-  }
-</script>
