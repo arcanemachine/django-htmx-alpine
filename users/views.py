@@ -2,13 +2,11 @@ from captcha import helpers as captcha_helpers, models as captcha_models
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import authenticate, login as auth_login, \
-    logout as auth_logout, get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
+    get_user_model
 from django.http import HttpResponseRedirect  # , HttpResponse
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
-# from django.views.decorators.http import require_http_methods
-from django.views.generic import CreateView, DeleteView, DetailView
+from django.views.generic import CreateView
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -105,17 +103,3 @@ class UserLogoutView(LogoutView):
     def dispatch(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
         return super().dispatch(request, *args, **kwargs)
-
-
-class UserDetailMeView(LoginRequiredMixin, DetailView):
-    template_name = 'users/user_detail_me.html'
-
-    def get_object(self):
-        return self.request.user
-
-
-class UserDeleteView(LoginRequiredMixin, DeleteView):
-    template_name = 'users/user_delete.html'
-
-    def get_object(self):
-        return self.request.user
