@@ -30,9 +30,7 @@
 
     {% block body_start_script %}{% endblock body_start_script %}
 
-    <div class="navbar-container">
-      {% include 'navbar.html' %}
-    </div>
+    {% include 'navbar.html' %}
 
     <noscript>
       <div class="my-4 is-size-5 has-text-danger has-text-centered">
@@ -50,7 +48,8 @@
           </div>
       </div>
 
-      <div class="pt-4 section">
+      <div id="content-container"
+           class="pt-4 section">
         {% block content %}{% endblock content %}
       </div>
     </div>

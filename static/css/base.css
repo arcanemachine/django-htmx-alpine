@@ -116,6 +116,10 @@ body {
   opacity: 1;
 }
 
+.outline-none {
+  outline: none;
+}
+
 .trans-opacity-500 {
   transition: opacity 0.5s;
 }

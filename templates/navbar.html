@@ -26,30 +26,10 @@
 }
 </style>
 
-<script>
-  function navbarMainContainerData() {
-    return {
-      // data
-      navbarIsActive: false,
-      loginModalIsActive: false,
-      loginSubmitButtonIsLoading: false,
-      registerModalIsActive: false,
-      registerSubmitButtonIsLoading: false,
-      logoutModalIsActive: false,
-      // methods
-      navbarClearAll() {
-        this.navbarIsActive = false;
-        this.loginModalIsActive = false;
-        this.loginSubmitButtonIsLoading = false;
-        this.registerModalIsActive = false;
-        this.registerSubmitButtonIsLoading = false;
-        this.logoutModalIsActive = false;
-      },
-    }
-  }
-</script>
-
-<div x-data="navbarMainContainerData()"
+<div class="outline-none"
+     tabindex="-1"
+     x-data="navbarMainContainerData()"
+     @keyup.escape="navbarClearAll()"
      @login-submit-button-enable.window="loginSubmitButtonIsLoading = false"
      @register-submit-button-enable.window="
        registerSubmitButtonIsLoading = false">
@@ -104,3 +84,25 @@
   
 </div>
 
+<script>
+  function navbarMainContainerData() {
+    return {
+      // data
+      navbarIsActive: false,
+      loginModalIsActive: false,
+      loginSubmitButtonIsLoading: false,
+      registerModalIsActive: false,
+      registerSubmitButtonIsLoading: false,
+      logoutModalIsActive: false,
+      // methods
+      navbarClearAll() {
+        this.navbarIsActive = false;
+        this.loginModalIsActive = false;
+        this.loginSubmitButtonIsLoading = false;
+        this.registerModalIsActive = false;
+        this.registerSubmitButtonIsLoading = false;
+        this.logoutModalIsActive = false;
+      },
+    }
+  }
+</script>
