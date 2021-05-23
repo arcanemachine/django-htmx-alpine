@@ -48,16 +48,16 @@
       getColors(messageType) {
         let background = '';
         let text = '';
-        if (messageType === '20') {
+        if (messageType === '20' || messageType == 'info') {
           background = 'info';
           text = 'white';
-        } else if (messageType === '25') {
+        } else if (messageType === '25' || messageType == 'success') {
           background = 'success';
           text = 'white';
-        } else if (messageType === '30') {
+        } else if (messageType === '30' || messageType == 'warning') {
           background = 'warning';
           text = 'black';
-        } else if (messageType === '40') {
+        } else if (messageType === '40' || messageType == 'danger') {
           background = 'danger';
           text = 'white';
         }
@@ -77,7 +77,7 @@
         if (this.statusMessageText) {
           this.statusMessageClear();
           setTimeout(() => {
-            this.statusMessageDisplay(message, timeout);
+            this.statusMessageDisplay(message, timeout, messageType);
           }, defaultTransitionLength);
           return false;
         }
@@ -91,20 +91,14 @@
           timeout = 9999999;
         }
 
-        // apply colors, if applicable
-        let colors = {};
+        // apply colors
+        colors = this.getColors(messageType);
         let currentEl = document.querySelector('#status-message-notification');
         if (messageType) {
-          colors = this.getColors(messageType);
           if (currentEl) {
             // add colors
             currentEl.classList.add(`has-background-${colors.background}`);
             currentEl.classList.add(`has-text-${colors.text}`);
-            // remove colors
-            setTimeout(() => {
-              currentEl.classList.remove(`has-background-${colors.background}`);
-              currentEl.classList.remove(`has-text-${colors.text}`);
-            }, timeout + defaultTransitionLength)
           }
         }
 
@@ -112,8 +106,16 @@
         this.show = true;
         this.statusMessageText = message;
         this.statusMessageTimeout = setTimeout(() => {
-          // clear the message and remove the colorClass
+          // clear the message and remove any color classes
           this.statusMessageClear();
+          if (Object.keys(colors).length) {
+            setTimeout(() => {
+              currentEl.classList
+                .remove(`has-background-${colors.background}`);
+              currentEl.classList
+                .remove(`has-text-${colors.text}`);
+            }, defaultTransitionLength);
+          }
         }, timeout);
       },
 
