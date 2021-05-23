@@ -49,7 +49,8 @@
   </div>
 
   <!-- task edit/delete icons -->
-  <div class="task-item-container-icons is-size-4">
+  <div class="task-item-container-icons is-size-4"
+       x-data="{ itemDeleteModal{{ task.id }}IsActive: false }">
     <div id="icon-task-edit-{{ task.id }}"
           class="p-2 cursor-pointer has-text-weight-bold"
           onclick="updateDivToggle({{ task.id }})"
@@ -59,11 +60,62 @@
     <div id="icon-task-delete-{{ task.id }}"
           class="ml-2 p-2 cursor-pointer has-text-weight-bold"
           title="Delete"
-          hx-delete="{% url 'tasks:task_delete' task_id=task.id %}"
-          hx-confirm="Are you sure you want to delete this item?"
-          hx-target="#tasks">
+          @click="itemDeleteModal{{ task.id }}IsActive = true;">
       &times; <!-- delete icon -->
     </div>
+
+    <!-- item delete modal -->
+    <template x-if="itemDeleteModal{{ task.id }}IsActive">
+      <div id="item-delete-modal-{{ task.id }}"
+           class="modal is-active outline-none"
+           tabindex="-1"
+           x-show.transition.opacity.duration.500ms="
+             itemDeleteModal{{ task.id }}IsActive"
+           @keyup.enter.window="itemDelete{{ task.id }}()"
+           @keyup.escape.window="itemDeleteModal{{ task.id }}IsActive = false">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+          <div class="p-0 section">
+            <div @click.away="itemDeleteModal{{ task.id }}IsActive = false"
+                 class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
+                        is-justify-content-center is-align-items-center
+                        has-text-centered">
+
+              <div class="my-3 is-size-4">Delete Item</div>
+
+              <div class="is-size-6 has-text-centered">
+                Are you sure you want to delete this item?
+              </div>
+
+              <div class="mt-5 is-flex is-justify-content-space-between">
+                <button class="button is-block is-danger is-medium is-fullwidth"
+                   @click="
+                      ">
+                  Delete
+                </button>
+                <button class="ml-4 button is-block is-light
+                               is-medium is-fullwidth"
+                        @click="itemDeleteModal{{ task.id }}IsActive = false">
+                  Cancel
+                </button>
+              </div>
+
+            </div>
+          </div>
+          <button class="modal-close is-large" aria-label="close"></button>
+        </div>
+
+      </div>
+    </template>
+
   </div>
 
 </li>
+
+<script>
+function itemDelete{{ task.id }}() {
+  htmx.ajax('DELETE', '{% url 'tasks:task_delete' task_id=task.id %}', {
+    target: '#tasks'
+  });
+}
+</script>
