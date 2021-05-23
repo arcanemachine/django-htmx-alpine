@@ -15,7 +15,7 @@
   </div>
 
   <!-- task description -->
-  <div id="text-item-description-{{ task.id }}"
+  <div id="task-item-description-{{ task.id }}"
        class="mw-20rem task-item-container-description cursor-pointer
             {% if task.is_complete %}
               text-strikethrough has-text-grey-light
@@ -50,7 +50,7 @@
 
   <!-- task edit/delete icons -->
   <div class="task-item-container-icons is-size-4"
-       x-data="{ itemDeleteModal{{ task.id }}IsActive: false }">
+       x-data="{ taskDeleteModal{{ task.id }}IsActive: false }">
     <div id="icon-task-edit-{{ task.id }}"
           class="p-2 cursor-pointer has-text-weight-bold"
           onclick="updateDivToggle({{ task.id }})"
@@ -60,23 +60,23 @@
     <div id="icon-task-delete-{{ task.id }}"
           class="ml-2 p-2 cursor-pointer has-text-weight-bold"
           title="Delete"
-          @click="itemDeleteModal{{ task.id }}IsActive = true;">
+          @click="jaskDeleteModal{{ task.id }}IsActive = true;">
       &times; <!-- delete icon -->
     </div>
 
     <!-- item delete modal -->
-    <template x-if="itemDeleteModal{{ task.id }}IsActive">
+    <template x-if="taskDeleteModal{{ task.id }}IsActive">
       <div id="item-delete-modal-{{ task.id }}"
            class="modal is-active outline-none"
            tabindex="-1"
            x-show.transition.opacity.duration.500ms="
-             itemDeleteModal{{ task.id }}IsActive"
-           @keyup.enter.window="itemDelete({{ task.id }})"
-           @keyup.escape.window="itemDeleteModal{{ task.id }}IsActive = false">
+             taskDeleteModal{{ task.id }}IsActive"
+           @keyup.enter.window="taskDelete({{ task.id }})"
+           @keyup.escape.window="taskDeleteModal{{ task.id }}IsActive = false">
         <div class="modal-background"></div>
         <div class="modal-content">
           <div class="p-0 section">
-            <div @click.away="itemDeleteModal{{ task.id }}IsActive = false"
+            <div @click.away="taskDeleteModal{{ task.id }}IsActive = false"
                  class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
                         is-justify-content-center is-align-items-center
                         has-text-centered">
@@ -89,12 +89,12 @@
 
               <div class="mt-5 is-flex is-justify-content-space-between">
                 <button class="button is-block is-danger is-medium is-fullwidth"
-                   @click="itemDelete({{ task.id }})">
+                   @click="taskDelete({{ task.id }})">
                   Delete
                 </button>
                 <button class="ml-4 button is-block is-light
                                is-medium is-fullwidth"
-                        @click="itemDeleteModal{{ task.id }}IsActive = false">
+                        @click="taskDeleteModal{{ task.id }}IsActive = false">
                   Cancel
                 </button>
               </div>

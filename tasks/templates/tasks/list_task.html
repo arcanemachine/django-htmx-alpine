@@ -9,7 +9,7 @@
 function updateDivToggle(id) {
   let updateDiv = document.querySelector(`#update-div-${id}`);
   let descriptionDiv = document
-    .querySelector(`#text-item-description-${id}`);
+    .querySelector(`#task-item-description-${id}`);
   updateDiv.classList.toggle('is-hidden');
   descriptionDiv.classList.toggle('is-hidden');
 
@@ -27,7 +27,7 @@ function updateConfirm(id) {
   let input = document.querySelector(`#task-update-input-text-${id}`);
   let updateDiv = document.querySelector(`#update-div-${id}`)
   let descriptionDiv = document
-    .querySelector(`#text-item-description-${id}`);
+    .querySelector(`#task-item-description-${id}`);
   updateDiv.classList.add('is-hidden');
   descriptionDiv.classList.remove('is-hidden');
   let result = input.value;
@@ -35,7 +35,7 @@ function updateConfirm(id) {
   return result;
 }
 
-function itemDelete(id) {
+function taskDelete(id) {
   htmx.ajax('DELETE',
     `{% url 'tasks:task_delete_noid' %}${id}/`, {
     target: '#tasks'
@@ -43,9 +43,9 @@ function itemDelete(id) {
 }
 
 
-{% if item_deleted %}
+{% if task_deleted %}
 hDispatch('status-message-display', {
-  message: 'Item deleted',
+  message: 'Task deleted',
   messageType: 'success'
 });
 {% endif %}
@@ -53,6 +53,6 @@ hDispatch('status-message-display', {
 
 {% else %}
   <div class="mt-6">
-    <em>No items created</em>
+    <em>No tasks created</em>
   </div>
 {% endif %}
