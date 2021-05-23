@@ -3,8 +3,9 @@
     {% for task in tasks %}
       {% include 'tasks/get_task.html' %}
     {% endfor %}
+  </ul>
 
-    <script>
+  <script>
 function updateDivToggle(id) {
   let updateDiv = document.querySelector(`#update-div-${id}`);
   let descriptionDiv = document
@@ -34,16 +35,22 @@ function updateConfirm(id) {
   return result;
 }
 
+function itemDelete(id) {
+  htmx.ajax('DELETE',
+    `{% url 'tasks:task_delete_noid' %}${id}/`, {
+    target: '#tasks'
+  });
+}
+
+
 {% if item_deleted %}
 hDispatch('status-message-display', {
   message: 'Item deleted',
   messageType: 'success'
 });
 {% endif %}
+  </script>
 
-    </script>
-
-  </ul>
 {% else %}
   <div class="mt-6">
     <em>No items created</em>

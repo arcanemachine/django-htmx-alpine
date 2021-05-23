@@ -71,7 +71,7 @@
            tabindex="-1"
            x-show.transition.opacity.duration.500ms="
              itemDeleteModal{{ task.id }}IsActive"
-           @keyup.enter.window="itemDelete{{ task.id }}()"
+           @keyup.enter.window="itemDelete({{ task.id }})"
            @keyup.escape.window="itemDeleteModal{{ task.id }}IsActive = false">
         <div class="modal-background"></div>
         <div class="modal-content">
@@ -89,8 +89,7 @@
 
               <div class="mt-5 is-flex is-justify-content-space-between">
                 <button class="button is-block is-danger is-medium is-fullwidth"
-                   @click="
-                      ">
+                   @click="itemDelete({{ task.id }})">
                   Delete
                 </button>
                 <button class="ml-4 button is-block is-light
@@ -111,11 +110,3 @@
   </div>
 
 </li>
-
-<script>
-function itemDelete{{ task.id }}() {
-  htmx.ajax('DELETE', '{% url 'tasks:task_delete' task_id=task.id %}', {
-    target: '#tasks'
-  });
-}
-</script>

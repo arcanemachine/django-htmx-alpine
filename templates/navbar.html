@@ -97,8 +97,10 @@
               </div>
               <button type="submit"
                       id="login-button-submit"
-                      class="mt-4 button is-block is-info is-medium is-fullwidth"
-                      :class="{ 'is-loading': loginSubmitButtonIsLoading }">
+                      class="mt-4 button is-block is-info
+                             is-medium is-fullwidth"
+                      :class="{
+                        'is-loading': loginSubmitButtonIsLoading }">
                 Login
               </button>
 
@@ -110,7 +112,8 @@
               <a class="is-size-5 is-clickable"
                  hx-get="{% url 'users:register' %}"
                  hx-target="#register-captcha-img-container"
-                 @click="loginModalIsActive = false; registerModalIsActive = true">
+                 @click="loginModalIsActive = false;
+                         registerModalIsActive = true">
                 Register a new account
               </a>
             </div>
@@ -189,8 +192,11 @@
               </div>
               <button type="submit"
                       id="register-button-submit"
-                      class="mt-4 button is-block is-info is-medium is-fullwidth"
-                      :class="{ 'is-loading': registerSubmitButtonIsLoading }">
+                      class="mt-4 button is-block is-info
+                             is-medium is-fullwidth"
+                      :class="{
+                        'is-loading': registerSubmitButtonIsLoading
+                      }">
                 Register
               </button>
 
@@ -202,7 +208,9 @@
               <a class="is-size-5 is-clickable"
                  hx-get="{% url 'users:login' %}"
                  hx-target="#login-captcha-img-container"
-                 @click="registerModalIsActive = false; loginModalIsActive = true">
+                 @click="
+                   registerModalIsActive = false;
+                   loginModalIsActive = true">
                 Login to an existing account
               </a>
             </div>
@@ -249,14 +257,7 @@
       </div>
     </div>
   {% endif %}
-
-
-  <!--div style="position: fixed; z-index: 1000; bottom: 1rem; left: 1rem;">
-    <button @click="logoutModalIsActive = true">
-      deleteme
-    </button>
-  </div-->
-  
+ 
 </div>
 
 <script>

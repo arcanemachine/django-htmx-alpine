@@ -1,10 +1,10 @@
-from django.contrib import messages
+# from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, render
 from urllib.parse import unquote as urllib_parse_unquote
-from django.utils.translation import ugettext_lazy as _
+# from django.utils.translation import ugettext_lazy as _
 
 from .models import Task
 from project_folder import helpers as h
@@ -23,6 +23,10 @@ def authorization_required(request):
     response = HttpResponse()
     response.status_code = 304  # HTMX does not change content if 304 returned
     return response
+
+
+def dummy_view(request):
+    return None
 
 
 def task_list(request):
