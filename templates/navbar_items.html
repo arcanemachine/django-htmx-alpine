@@ -2,14 +2,10 @@
      @click.away="navbarIsActive = false">
   {% if not user.is_authenticated %}
     <a class="navbar-item"
-       hx-get="{% url 'users:login' %}"
-       hx-target="#login-captcha-img-container"
        @click="loginModalIsActive = true; navbarIsActive = false;">
       Sign In
     </a>
     <a class="navbar-item"
-       hx-get="{% url 'users:register' %}"
-       hx-target="#register-captcha-img-container"
        @click="registerModalIsActive = true; navbarIsActive = false">
       Register
     </a>

@@ -52,7 +52,11 @@ hDispatch('status-message-display', {
   </script>
 
 {% else %}
-  <div class="mt-6">
-    <em>No tasks created</em>
+  <div class="mt-5">
+    {% if user.is_authenticated %}
+      <em>No tasks created</em>
+    {% else %}
+      <em>You must create an account before you can create any todo items.</em>
+    {% endif %}
   </div>
 {% endif %}

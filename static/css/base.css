@@ -16,6 +16,11 @@ body {
   background-color: black;
 }
 
+/* make text input placeholders easier to read */
+::placeholder {
+  opacity: 1;
+}
+
 
 /* BULMA */
 .button.is-light {
@@ -24,6 +29,10 @@ body {
 
 .button.is-light:hover {
   background-color: #d4d4d4;
+}
+
+.is-fullwidth {
+  width: 100%;
 }
 
 .modal-content {
@@ -36,71 +45,76 @@ body {
   font-size: 1.5rem;
 }
 
+.navbar-menu-main.is-hidden-touch {
+  padding-top: 0;
+}
 
-/* UI ELEMENTS */
+.navbar-menu-main.is-hidden-desktop {
+  position: absolute;
+  width: 100vw;
+  min-height: 3.5rem;
+}
 
-/* TYPOGRAPHY */
+
+/* UTILITY */
+.btn-group-left-side {
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+
+.btn-group-center {
+  border-radius: 0;
+}
+
+.btn-group-right-side {
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
 
-.text-center {
-  text-align: center;
-}
-
-.text-strikethrough {
-  text-decoration: line-through;
-}
-
-.word-break-break-word {
-  word-break: break-word;
-}
-
-
-/* DISPLAY AND POSITIONING */
-.is-absolute {
-  position: absolute;
-}
-
-.is-fullwidth {
-  width: 100%;
-}
-
-.max-width-90vw {
-  max-width: 90vw;
-}
-
-.w-max-content {
-  width: max-content;
-}
-
-/* UTILITY */
 .d-none {
   display: none;
 }
 
-.mw-20rem {
+.w-5rem {
+  width: 5rem;
+}
+
+.w-30rem {
+  width: 30rem;
+}
+
+.w-max-20rem {
   max-width: 20rem;
 }
 
-.mw-25rem {
+.w-max-25rem {
   max-width: 25rem;
 }
 
-.mw-30rem {
+.w-max-30rem {
   max-width: 30rem;
 }
 
-.mw-35rem {
+.w-max-35rem {
   max-width: 35rem;
 }
 
-.mw-40rem {
+.w-max-40rem {
   max-width: 40rem;
 }
 
-.mw-40vw {
+.w-max-40vw {
   max-width: 40vw;
+}
+
+.w-max-50vw {
+  max-width: 50vw;
+}
+
+.w-max-90vw {
+  max-width: 90vw;
 }
 
 .mx-auto {
@@ -120,6 +134,18 @@ body {
   outline: none;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.text-strikethrough {
+  text-decoration: line-through;
+}
+
+.trans-color-1000 {
+  transition: color 1s;
+}
+
 .trans-opacity-500 {
   transition: opacity 0.5s;
 }
@@ -128,6 +154,10 @@ body {
   transition: opacity 1s;
 }
 
-::placeholder {
-  opacity: 1;
+.width-max-content {
+  width: max-content;
+}
+
+.word-break-break-word {
+  word-break: break-word;
 }

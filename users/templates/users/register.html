@@ -12,9 +12,6 @@
 
   <span id="register-form-response-text"
        class="has-text-danger"
-       hx-get="{% url 'users:login' %}"
-       hx-trigger="load"
-       hx-target="#register-captcha-img-container"
        x-data="{ show: false }"
        x-show.transition.opacity.duration.500ms="show"
        x-init="() => {show = true }">
@@ -22,6 +19,12 @@
     {{ form_errors|safe }}
 
     <script>
+      // get register captcha
+      htmx.ajax('GET', '{% url 'users:login' %}', {
+        target: '#register-captcha-img-container'
+      });
+
+      // re-enable the register submit button
       hDispatch('register-submit-button-enable');
     </script>
 

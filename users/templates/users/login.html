@@ -12,9 +12,6 @@
 
   <span id="login-form-response-text"
        class="has-text-danger"
-       hx-get="{% url 'users:login' %}"
-       hx-trigger="load"
-       hx-target="#login-captcha-img-container"
        x-data="{ show: false }"
        x-show.transition.opacity.duration.500ms="show"
        x-init="() => { show = true; }">
@@ -22,6 +19,12 @@
     {{ form_errors }}
 
     <script>
+      // get login captcha
+      htmx.ajax('GET', '{% url 'users:login' %}', {
+        target: '#login-captcha-img-container'
+      });
+
+      // re-enable the login submit button
       hDispatch('login-submit-button-enable');
     </script>
 
