@@ -1,34 +1,7 @@
-<style>
-.captcha-img {
-  height: 2.5em;
-  width: 7em;
-}
-
-.navbar-background-gradient-placeholder {
-  height: 4rem;
-  background: linear-gradient(to bottom, #ddd 75%, #eee);
-}
-
-.navbar-menu-main.is-hidden-touch {
-  padding-top: 0;
-}
-
-.navbar-menu-main.is-hidden-desktop {
-  position: absolute;
-  width: 100vw;
-  min-height: 3.5rem;
-}
-
-.navbar-title-container {
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-}
-</style>
-
 <div class="outline-none"
      tabindex="-1"
      x-data="navbarMainContainerData()"
+     x-ref="navbarMainContainer"
      @keyup.escape="navbarClearAll()"
      @login-submit-button-enable.window="loginSubmitButtonIsLoading = false"
      @register-submit-button-enable.window="
@@ -69,10 +42,212 @@
   </nav>
 
   {% if not user.is_authenticated %}
-    {% include 'modal_login.html' %}
-    {% include 'modal_register.html' %}
+    
+    <div id="login-modal"
+         class="modal is-active"
+         x-show.transition.opacity.duration.500ms="loginModalIsActive"
+         x-cloak>
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="p-0 section">
+          <div @click.away="loginModalIsActive = false"
+               class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
+                      is-justify-content-center is-align-items-center
+                      has-text-centered">
+            <div class="my-3 is-size-4">Account Login</div>
+            <form class="mt-3"
+                  hx-post="{% url 'users:login' %}"
+                  hx-target="#login-form-response"
+                  @submit="loginSubmitButtonIsLoading = true">
+              <div class="field">
+                <div class="control">
+                  <input type="text"
+                         name="username"
+                         class="input"
+                         autocorrect="off"
+                         autocapitalize="none"
+                         placeholder="Username"
+                         required>
+                </div>
+                <div class="mt-4 control">
+                  <input type="password"
+                         name="password"
+                         class="input"
+                         placeholder="Password"
+                         required>
+                </div>
+                <div class="mt-4 control">
+                  <div class="is-flex">
+                    <div id="login-captcha-container"
+                         class="is-flex-grow-1">
+                      <div id="login-captcha-img-container">
+                        <input type="hidden"
+                               name="captcha_0"
+                               value="">
+                      </div>
+                    </div>
+                    <input type="text"
+                           name="captcha_1"
+                           id="login-input-captcha"
+                           class="ml-2 input"
+                           placeholder="Human test"
+                           required>
+                  </div>
+                </div>
+              </div>
+              <button type="submit"
+                      id="login-button-submit"
+                      class="mt-4 button is-block is-info is-medium is-fullwidth"
+                      :class="{ 'is-loading': loginSubmitButtonIsLoading }">
+                Login
+              </button>
+
+            </form>
+            <div class="pt-4 pb-3 is-size-6 has-text-weight-bold">
+              &nbsp;<span id="login-form-response"></span>
+            </div>
+            <div>
+              <a class="is-size-5 is-clickable"
+                 hx-get="{% url 'users:register' %}"
+                 hx-target="#register-captcha-img-container"
+                 @click="loginModalIsActive = false; registerModalIsActive = true">
+                Register a new account
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
+    <div id="register-modal"
+         class="modal is-active"
+         x-show.transition.opacity.duration.500ms="registerModalIsActive"
+         x-cloak>
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="p-0 section">
+          <div @click.away="registerModalIsActive = false"
+               class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
+                      is-justify-content-center is-align-items-center
+                      has-text-centered">
+            <div class="my-3 is-size-4">Register New Account</div>
+            <form id="register-form"
+                  class="mt-3"
+                  @submit.prevent="registerFormSubmit">
+              <div class="field">
+                <div class="control">
+                  <input type="text"
+                         name="username"
+                         class="input"
+                         autocorrect="off"
+                         autocapitalize="none"
+                         placeholder="Username"
+                         required
+                         x-ref="registerFormFieldUsername">
+                  <input type="hidden"
+                         name="name"
+                         required>
+                </div>
+                <div class="mt-4 control">
+                  <input type="password"
+                         name="password1"
+                         class="input"
+                         placeholder="Password"
+                         required
+                         x-ref="registerFormFieldPassword1">
+                </div>
+                <div class="mt-4 control">
+                  <input type="password"
+                         name="password2"
+                         class="input"
+                         placeholder="Confirm password"
+                         required
+                         x-ref="registerFormFieldPassword2">
+                </div>
+                <div class="mt-4 control">
+                  <div class="is-flex">
+                    <div id="register-captcha-container"
+                         class="is-flex-grow-1">
+                      <div id="register-captcha-img-container">
+                        <input type="hidden"
+                               name="captcha_0"
+                               id="register-captcha-key"
+                               value="">
+                      </div>
+                    </div>
+                    <input type="text"
+                           name="captcha_1"
+                           id="register-input-captcha"
+                           class="ml-2 input"
+                           placeholder="Human test"
+                           required
+                           x-ref="registerFormFieldCaptcha">
+                  </div>
+                </div>
+              </div>
+              <button type="submit"
+                      id="register-button-submit"
+                      class="mt-4 button is-block is-info is-medium is-fullwidth"
+                      :class="{ 'is-loading': registerSubmitButtonIsLoading }">
+                Register
+              </button>
+
+            </form>
+            <div class="pt-4 pb-3 is-size-6 has-text-weight-bold">
+              &nbsp;<span id="register-form-response"></span>
+            </div>
+            <div>
+              <a class="is-size-5 is-clickable"
+                 hx-get="{% url 'users:login' %}"
+                 hx-target="#login-captcha-img-container"
+                 @click="registerModalIsActive = false; loginModalIsActive = true">
+                Login to an existing account
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
   {% elif user.is_authenticated %}
-    {% include 'modal_logout.html' %}
+    <div id="logout-modal"
+         class="modal is-active"
+         x-show.transition.opacity.duration.500ms="logoutModalIsActive"
+         x-cloak>
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="p-0 section">
+          <div @click.away="logoutModalIsActive = false"
+               class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
+                      is-justify-content-center is-align-items-center
+                      has-text-centered">
+
+            <div class="my-3 is-size-4">Account Logout</div>
+
+            <div class="is-size-6 has-text-centered">
+              Are you sure you want to log out?
+            </div>
+
+            <div class="mt-4 is-flex is-justify-content-space-between">
+              <a class="button is-block is-info is-medium is-fullwidth"
+                 href="{% url 'users:logout' %}">
+                Logout
+              </a>
+              <a class="ml-4 button is-block is-light is-medium is-fullwidth"
+                 @click="logoutModalIsActive = false">
+                Cancel
+              </a>
+            </div>
+
+          </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+      </div>
+    </div>
   {% endif %}
 
 
@@ -103,6 +278,51 @@
         this.registerSubmitButtonIsLoading = false;
         this.logoutModalIsActive = false;
       },
+      registerFormSubmit() {
+        // do not continue if passwords do not match
+        let password1 = this.$refs.registerFormFieldPassword1.value;
+        let password2 = this.$refs.registerFormFieldPassword2.value;
+        if (password1 !== password2) {
+          hDispatch('status-message-display', {
+            message: "The passwords do not match.",
+            messageType: 'danger'
+          });
+          return false;
+        }
+        this.registerSubmitButtonIsLoading = true;
+        htmx.ajax('POST', '{% url 'users:register' %}', {
+          source: '#register-form',
+          target: '#register-form-response',
+        });
+      }
     }
   }
 </script>
+
+<style>
+.captcha-img {
+  height: 2.5em;
+  width: 7em;
+}
+
+.navbar-background-gradient-placeholder {
+  height: 4rem;
+  background: linear-gradient(to bottom, #ddd 75%, #eee);
+}
+
+.navbar-menu-main.is-hidden-touch {
+  padding-top: 0;
+}
+
+.navbar-menu-main.is-hidden-desktop {
+  position: absolute;
+  width: 100vw;
+  min-height: 3.5rem;
+}
+
+.navbar-title-container {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+</style>

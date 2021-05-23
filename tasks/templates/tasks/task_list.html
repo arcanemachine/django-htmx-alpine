@@ -32,7 +32,17 @@ function getTaskText() {
 
     <form id="form-new-task"
           class="mt-4">
-      <input type="text"
+      <input x-data="{}"
+             @keyup.escape="
+                // clear the text input if it is not empty
+                if ($event.srcElement.value) {
+                  $event.srcElement.value = '';
+                  hDispatch('status-message-display', {
+                    message: `List entry cleared`,
+                    timeout: 2500
+                  });
+                }"
+             type="text"
              id="new-task-input-text"
              class="input is-medium button-group-left-side"
              placeholder="Enter new task...">

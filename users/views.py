@@ -19,10 +19,12 @@ UserModel = get_user_model()
 def get_form_errors(form):
     for key, values in form.errors.items():
         for value in values:
-            if key == '__all__':
-                return value
-            else:
-                return f"{key}: {value}"
+            # if key == '__all__':
+            #     return value
+            # elif key == 'password1' or key == 'password2':
+            #     return f"Password: {value}"
+            # else:
+            return f"{value}"
 
 
 def users_root(request):
