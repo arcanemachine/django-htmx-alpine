@@ -28,7 +28,7 @@ def get_weather(request):
             f'The temperature in {city} is {temperature} degrees {units}.')
     else:
         if response.text:
-            return HttpResponse(f"Error {response.status_code}:"
+            return HttpResponse(f"Error {response.status_code}: "
                                 f"{json.loads(response.text)['message']}")
         else:
             return HttpResponse(
