@@ -7,8 +7,9 @@
   <div class="modal-content">
     <div class="p-0 section">
       <div @click.away="aboutModalIsActive = false"
-           class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
-                  is-justify-content-center is-align-items-center">
+           class="px-5 pt-2 pb-5 box is-flex
+                  is-flex-direction-column is-justify-content-center
+                  is-align-items-center">
 
         <div class="my-4 is-size-4 has-text-centered">
           About this Project
@@ -47,7 +48,9 @@
                     has-text-centered border-radius-0.5rem">
           <div class="is-size-5">Get City Weather</div>
 
-          <form hx-post="{% url 'get_weather' %}"
+          <form action="javascript:void(0);"
+                method="post"
+                hx:post="{% url 'get_weather' %}"
                 hx-target="#about-htmx-response">
 
             <div class="mt-4 field">
@@ -92,12 +95,10 @@
 
             </div>
 
-            <div class="control has-text-centered">
-              <button type="submit"
-                      class="button is-success">
-                Submit
-              </button>
-            </div>
+            <button type="submit"
+                    class="button is-success">
+              Submit
+            </button>
 
           </form>
           <div id="about-htmx-response" class="ml-2 pt-2">&nbsp;</div>
