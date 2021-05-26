@@ -15,13 +15,14 @@
         return {
           // methods
           userIsAuthenticated() {
-            return '{{ user.is_authenticated }}' ? true : false;
+            return {{ user.is_authenticated|yesno:'true,false' }};
           },
           taskCreate() {
-            if (!this.userIsAuthenticated) {
+            if (!this.userIsAuthenticated()) {
               // do not continue if user is not authenticated
               hDispatch(
                 'status-message-display', "You must create an account first.");
+              return false;
             }
             else {
               // get the value of the text input, then clear it
