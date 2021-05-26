@@ -8,3 +8,6 @@ SECRET_KEY = '_z45zkzpqrv^x&x88^8+)c=k#oujctymo0o_**(828ixo$m6eq'
 DATABASE_USER = 'project_admin'
 DATABASE_PASSWORD = \
     'ufA5SDqbAuVLrcB3QsWiccy0rR8lG67R5xfPQkv8A6hmxtInY//K6l3+JNbXm/0R'
+
+# OpenWeatherMap API key
+WEATHER_API_KEY = 'your_api_key'

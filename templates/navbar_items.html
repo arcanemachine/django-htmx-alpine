@@ -2,17 +2,21 @@
      @click.away="navbarIsActive = false">
   {% if not user.is_authenticated %}
     <a class="navbar-item"
-       @click="loginModalIsActive = true; navbarIsActive = false;">
+       @click="loginModalEnable">
       Sign In
     </a>
     <a class="navbar-item"
-       @click="registerModalIsActive = true; navbarIsActive = false">
+       @click="registerModalEnable">
       Register
     </a>
   {% elif user.is_authenticated %}
     <a class="navbar-item"
-       @click="logoutModalIsActive = true; navbarIsActive = false">
+       @click="logoutModalEnable">
       Logout
     </a>
   {% endif %}
+    <a class="navbar-item"
+       @click="aboutModalEnable">
+      About
+    </a>
 </div>

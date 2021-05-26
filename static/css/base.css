@@ -38,7 +38,6 @@ body {
 .modal-content {
   max-height: 95vh;
   max-width: 90vw;
-  max-width: max-content;
 }
 
 .navbar-brand {
@@ -57,6 +56,10 @@ body {
 
 
 /* UTILITY */
+.border-radius-0\.5rem {
+  border-radius: 0.5rem;
+}
+
 .btn-group-left-side {
   border-radius: 0.5rem 0 0 0.5rem;
 }
@@ -77,12 +80,44 @@ body {
   display: none;
 }
 
+.w-100 {
+  width: 100%;
+}
+
 .w-5rem {
   width: 5rem;
 }
 
 .w-30rem {
   width: 30rem;
+}
+
+.w-min-20rem {
+  min-width: 20rem;
+}
+
+.w-min-25rem {
+  min-width: 25rem;
+}
+
+.w-min-30rem {
+  min-width: 30rem;
+}
+
+.w-min-35rem {
+  min-width: 35rem;
+}
+
+.w-min-40rem {
+  min-width: 40rem;
+}
+
+.w-min-40vw {
+  min-width: 40vw;
+}
+
+.w-min-50vw {
+  min-width: 50vw;
 }
 
 .w-max-20rem {
