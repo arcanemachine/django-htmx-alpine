@@ -11,13 +11,14 @@ body {
   display: none !important;
 }
 
-.dark-mode {
-  color: white;
-  background-color: black;
+#page-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-/* make text input placeholders easier to read */
-::placeholder {
+::placeholder {  /* make text-input placeholders easier to read */
   opacity: 1;
 }
 
@@ -78,6 +79,10 @@ body {
 
 .d-none {
   display: none;
+}
+
+.list-unstyled {
+  list-style-type: none;
 }
 
 .w-100 {

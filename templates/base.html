@@ -30,31 +30,35 @@
   </head>
 
   <body>
-
     {% block body_start_script %}{% endblock body_start_script %}
 
-    {% include 'navbar.html' %}
+    <div id="page-container">
+      {% include 'navbar.html' %}
 
-    <noscript>
-      <div class="my-4 is-size-5 has-text-danger has-text-centered">
-        This page requires Javascript to function correctly.
-      </div>
-    </noscript>
-
-    <div class="container">
-      <div class="mb-0 pb-0 has-text-centered">
-        <div class="title">
-          {% block body_title %}{% endblock body_title %}
+      <noscript>
+        <div class="my-4 is-size-5 has-text-danger has-text-centered">
+          This page requires Javascript to function correctly.
         </div>
-        <div class="subtitle">
-          {% block body_subtitle %}{% endblock body_subtitle %}
+      </noscript>
+
+      <div id="main-container"
+           class="container is-flex-grow-1 has-background-light-grey">
+        <div class="mb-0 pb-0 has-text-centered">
+          <div class="title">
+            {% block body_title %}{% endblock body_title %}
           </div>
+          <div class="subtitle">
+            {% block body_subtitle %}{% endblock body_subtitle %}
+            </div>
+        </div>
+
+        <div class="pt-4 section">
+          {% block content %}{% endblock content %}
+        </div>
       </div>
 
-      <div id="content-container"
-           class="pt-4 section">
-        {% block content %}{% endblock content %}
-      </div>
+      {% include 'footer.html' %}
+
     </div>
 
     {% block body_end_script %}{% endblock body_end_script %}
