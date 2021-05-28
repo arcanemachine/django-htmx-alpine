@@ -19,11 +19,7 @@ UserModel = get_user_model()
 def get_form_errors(form):
     for key, values in form.errors.items():
         for value in values:
-            # if key == '__all__':
-            #     return value
-            # elif key == 'password1' or key == 'password2':
-            #     return f"Password: {value}"
-            # else:
+            # only return the first error
             return f"{value}"
 
 
@@ -47,7 +43,6 @@ class UserRegisterView(CreateView):
 
     def form_invalid(self, form):
         form_errors = get_form_errors(form)
-
         context = {'register_fail': True,
                    'form_errors': form_errors}
         return render(self.request, self.template_name, context)
@@ -77,12 +72,22 @@ class UserLoginView(LoginView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.method == 'GET':
-            # generate captcha
-            captcha_key = captcha_models.CaptchaStore.pick()
-            captcha_img_url = captcha_helpers.captcha_image_url(captcha_key)
-            context = {'captcha_key': captcha_key,
-                       'captcha_img_url': captcha_img_url}
-            return render(request, self.template_name, context)
+            if request.GET.get('form') == '1':
+                if request.user.is_authenticated:
+                    messages.info(
+                        self.request, _('You are already logged in.'))
+                    return HttpResponseRedirect(reverse('tasks:task_list'))
+                # return basic login form
+                else:
+                    self.template_name = 'users/login_form.html'
+            else:
+                # generate captcha
+                captcha_key = captcha_models.CaptchaStore.pick()
+                captcha_img_url = \
+                    captcha_helpers.captcha_image_url(captcha_key)
+                context = {'captcha_key': captcha_key,
+                           'captcha_img_url': captcha_img_url}
+                return render(request, self.template_name, context)
         return super().dispatch(request, *args, **kwargs)
 
     def form_invalid(self, form):
@@ -94,8 +99,11 @@ class UserLoginView(LoginView):
     def form_valid(self, form):
         auth_login(self.request, form.get_user())
         messages.success(self.request, _('You are now logged in.'))
-        context = {'login_success': True}
-        return render(self.request, self.template_name, context)
+        if self.request.GET.get('form') == '1':
+            return HttpResponseRedirect(reverse('tasks:task_list'))
+        else:
+            context = {'login_success': True}
+            return render(self.request, self.template_name, context)
 
 
 class UserLogoutView(LogoutView):
