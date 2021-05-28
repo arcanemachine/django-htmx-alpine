@@ -1,0 +1,1 @@
+testcafe --inspect-brk chromium .
