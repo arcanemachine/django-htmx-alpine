@@ -15,8 +15,12 @@
       <a class="navbar-item brand-text is-size-4" href="/">
         Alpine.JS + HTMX
       </a>
+      <a class="w-100"
+         @click="navbarIsActive = !navbarIsActive">
+        &nbsp;
+      </a>
       <a role="button"
-         class="navbar-burger"
+         class="px-5 navbar-burger"
          aria-label="menu"
          aria-expanded="false"
          data-target="navbarMain"
