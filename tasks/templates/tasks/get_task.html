@@ -17,7 +17,7 @@
 
   <!-- task description -->
   <div id="task-item-description-{{ task.id }}"
-       class="w-max-20rem cursor-pointer trans-color-1000
+       class="w-max-35rem is-centered cursor-pointer trans-color-1000
               {% if task.is_complete %}
                 text-strikethrough has-text-grey-light
               {% endif %}"
@@ -75,7 +75,7 @@
            @keyup.enter.window="taskDelete({{ task.id }})"
            @keyup.escape.window="taskDeleteModal{{ task.id }}IsActive = false">
         <div class="modal-background"></div>
-        <div class="modal-content">
+        <div class="w-max-25rem modal-content">
           <div class="p-0 section">
             <div @click.away="taskDeleteModal{{ task.id }}IsActive = false"
                  class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
@@ -89,7 +89,9 @@
               </div>
 
               <div class="mt-5 is-flex is-justify-content-space-between">
-                <button class="button is-block is-danger is-medium is-fullwidth"
+                <button id="task-button-delete-{{ task.id }}"
+                        class="button is-block is-danger is-medium
+                               is-fullwidth"
                    @click="taskDelete({{ task.id }})">
                   Delete
                 </button>

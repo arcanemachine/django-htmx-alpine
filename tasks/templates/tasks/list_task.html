@@ -1,62 +1,64 @@
-{% if tasks %}
-  <ul id="task-list" class="mt-4 box">
-    {% for task in tasks %}
-      {% include 'tasks/get_task.html' %}
-    {% endfor %}
-  </ul>
+<div id="tasks">
+  {% if tasks %}
+    <ul id="task-list" class="mt-4 box">
+      {% for task in tasks %}
+        {% include 'tasks/get_task.html' %}
+      {% endfor %}
+    </ul>
 
-  <script>
-function updateDivToggle(id) {
-  let updateDiv = document.querySelector(`#update-div-${id}`);
-  let descriptionDiv = document
-    .querySelector(`#task-item-description-${id}`);
-  updateDiv.classList.toggle('is-hidden');
-  descriptionDiv.classList.toggle('is-hidden');
+    <script>
+  function updateDivToggle(id) {
+    let updateDiv = document.querySelector(`#update-div-${id}`);
+    let descriptionDiv = document
+      .querySelector(`#task-item-description-${id}`);
+    updateDiv.classList.toggle('is-hidden');
+    descriptionDiv.classList.toggle('is-hidden');
 
-  if (!updateDiv.classList.contains('is-hidden')) {
-    // select the text input when showing the div
-    document.querySelector(`#task-update-input-text-${id}`).select();
-  } else {
-    // reset the text input when hiding the div
-    document.querySelector(`#task-update-form-${id}`).reset();
+    if (!updateDiv.classList.contains('is-hidden')) {
+      // select the text input when showing the div
+      document.querySelector(`#task-update-input-text-${id}`).select();
+    } else {
+      // reset the text input when hiding the div
+      document.querySelector(`#task-update-form-${id}`).reset();
+    }
+
   }
 
-}
+  function updateConfirm(id) {
+    let input = document.querySelector(`#task-update-input-text-${id}`);
+    let updateDiv = document.querySelector(`#update-div-${id}`)
+    let descriptionDiv = document
+      .querySelector(`#task-item-description-${id}`);
+    updateDiv.classList.add('is-hidden');
+    descriptionDiv.classList.remove('is-hidden');
+    let result = input.value;
+    input.value = '';
+    return result;
+  }
 
-function updateConfirm(id) {
-  let input = document.querySelector(`#task-update-input-text-${id}`);
-  let updateDiv = document.querySelector(`#update-div-${id}`)
-  let descriptionDiv = document
-    .querySelector(`#task-item-description-${id}`);
-  updateDiv.classList.add('is-hidden');
-  descriptionDiv.classList.remove('is-hidden');
-  let result = input.value;
-  input.value = '';
-  return result;
-}
+  function taskDelete(id) {
+    htmx.ajax('DELETE',
+      `{% url 'tasks:task_delete_noid' %}${id}/`, {
+      target: '#tasks'
+    });
+  }
 
-function taskDelete(id) {
-  htmx.ajax('DELETE',
-    `{% url 'tasks:task_delete_noid' %}${id}/`, {
-    target: '#tasks'
+
+  {% if task_deleted %}
+  hDispatch('status-message-display', {
+    message: 'Task deleted',
+    messageType: 'success'
   });
-}
+  {% endif %}
+    </script>
 
-
-{% if task_deleted %}
-hDispatch('status-message-display', {
-  message: 'Task deleted',
-  messageType: 'success'
-});
-{% endif %}
-  </script>
-
-{% else %}
-  <div id="todo-list-message" class="mt-5 is-italic">
-    {% if user.is_authenticated %}
-      No tasks created
-    {% else %}
-      You must login before you can create any todo items.
-    {% endif %}
-  </div>
-{% endif %}
+  {% else %}
+    <div id="todo-list-message" class="mt-5 is-italic">
+      {% if user.is_authenticated %}
+        No tasks created
+      {% else %}
+        You must login before you can create any todo items.
+      {% endif %}
+    </div>
+  {% endif %}
+</div>

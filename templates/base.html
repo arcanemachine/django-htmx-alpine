@@ -43,7 +43,7 @@
 
       <div id="main-container"
            class="container is-flex-grow-1 has-background-light-grey">
-        <div class="mt-2 mb-0 pb-0 is-centered">
+        <div class="mt-2 is-centered">
           <div class="title">
             {% block body_title %}{% endblock body_title %}
           </div>
@@ -55,6 +55,7 @@
         <div class="pt-4 section">
           {% block content %}{% endblock content %}
         </div>
+
       </div>
 
       {% include 'footer.html' %}

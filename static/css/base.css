@@ -10,6 +10,10 @@ body {
   background-color: #eee;
 }
 
+::placeholder {  /* make text-input placeholders easier to read */
+  opacity: 1;
+}
+
 [x-cloak] {
   display: none !important;
 }
@@ -21,12 +25,32 @@ body {
   justify-content: space-between;
 }
 
-::placeholder {  /* make text-input placeholders easier to read */
-  opacity: 1;
+
+/* COMPONENTS */
+.n-box {
+  background-color: #eee;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid black;
 }
 
+.n-box-gray-lighter {
+  background-color: #ddd;
+  border-color: #ccc;
+}
+
+.n-box-gray-light {
+  background-color: #ccc;
+  border-color: #bbb;
+}
 
 /* BULMA */
+p {
+  margin-top: 1.5rem;
+}
+
 .button.is-light {
   background-color: #ddd;
 }
@@ -64,6 +88,10 @@ body {
   position: absolute;
   width: 100vw;
   min-height: 3.5rem;
+}
+
+.section {
+  padding: 2rem 1.5rem;
 }
 
 
@@ -141,8 +169,40 @@ body {
   width: 5rem;
 }
 
+.w-10rem {
+  width: 10rem;
+}
+
+.w-15rem {
+  width: 15rem;
+}
+
+.w-20rem {
+  width: 20rem;
+}
+
+.w-25rem {
+  width: 25rem;
+}
+
 .w-30rem {
   width: 30rem;
+}
+
+.w-35rem {
+  width: 35rem;
+}
+
+.w-40rem {
+  width: 40rem;
+}
+
+.w-45rem {
+  width: 45rem;
+}
+
+.w-50rem {
+  width: 50rem;
 }
 
 .w-min-20rem {
@@ -199,6 +259,10 @@ body {
 
 .w-max-50vw {
   max-width: 50vw;
+}
+
+.w-max-80vw {
+  max-width: 80vw;
 }
 
 .w-max-90vw {
