@@ -58,8 +58,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # auth
 LOGIN_URL = 'users:login'
-LOGIN_REDIRECT_URL = 'project_root'
-LOGOUT_REDIRECT_URL = 'project_root'
+LOGIN_REDIRECT_URL = 'tasks:task_list'
+LOGOUT_REDIRECT_URL = 'tasks:task_list'
 
 # captcha
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
