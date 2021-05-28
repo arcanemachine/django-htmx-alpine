@@ -1,0 +1,61 @@
+<form class="mt-5 form" method="post">
+
+  {% csrf_token %}
+
+  {{ form.as_p }}
+
+  {% if confirm_text %}
+    <div class="field">
+      <div class="control">
+        <div class="notification is-{% if confirm_style %}{{ confirm_style }}{% else %}info{% endif %}"
+             role="alert">
+          <label class="mb-0">
+            <input type="checkbox"
+                   id="confirm_checkbox"
+                   name="confirm_checkbox"
+                   value="1"
+                   required>
+            &nbsp;&nbsp;{{ confirm_text }}
+          </label>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="field">
+    <div class="control mt-4 has-text-centered">
+      <span>
+        <button id="form-button-submit" type="submit"
+          class="button is-{% if confirm_style %}{{ confirm_style }}{% else %}success{% endif %}">
+          {% if submit_button_text %}
+            {{ submit_button_text }}
+          {% else %}
+            Submit
+          {% endif %}
+        </button>
+      </span>
+
+      {% if not cancel_button == False %}
+        <span>
+          <button type="button"
+                  class="ml-2 button is-light" onclick="history.go(-1)">
+            Cancel
+          </button>
+        </span>
+      {% endif %}
+    </div>
+  </div>
+
+</form>
+
+<style>
+form > p {
+  display: flex;
+  align-items: center;
+  margin: 1rem;
+}
+
+form > p > input {
+  margin-left: auto;
+}
+</style>
