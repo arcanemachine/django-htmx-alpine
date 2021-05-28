@@ -1,5 +1,5 @@
 {% if tasks %}
-  <ul class="mt-4 box">
+  <ul id="task-list" class="mt-4 box">
     {% for task in tasks %}
       {% include 'tasks/get_task.html' %}
     {% endfor %}
@@ -52,11 +52,11 @@ hDispatch('status-message-display', {
   </script>
 
 {% else %}
-  <div class="mt-5">
+  <div id="todo-list-message" class="mt-5 is-italic">
     {% if user.is_authenticated %}
-      <em>No tasks created</em>
+      No tasks created
     {% else %}
-      <em>You must create an account before you can create any todo items.</em>
+      You must login before you can create any todo items.
     {% endif %}
   </div>
 {% endif %}

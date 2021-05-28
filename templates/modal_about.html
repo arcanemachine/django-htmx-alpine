@@ -11,7 +11,7 @@
                   is-flex-direction-column is-justify-content-center
                   is-align-items-center">
 
-        <div class="my-4 is-size-4 has-text-centered">
+        <div class="my-4 is-size-4 is-centered">
           About this Project
         </div>
         <p class="my-2">This project uses a mixture of Django, Alpine.JS, and HTMX to serve as a lightweight alternative to Javascript-based frontend frameworks such as React, Vue, Angular and Svelte.</p>
@@ -25,7 +25,7 @@
         <p class="my-2">Here is an example of how an Alpine.JS component can be easily added to a page:</p>
 
         <div class="w-min-20rem my-4 p-4 has-background-grey-lighter
-                    has-text-centered border-radius-0.5rem"
+                    is-centered border-radius-0.5rem"
              x-data="{ counter: 0 }">
           <div>
             <button class="button is-success"
@@ -45,7 +45,7 @@
         <p class="my-2">This means you don't have to process the data on the client-side; you can simply return page fragments from your server. As with Alpine.JS, this gives the power back to the server-based frameworks. For example, your Django server can render all the elements with the proper data, and you simply receive the data and pop it right where it needs to go, with no Javascript-based messing around with Fetch calls.</p>
 
         <div class="w-100 my-4 p-4 has-background-grey-lighter
-                    has-text-centered border-radius-0.5rem">
+                    is-centered border-radius-0.5rem">
           <div class="is-size-5">Get City Weather</div>
 
           <form action="javascript:void(0);"

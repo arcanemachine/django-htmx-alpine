@@ -5,9 +5,9 @@
 
 {% block content %}
 
-<div class="pt-0 has-text-centered">
+<div class="pt-0 is-centered">
 
-  <div class="is-size-4 has-text-centered">Your Todo List</div>
+  <div class="is-size-4 is-centered">Your Todo List</div>
 
   <div class="w-max-35rem mx-auto">
 
@@ -22,7 +22,8 @@
             if (!this.userIsAuthenticated()) {
               // do not continue if user is not authenticated
               hDispatch(
-                'status-message-display', "You must create an account first.");
+                'status-message-display',
+                "You must login before you can add any tasks.");
               return false;
             }
             else {
@@ -50,6 +51,7 @@
              class="w-30rem w-max-50vw input is-medium btn-group-left-side"
              placeholder="Enter new task...">
       <button type="submit"
+              id="new-task-button-create"
               class="button is-info is-medium btn-group-right-side">
         Create
       </button>

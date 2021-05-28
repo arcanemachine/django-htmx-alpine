@@ -35,6 +35,14 @@ body {
   background-color: #d4d4d4;
 }
 
+.is-bold {
+  font-weight: bold;
+}
+
+.is-centered {
+  text-align: center;
+}
+
 .is-fullwidth {
   width: 100%;
 }
@@ -195,6 +203,10 @@ body {
 
 .w-max-90vw {
   max-width: 90vw;
+}
+
+.w-max-content {
+  max-width: max-content;
 }
 
 .word-break-break-word {
