@@ -1,6 +1,6 @@
 <li id="list-item-{{ task.id }}"
     class="mx-auto is-flex is-justify-content-space-between
-           is-align-items-center">
+           is-align-items-center task-list-item">
 
   <!-- task completion checkbox -->
   <div class="task-item-container-checkbox">
@@ -22,6 +22,7 @@
                 text-strikethrough has-text-grey-light
               {% endif %}"
        title="Task ID#: {{ task.id }}"
+       data-task-id="{{ task.id }}"
        hx-put="{% url 'tasks:task_update' task_id=task.id %}"
        hx-vals='{"is_complete": "{{ task.is_complete|yesno:'false,true' }}"}'
        hx-target="#list-item-{{ task.id }}"

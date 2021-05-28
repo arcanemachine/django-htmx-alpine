@@ -1,6 +1,7 @@
 import { ClientFunction, RequestLogger, Selector } from 'testcafe';
 
 import * as ht from './helpersTesting.js';
+import * as roles from './roles.js';
 
 const serverUrl = ht.SERVER_URL;
 const testUrl = `${serverUrl}`;
@@ -21,14 +22,14 @@ let newTaskMessage = 'Test task';
 
 test('unauthenticated user cannot create new task', async t => {
   let newTaskInputText = await Selector('#new-task-input-text');
-  let todoListMessage = await Selector('#todo-list-message');
+  let taskListMessage = await Selector('#task-list-message');
   let statusMessageNotification = await Selector(
     '#status-message-notification');
 
-  // element below text input warns user to login first
-  await t.expect(todoListMessage.textContent).contains("You must login");
+  // #task-list-message warns user to login first
+  await t.expect(taskListMessage.textContent).contains("You must login");
 
-  // attempt to create new todo
+  // attempt to create new task
   await t.typeText(newTaskInputText, newTaskMessage);
   await t.click('#new-task-button-create');
 
@@ -36,7 +37,27 @@ test('unauthenticated user cannot create new task', async t => {
   await t.expect(statusMessageNotification.textContent)
     .contains("You must login");
 
-  // todo list is still empty
-  await t.expect(Selector('#todo-list').exists).notOk();
+  // task list is still empty
+  await t.expect(Selector('#task-list').exists).notOk();
 })
 
+test('authenticated user can create new task', async t => {
+  await t.useRole(roles.testUser);
+  
+  /*
+  // #task-list-message notifies user that no tasks have been created
+  await t.expect(Selector('#task-list-message').textContent)
+    .contains("No tasks created");
+
+  // #task-list does not exist
+  await t.expect(Selector('#task-list').exists).notOk();
+  */
+
+  // create new task
+  await t.typeText(Selector('#new-task-input-text'), newTaskMessage);
+  await t.click('#new-task-button-create');
+
+  // succeeds; #task-list exists and contains the proper task
+  await t.expect(Selector('#task-list').exists).ok();
+  await t.expect(Selector('.task-list-item').count).ok();
+})
