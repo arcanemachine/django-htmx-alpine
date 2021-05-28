@@ -433,9 +433,6 @@
       loginModalEnable() {
         this.navbarClearAll();
         this.loginModalIsActive = true;
-        htmx.get('GET', '{% url 'users:login' %}', {
-          target: '#login-captcha-img-container'
-        });
       },
       logoutModalEnable() {
         this.navbarClearAll();
@@ -469,9 +466,6 @@
       registerModalEnable() {
         this.navbarClearAll();
         this.registerModalIsActive = true;
-        htmx.get('GET', '{% url 'users:register' %}', {
-          target: '#register-captcha-img-container'
-        });
       },
     }
   }
