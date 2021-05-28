@@ -10,15 +10,6 @@ from .models import Task
 from project_folder import helpers as h
 
 
-def authorization_required_old(request):
-    return HttpResponse(
-        '<script>'
-        '  hDispatch('
-        '    `status-message-display`, "You must create an account first."'
-        '  );'
-        '</script>')
-
-
 def authorization_required(request):
     response = HttpResponse()
     response.status_code = 304  # HTMX does not change content if 304 returned
@@ -42,8 +33,8 @@ def task_list(request):
 def task_create(request):
     if not request.user.is_authenticated:
         return authorization_required(request)
-    if request.POST.get('description', None):
-        task = Task.objects.create(
+    if request.POST.get('description'):
+        Task.objects.create(
             user=request.user,
             description=request.POST['description'])
     else:
@@ -55,8 +46,7 @@ def task_create(request):
             '</script>')
 
     tasks = Task.objects.filter(user=request.user)
-    context = {'tasks': tasks,
-               'task': task}
+    context = {'tasks': tasks}
 
     return render(request, 'tasks/list_task.html', context)
 
