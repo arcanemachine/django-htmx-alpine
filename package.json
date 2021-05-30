@@ -1,0 +1,22 @@
+{
+  "name": "django-htmx-alpine",
+  "version": "0.0.1",
+  "description": "A sandbox for using Django with HTMX.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arcanemachine/django-htmx-alpine.git"
+  },
+  "author": "Nicholas Moen <arcanemachine@tutanota.com> (https://nicholasmoen.com/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arcanemachine/django-htmx-alpine/issues"
+  },
+  "homepage": "https://github.com/arcanemachine/django-htmx-alpine#readme",
+  "devDependencies": {
+    "cypress": "^7.4.0"
+  }
+}
