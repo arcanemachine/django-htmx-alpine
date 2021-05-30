@@ -1,11 +1,12 @@
 <li id="list-item-{{ task.id }}"
     class="mx-auto is-flex is-justify-content-space-between
-           is-align-items-center task-list-item">
+           is-align-items-center task-list-item"
+    data-task-id="{{ task.id }}">
 
   <!-- task completion checkbox -->
   <div class="task-item-container-checkbox">
     <input type="checkbox" {{ task.is_complete|yesno:'checked,' }}
-           class="w-5rem p-2 checkbox is-medium"
+           class="w-5rem p-2 checkbox is-medium checkbox-task-complete"
            autocomplete="off"
            id="checkbox-task-complete-{{ task.id }}"
            hx-put="{% url 'tasks:task_update' task_id=task.id %}"
@@ -22,7 +23,6 @@
                 text-strikethrough has-text-grey-light
               {% endif %}"
        title="Task ID#: {{ task.id }}"
-       data-task-id="{{ task.id }}"
        hx-put="{% url 'tasks:task_update' task_id=task.id %}"
        hx-vals='{"is_complete": "{{ task.is_complete|yesno:'false,true' }}"}'
        hx-target="#list-item-{{ task.id }}"
@@ -54,13 +54,13 @@
   <div class="w-5rem is-size-4 is-flex is-justify-content-center"
        x-data="{ taskDeleteModal{{ task.id }}IsActive: false }">
     <div id="icon-task-edit-{{ task.id }}"
-          class="p-2 pt-3 cursor-pointer has-text-weight-bold"
+          class="p-2 pt-3 cursor-pointer has-text-weight-bold icon-task-edit"
           onclick="updateDivToggle({{ task.id }})"
           title="Edit">
       &#9998; <!-- edit icon -->
     </div>
     <div id="icon-task-delete-{{ task.id }}"
-          class="ml-2 p-2 cursor-pointer has-text-weight-bold"
+          class="ml-2 p-2 cursor-pointer has-text-weight-bold icon-task-delete"
           title="Delete"
           @click="taskDeleteModal{{ task.id }}IsActive = true;">
       &times; <!-- delete icon -->

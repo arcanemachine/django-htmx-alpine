@@ -1,1 +1,1 @@
-testcafe --inspect-brk chromium .
+testcafe --inspect-brk chromium . -L
