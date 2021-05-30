@@ -17,6 +17,7 @@ mediafiles/
 server_config.py
 
 # testcafe
+testcafe/
 keys.js
 
 # npm #
