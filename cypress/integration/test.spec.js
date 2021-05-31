@@ -1,28 +1,7 @@
 import * as h from '../support/helpers.js';
 import * as keys from '../support/keys.js';
 
-xdescribe('tasks:task_list', () => {
-  let testUrl = h.urls.taskList;
-  it('Does not allow unauthenticated user to create new task', () => {
-    cy.visit(testUrl)
-
-    // #task-list-message tells user to login first
-    cy.get('#task-list-message')
-      .contains('You must login');
-
-    // attempt to create new task
-    cy.get('#new-task-input-text')
-      .type('New task');
-    cy.get('#new-task-button-create')
-      .click();
-
-    // does not succeed, contains status message telling user to login
-    cy.get('#status-message-notification')
-      .contains('You must login');
-  })
-})
-
-describe('commands.js - login(), loginByCsrf()', () => {
+xdescribe('commands.js: login(), loginByCsrf()', () => {
   it('loginByCsrf() - Logs in the user using valid CSRF token', () => {
     cy.request(h.urls.loginForm)
       .its('body')
@@ -62,4 +41,25 @@ describe('commands.js - login(), loginByCsrf()', () => {
 
   })
 
+})
+
+describe('tasks:task_list', () => {
+  let testUrl = h.urls.taskList;
+  it('Does not allow unauthenticated user to create new task', () => {
+    cy.visit(testUrl)
+
+    // #task-list-message tells user to login first
+    cy.get('#task-list-message')
+      .contains('You must login');
+
+    // attempt to create new task
+    cy.get('#new-task-input-text')
+      .type('New task');
+    cy.get('#new-task-button-create')
+      .click();
+
+    // does not succeed, contains status message telling user to login
+    cy.get('#status-message-notification')
+      .contains('You must login');
+  })
 })
