@@ -27,7 +27,7 @@ describe('users:login', () => {
   let password = keys.TEST_USER_PASSWORD;
   let testUrl = h.urls.loginForm;
 
-  Cypress.Commands.add('loginByCsrf', (csrfToken) => {
+  Cypress.Commands.add('login', (csrfToken) => {
     cy.request({
       method: 'POST',
       url: h.urls.loginForm,
@@ -44,19 +44,19 @@ describe('users:login', () => {
   })
 
   it('Returns 403 without CSRF token', () => {
-    cy.loginByCsrf('invalid-token')
+    cy.login('invalid-token')
       .its('status')
       .should('eq', 403);
   })
 
-  it('Logs in the user via loginByCsrf()', () => {
+  it('Logs in the user via login()', () => {
     cy.request(h.urls.loginForm)
       .its('body')
       .then((body) => {
         const $html = Cypress.$(body);
         const csrfToken = $html
           .find('input[name="csrfmiddlewaretoken"]').val();
-        cy.loginByCsrf(csrfToken)
+        cy.login(csrfToken)
           .then((resp) => {
             expect(resp.status).to.eq(200);
             expect(resp.body).to.include('You are now logged in');
