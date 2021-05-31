@@ -1,5 +1,13 @@
 <div class="navbar-end is-centered"
      @click.away="navbarIsActive = false">
+  <a class="navbar-item"
+     href="{% url 'tasks:task_list' %}">
+    Home
+  </a>
+  <a class="navbar-item"
+     href="{% url 'about' %}">
+    About
+  </a>
   {% if not user.is_authenticated %}
     <a class="navbar-item"
        @click="loginModalEnable">
@@ -15,8 +23,4 @@
       Logout
     </a>
   {% endif %}
-    <a class="navbar-item"
-       href="{% url 'about' %}">
-      About this Project
-    </a>
 </div>
