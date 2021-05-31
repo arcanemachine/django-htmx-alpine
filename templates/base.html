@@ -22,14 +22,6 @@
 {% block style %}{% endblock style %}
     </style>
 
-    <script>
-      // redirect user to 'About' view if this is their first visit
-      if (!localStorage.getItem('introSeen')) {
-        localStorage.setItem('introSeen', true);
-        window.location.href = "{% url 'about'  %}";
-      }
-    </script>
-
     {% block head_script %}{% endblock head_script %}
 
     <!-- js -->
