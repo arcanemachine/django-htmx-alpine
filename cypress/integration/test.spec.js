@@ -22,60 +22,15 @@ xdescribe('tasks:task_list', () => {
   })
 })
 
-describe('users:login', () => {
-  let username = keys.TEST_USER_USERNAME;
-  let password = keys.TEST_USER_PASSWORD;
-  let testUrl = h.urls.loginForm;
-
-  Cypress.Commands.add('loginByCsrf', (csrfToken) => {
-    cy.request({
-      method: 'POST',
-      url: h.urls.loginForm,
-      failOnStatusCode: false, // dont fail so we can make assertions
-      form: true, // we are submitting a regular form body
-      body: {
-        username,
-        password,
-        captcha_0: 'PASSED',
-        captcha_1: 'PASSED',
-        csrfmiddlewaretoken: csrfToken, // insert this as part of form body
-      },
-    })
-  })
-
-  Cypress.Commands.add('login', () => {
+describe('commands.js - login(), loginByCsrf()', () => {
+  it('loginByCsrf() - Logs in the user using valid CSRF token', () => {
     cy.request(h.urls.loginForm)
       .its('body')
       .then((body) => {
         const $html = Cypress.$(body);
         const csrfToken = $html
           .find('input[name="csrfmiddlewaretoken"]').val();
-        cy.loginByCsrf(csrfToken);
-    })
-  })
-
-  it('Logs in the user via login()', () => {
-    cy.login()
-      .then((resp) => {
-        expect(resp.status).to.eq(200);
-        expect(resp.body).to.include('You are now logged in');
-    })
-  })
-
-  it('Returns 403 without CSRF token', () => {
-    cy.loginByCsrf('invalid-token')
-      .its('status')
-      .should('eq', 403);
-  })
-
-  it('Logs in the user via loginByCsrf()', () => {
-    cy.request(h.urls.loginForm)
-      .its('body')
-      .then((body) => {
-        const $html = Cypress.$(body);
-        const csrfToken = $html
-          .find('input[name="csrfmiddlewaretoken"]').val();
-        cy.login(csrfToken)
+        cy.loginByCsrf(csrfToken)
           .then((resp) => {
             expect(resp.status).to.eq(200);
             expect(resp.body).to.include('You are now logged in');
@@ -83,8 +38,22 @@ describe('users:login', () => {
     })
   })
 
+  it('loginByCsrf() - Returns 403 without CSRF token', () => {
+    cy.loginByCsrf('invalid-token')
+      .its('status')
+      .should('eq', 403);
+  })
+
+  it('login() - Gets valid CSRF token and logs in the user', () => {
+    cy.login()
+      .then((resp) => {
+        expect(resp.status).to.eq(200);
+        expect(resp.body).to.include('You are now logged in');
+    })
+  })
+
   xit('(slow) Logs in the user using form input', () => {
-    cy.visit(testUrl);
+    cy.visit(h.urls.loginForm);
 
     cy.get('#id_username').type(username);
     cy.get('#id_password').type(password);
