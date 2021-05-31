@@ -27,7 +27,7 @@ describe('users:login', () => {
   let password = keys.TEST_USER_PASSWORD;
   let testUrl = h.urls.loginForm;
 
-  Cypress.Commands.add('login', (csrfToken) => {
+  Cypress.Commands.add('loginByCsrf', (csrfToken) => {
     cy.request({
       method: 'POST',
       url: h.urls.loginForm,
@@ -43,13 +43,32 @@ describe('users:login', () => {
     })
   })
 
+  Cypress.Commands.add('login', () => {
+    cy.request(h.urls.loginForm)
+      .its('body')
+      .then((body) => {
+        const $html = Cypress.$(body);
+        const csrfToken = $html
+          .find('input[name="csrfmiddlewaretoken"]').val();
+        cy.loginByCsrf(csrfToken);
+    })
+  })
+
+  it('Logs in the user via login()', () => {
+    cy.login()
+      .then((resp) => {
+        expect(resp.status).to.eq(200);
+        expect(resp.body).to.include('You are now logged in');
+    })
+  })
+
   it('Returns 403 without CSRF token', () => {
-    cy.login('invalid-token')
+    cy.loginByCsrf('invalid-token')
       .its('status')
       .should('eq', 403);
   })
 
-  it('Logs in the user via login()', () => {
+  it('Logs in the user via loginByCsrf()', () => {
     cy.request(h.urls.loginForm)
       .its('body')
       .then((body) => {
@@ -60,8 +79,8 @@ describe('users:login', () => {
           .then((resp) => {
             expect(resp.status).to.eq(200);
             expect(resp.body).to.include('You are now logged in');
-          })
-      })
+        })
+    })
   })
 
   xit('(slow) Logs in the user using form input', () => {
