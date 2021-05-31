@@ -22,6 +22,14 @@
 {% block style %}{% endblock style %}
     </style>
 
+    <script>
+      // redirect user to 'About' view if this is their first visit
+      if (!localStorage.getItem('introSeen')) {
+        localStorage.setItem('introSeen', true);
+        window.location.href = "{% url 'about'  %}";
+      }
+    </script>
+
     {% block head_script %}{% endblock head_script %}
 
     <!-- js -->
@@ -70,11 +78,11 @@
     <script src="{% static 'js/helpers.js' %}"></script>
 
     <script>
-      <!-- add CSRFToken to HTMX headers -->
-      let sayHello = () => {console.log('hello')}
+      // add CSRFToken to HTMX headers
       document.body.addEventListener('htmx:configRequest', (event) => {
         event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
       })
+
     </script>
 
     {% include 'status_message.html' %}
