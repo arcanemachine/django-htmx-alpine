@@ -2,6 +2,7 @@ import json
 import requests
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
+from django.views.generic import TemplateView
 
 from project_folder import keys, helpers as h
 
@@ -33,3 +34,7 @@ def get_weather(request):
         else:
             return HttpResponse(
                 f'We could not find the temperature for {city}.')
+
+
+class AboutTemplateView(TemplateView):
+    template_name = 'about.html'
