@@ -11,7 +11,15 @@
 
     <p>This project uses a mixture of Django, Alpine.JS, and HTMX to serve as a minimalist alternative to Javascript-based frontend frameworks such as React, Vue, Angular and Svelte.</p>
 
-    <div class="mt-6 is-size-4 is-centered">Why?</div>
+    <div class="my-6 is-centered">
+      <a href="{% url 'tasks:task_list' %}">
+        <button class="button is-info">
+          Take me to the demo!
+        </button>
+      </a>
+    </div>
+
+    <div class="mt-6 is-size-4 is-centered">Why Did I Make This Project?</div>
     <p>Most frontend frameworks require a lot of extra steps to play nicely with a backend web framework such as Django. Using Alpine.JS and HTMX allows you to spice up your frontend experience, while keeping the convenience and versatility of your server-side framework's capabilities. For example, this setup allows you to use Django's built-in session authentication system, which is more secure that the token-based systems that many services use, which can be vulnerable to XSS hacking attacks.</p>
     <p>With the whiz-bang frameworks (React, Vue, etc.), a lot of what makes the backend frameworks useful is stripped away, reducing them to mere API handlers and database ORMs. Using HTMX and Alpine.js puts the muscle back into your server-side framework.</p>
 
@@ -117,7 +125,16 @@ hx-target=&quot;#about-htmx-response&quot;&gt;</pre>
     <div class="mt-6 is-size-4 is-centered">Conclusion</div>
     <p>HTMX and Alpine.JS can be used to add interactivity and native app-like functionality to websites with a minimum of additional code. While this project could have been made without them, it showcases their usefulness, both by themselves, and also how they can be used together.</p>
 
+    <div class="mt-4 is-centered">
+      <a href="{% url 'tasks:task_list' %}">
+        <button class="button is-info">
+          Take me to the demo!
+        </button>
+      </a>
+    </div>
+
   </div>
+
 </div>
 
 {% endblock content %}
