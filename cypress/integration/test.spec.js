@@ -45,7 +45,10 @@ xdescribe('commands.js: login(), loginByCsrf()', () => {
 
 describe('tasks:task_list', () => {
   let testUrl = h.urls.taskList;
-  it('Does not allow unauthenticated user to create new task', () => {
+
+  let newTaskDescription = new Date().toString();
+
+  xit('Does not allow unauthenticated user to create new task', () => {
     cy.visit(testUrl)
 
     // #task-list-message tells user to login first
@@ -54,7 +57,7 @@ describe('tasks:task_list', () => {
 
     // attempt to create new task
     cy.get('#new-task-input-text')
-      .type('New task');
+      .type(newTaskDescription);
     cy.get('#new-task-button-create')
       .click();
 
@@ -62,4 +65,27 @@ describe('tasks:task_list', () => {
     cy.get('#status-message-notification')
       .contains('You must login');
   })
+
+  it('Allows authenticated user to create new task', () => {
+    cy.login()
+      .visit(testUrl)
+      // .contains('No tasks created');  // task list empty
+
+    // create new task
+    cy.get('#new-task-input-text')
+      .type(newTaskDescription)
+      .get('#new-task-button-create')
+      .click();
+
+    // first task list item contains newTaskDescription
+    cy.reload() // reload stale DOM after HTMX updates page content
+      .get('#task-list').then(($ul) => {
+        expect($ul.children(':first').text())
+          .contains(newTaskDescription)
+    })
+
+  })
+
+  // it('Logs in the user using the login modal', () => {})
+  // it('Registers a new user using the register modal', () => {})
 })

@@ -21,12 +21,14 @@
        class="w-max-35rem is-centered cursor-pointer trans-color-1000
               {% if task.is_complete %}
                 text-strikethrough has-text-grey-light
-              {% endif %}"
+              {% endif %}
+              task-item-description"
        title="Task ID#: {{ task.id }}"
        hx-put="{% url 'tasks:task_update' task_id=task.id %}"
        hx-vals='{"is_complete": "{{ task.is_complete|yesno:'false,true' }}"}'
        hx-target="#list-item-{{ task.id }}"
-       hx-swap="outerHTML">
+       hx-swap="outerHTML"
+       data-cy="task-item-description-{{ task.id }}">
     {{ task.description }}
   </div>
 
