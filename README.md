@@ -1,5 +1,8 @@
 # django-htmx-alpine 
-A sandbox for using Django with HTMX.
+
+This project is just a basic todo list.
+
+However, it is made using a combination of Alpine.JS and HTMX, and shows how you can get the reactivity of a frontend JS framework without sacrificing the benefits of your server-side framework (Session authentication, templating, etc).
 
 ## Setup Instructions
 
