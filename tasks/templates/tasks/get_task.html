@@ -27,9 +27,7 @@
        hx-put="{% url 'tasks:task_update' task_id=task.id %}"
        hx-vals='{"is_complete": "{{ task.is_complete|yesno:'false,true' }}"}'
        hx-target="#list-item-{{ task.id }}"
-       hx-swap="outerHTML"
-    {{ task.description }}
-  </div>
+       hx-swap="outerHTML">{{ task.description }}</div>
 
   <!-- task update div -->
   <div id="update-div-{{ task.id }}" class="is-hidden">

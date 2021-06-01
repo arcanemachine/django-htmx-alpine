@@ -44,11 +44,11 @@ xdescribe('commands.js: login(), loginByCsrf()', () => {
 })
 
 describe('tasks:task_list', () => {
-  let testUrl = h.urls.taskList;
+  const testUrl = h.urls.taskList;
 
-  let newTaskDescription = new Date().toString();
+  const newTaskDescription = new Date().toString();
 
-  xit('Does not allow unauthenticated user to create new task', () => {
+  it('Does not allow unauthenticated user to create new task', () => {
     cy.visit(testUrl)
 
     // #task-list-message tells user to login first
@@ -66,15 +66,14 @@ describe('tasks:task_list', () => {
       .contains('You must login')
   })
 
-  xit('Allows authenticated user to create new task', () => {
-    cy.login()
-      .visit(testUrl)
+  it('Allows authenticated user to create new task', () => {
+    cy.login().visit(testUrl)
 
     // create new task
     cy.get('#new-task-input-text')
-      .type(newTaskDescription)
+        .type(newTaskDescription)  // enter task description
       .get('#new-task-button-create')
-      .click()
+        .click()  // click submit button
 
     // first task list item contains newTaskDescription
     cy.reload() // reload stale DOM after HTMX updates page content
@@ -83,6 +82,29 @@ describe('tasks:task_list', () => {
           .contains(newTaskDescription)
     })
 
+  })
+
+  it('Allows authenticated user to update an existing task', () => {
+    cy.login().visit(testUrl)
+
+    cy.get('#task-list').then(($ul) => {
+      // get newest task id
+      const taskId = $ul.children()[0].dataset.taskId;
+
+      // update newest task
+      const updatedTaskMessage = new Date();
+      cy.get(`#task-item-description-${taskId}`)
+        .then(($descriptionEl) => {
+          const originalTaskDescription = $descriptionEl.text()
+          cy.get(`#icon-task-edit-${taskId}`).click()  // click the edit icon
+          cy.get(`#task-update-input-text-${taskId}`)
+            .type(String(updatedTaskMessage))  // edit the text
+            .type('{enter}')  // submit
+          cy.reload()
+            .get(`#task-item-description-${taskId}`)
+            .should('not.include.text', originalTaskDescription) // new description is different from old one
+      })
+    })
   })
 
   it('Allows authenticated user to delete an existing task', () => {
@@ -95,18 +117,14 @@ describe('tasks:task_list', () => {
 
       // delete newest task
       cy.get(`#list-item-${taskId}`)
-        .click() // click the delete icon
-      cy.get(`#icon-task-delete-${taskId}`)
-        .click() // click the delete modal 'Confirm' button
-      cy.reload()
-        .get(`#icon-task-delete-${taskId}`)
-        .should('not.exist')
+        .then(() => {
+          cy.get(`#icon-task-delete-${taskId}`)
+            .click() // click the delete icon
+          cy.get(`#task-button-delete-${taskId}`)
+            .click() // click the delete modal 'Confirm' button
+      }).should('not.exist') // element no longer exists after deletion
     })
-
-
   })
-
-  // it('Allows authenticated user to delete an existing task', () => {})
 
   // it('Logs in the user using the login modal', () => {})
   // it('Registers a new user using the register modal', () => {})
