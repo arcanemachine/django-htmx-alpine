@@ -3,14 +3,14 @@ import * as keys from '../support/keys.js';
 
 describe('auth (registration, login, logout)', () => {
 
-  it('userIsAuthenticated view reflects authentication state', () => {
+  it("userIsAuthenticated view reflects authentication state", () => {
     cy.visit(h.urls.userIsAuthenticated).contains('false')
       .login()
       .visit(h.urls.userIsAuthenticated).contains('true')
 
   })
 
-  it('Registers a new user using the Register modal', () => {
+  it("Registers a new user using the Register modal", () => {
     const username = h.randomString()
     const password = h.randomString()
 
@@ -34,7 +34,7 @@ describe('auth (registration, login, logout)', () => {
     cy.visit(h.urls.userIsAuthenticated).contains('true')
   })
 
-  it('Logs in the user using the Login modal', () => {
+  it("Logs in the user using the Login modal", () => {
     const username = keys.TEST_USER_USERNAME;
     const password = keys.TEST_USER_PASSWORD;
 
@@ -57,7 +57,7 @@ describe('auth (registration, login, logout)', () => {
     cy.visit(h.urls.userIsAuthenticated).contains('true')
   })
 
-  it('Logs out the user using the Logout modal', () => {
+  it("Logs out the user using the Logout modal", () => {
     cy.login().visit(h.urls.taskList)
 
     // click the Logout navbar item
@@ -74,7 +74,7 @@ describe('auth (registration, login, logout)', () => {
     cy.visit(h.urls.userIsAuthenticated).contains('false')
   })
 
-  it('Logs in the user using special form input view', () => {
+  it("Logs in the user using special form input view", () => {
     const username = keys.TEST_USER_USERNAME;
     const password = keys.TEST_USER_PASSWORD;
 
@@ -93,7 +93,7 @@ describe('auth (registration, login, logout)', () => {
     cy.visit(h.urls.userIsAuthenticated).contains('true')
   })
 
-  it('loginByCsrf() - Logs in the user using valid CSRF token', () => {
+  it("loginByCsrf() - Logs in the user using valid CSRF token", () => {
     cy.request(h.urls.loginForm)
       .its('body')
       .then((body) => {
@@ -110,13 +110,13 @@ describe('auth (registration, login, logout)', () => {
     cy.visit(h.urls.userIsAuthenticated).contains('true')
   })
 
-  it('loginByCsrf() - Returns 403 without CSRF token', () => {
+  it("loginByCsrf() - Returns 403 without CSRF token", () => {
     cy.loginByCsrf('invalid-token')
       .its('status')
       .should('eq', 403);
   })
 
-  it('login() - Gets valid CSRF token and logs in the user', () => {
+  it("login() - Gets valid CSRF token and logs in the user", () => {
     cy.login()
 
     // user authentication check view returns 'true'
@@ -125,12 +125,53 @@ describe('auth (registration, login, logout)', () => {
 
 })
 
-describe('tasks:task_list', () => {
+describe("view: about", () => {
+  const testUrl = h.urls.about;
+
+  it("Alpine.JS demo works properly", () => {
+    cy.visit(testUrl)
+
+    /*
+
+      // example using .then() chain and expect()
+    cy.get('[data-cy="demo-alpine-counter-text"]').then((counter) => {
+      cy.expect(counter.text()).to.equal('0')
+    })
+
+      // example using should()
+    cy.get('[data-cy="demo-alpine-counter-text"]').should('have.text', '0')
+
+    */
+
+    cy.get('[data-cy="demo-alpine-counter-button"]').then(($counterButton) => {
+      cy.get('[data-cy="demo-alpine-counter-text"]').then(($counterText) => {
+
+        // counter text should initially be '0'
+        cy.get($counterText).should('have.text', '0')
+
+        // counter text should be '1' after clicking the button
+        $counterButton.click()
+        cy.get($counterText).should('have.text', '1').then(() => {
+
+          // counter text should be '2' after clicking the button again
+          $counterButton.click()
+          cy.get($counterText).should('have.text', '2')
+
+        })
+
+      })
+    })
+
+  })
+
+})
+
+describe("view: tasks:task_list", () => {
   const testUrl = h.urls.taskList;
 
   const newTaskDescription = new Date().toString();
 
-  it('Does not allow unauthenticated user to create new task', () => {
+  it("Does not allow unauthenticated user to create new task", () => {
     cy.visit(testUrl)
 
     // #task-list-message tells user to login first
@@ -147,7 +188,7 @@ describe('tasks:task_list', () => {
       .get('[data-cy="status-message"]').contains('You must login')
   })
 
-  it('Allows authenticated user to create new task', () => {
+  it("Allows authenticated user to create new task", () => {
     cy.login().visit(testUrl)
 
     // create new task
@@ -165,7 +206,7 @@ describe('tasks:task_list', () => {
 
   })
 
-  it('Allows authenticated user to update an existing task', () => {
+  it("Allows authenticated user to update an existing task", () => {
     cy.login().visit(testUrl)
 
     cy.get('#task-list').then(($ul) => {
@@ -188,7 +229,7 @@ describe('tasks:task_list', () => {
     })
   })
 
-  it('Allows authenticated user to delete an existing task', () => {
+  it("Allows authenticated user to delete an existing task", () => {
     cy.login()
       .visit(testUrl)
 
