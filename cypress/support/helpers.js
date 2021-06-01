@@ -8,5 +8,6 @@ export const urls = {
   taskList: serverUrl,
   getCsrfToken: serverUrl + '/users/get-csrf-token/',
   login: serverUrl + '/users/login/',
-  loginForm: serverUrl + '/users/login/?form=1'
+  loginForm: serverUrl + '/users/login/?form=1',
+  userIsAuthenticated: serverUrl + '/utility/user-is-authenticated/'
 }

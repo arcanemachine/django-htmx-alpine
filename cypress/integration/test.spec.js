@@ -3,6 +3,13 @@ import * as keys from '../support/keys.js';
 
 describe('auth (registration, login, logout)', () => {
 
+  it('userIsAuthenticated view reflects authentication state', () => {
+    cy.visit(h.urls.userIsAuthenticated).contains('false')
+      .login()
+      .visit(h.urls.userIsAuthenticated).contains('true')
+
+  })
+
   it('Registers a new user using the Register modal', () => {
     const username = h.randomString()
     const password = h.randomString()
@@ -14,7 +21,7 @@ describe('auth (registration, login, logout)', () => {
       .get('[data-cy="navbar-item-register"]').first().click()
 
     // fill out and submit the form
-      .get('[data-cy="register-input-username"]').type(username)
+    cy.get('[data-cy="register-input-username"]').type(username)
       .get('[data-cy="register-input-password1"]').type(password)
       .get('[data-cy="register-input-password2"]').type(password)
       .get('[data-cy="register-input-captcha"]').type('PASSED')
@@ -22,6 +29,9 @@ describe('auth (registration, login, logout)', () => {
 
     // after redirect, #status-message contains success message
     cy.contains('[data-cy="status-message"]', 'Registration successful')
+
+    // user authentication check view returns 'true'
+    cy.visit(h.urls.userIsAuthenticated).contains('true')
   })
 
   it('Logs in the user using the Login modal', () => {
@@ -30,10 +40,12 @@ describe('auth (registration, login, logout)', () => {
 
     cy.visit(h.urls.taskList)
     
-      .get('[data-cy="navbar-burger"]').click()
+    // click the Login navbar item
+    cy.get('[data-cy="navbar-burger"]').click()
       .get('[data-cy="navbar-item-login"]').first().click()
 
-      .get('[data-cy="login-input-username"]').type(username)
+    // fill out and submit the form
+    cy.get('[data-cy="login-input-username"]').type(username)
       .get('[data-cy="login-input-password"]').type(password)
       .get('[data-cy="login-input-captcha"]').type('PASSED')
       .get('[data-cy="login-button-confirm"]').click()
@@ -41,6 +53,8 @@ describe('auth (registration, login, logout)', () => {
     // after redirect, #status-message contains success message
     cy.contains('[data-cy="status-message"]', 'Login successful')
 
+    // user authentication check view returns 'true'
+    cy.visit(h.urls.userIsAuthenticated).contains('true')
   })
 
   it('Logs out the user using the Logout modal', () => {
@@ -53,21 +67,30 @@ describe('auth (registration, login, logout)', () => {
     // click the confirm button
     cy.get('[data-cy="logout-button-confirm"]').click()
 
+    // after redirect, #status-message contains success message
     cy.contains('[data-cy="status-message"]', 'Logout successful')
 
+    // user authentication check view returns 'true'
+    cy.visit(h.urls.userIsAuthenticated).contains('false')
   })
 
   it('Logs in the user using special form input view', () => {
     const username = keys.TEST_USER_USERNAME;
     const password = keys.TEST_USER_PASSWORD;
 
-    cy.visit(h.urls.loginForm);
+    cy.visit(h.urls.loginForm)
 
-    cy.get('#id_username').type(username);
-    cy.get('#id_password').type(password);
-    cy.get('#id_captcha_1').type('PASSED');
-    cy.get('#form-button-submit').click();
+    // fill out and submit the form
+      .get('#id_username').type(username)
+      .get('#id_password').type(password)
+      .get('#id_captcha_1').type('PASSED')
+      .get('#form-button-submit').click()
 
+    // after redirect, #status-message contains success message
+    cy.contains('[data-cy="status-message"]', 'Login successful')
+
+    // user authentication check view returns 'true'
+    cy.visit(h.urls.userIsAuthenticated).contains('true')
   })
 
   it('loginByCsrf() - Logs in the user using valid CSRF token', () => {
@@ -75,14 +98,16 @@ describe('auth (registration, login, logout)', () => {
       .its('body')
       .then((body) => {
         const $html = Cypress.$(body);
-        const csrfToken = $html
-          .find('input[name="csrfmiddlewaretoken"]').val();
-        cy.loginByCsrf(csrfToken)
+        const token = $html.find('input[name="csrfmiddlewaretoken"]').val()
+        cy.loginByCsrf(token)
           .then((resp) => {
             expect(resp.status).to.eq(200);
             expect(resp.body).to.include('Login successful');
         })
     })
+
+    // user authentication check view returns 'true'
+    cy.visit(h.urls.userIsAuthenticated).contains('true')
   })
 
   it('loginByCsrf() - Returns 403 without CSRF token', () => {
@@ -93,10 +118,9 @@ describe('auth (registration, login, logout)', () => {
 
   it('login() - Gets valid CSRF token and logs in the user', () => {
     cy.login()
-      .then((resp) => {
-        expect(resp.status).to.eq(200);
-        cy.get('[data-cy="status-message"]').contains('Login successful')
-    })
+
+    // user authentication check view returns 'true'
+    cy.visit(h.urls.userIsAuthenticated).contains('true')
   })
 
 })
@@ -116,12 +140,11 @@ describe('tasks:task_list', () => {
     // attempt to create new task
     cy.get('#task-create-input-description')
       .type(newTaskDescription)
-    cy.get('#task-create-button-confirm')
+      .get('#task-create-button-confirm')
       .click()
 
     // does not succeed, contains status message telling user to login
-    cy.get('[data-cy="status-message"]')
-      .contains('You must login')
+      .get('[data-cy="status-message"]').contains('You must login')
   })
 
   it('Allows authenticated user to create new task', () => {
@@ -178,12 +201,10 @@ describe('tasks:task_list', () => {
         .then(() => {
           cy.get(`#task-icon-delete-${taskId}`)
             .click() // click the delete icon
-          cy.get(`#task-button-delete-${taskId}`)
+            .get(`#task-button-delete-${taskId}`)
             .click() // click the delete modal 'Confirm' button
       }).should('not.exist') // element no longer exists after deletion
     })
   })
 
-  // it('Logs in the user using the login modal', () => {})
-  // it('Registers a new user using the register modal', () => {})
 })

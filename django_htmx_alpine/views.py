@@ -36,5 +36,9 @@ def get_weather(request):
                 f'We could not find the temperature for {city}.')
 
 
+def user_is_authenticated(request):
+    return HttpResponse('true' if request.user.is_authenticated else 'false')
+
+
 class AboutTemplateView(TemplateView):
     template_name = 'about.html'
