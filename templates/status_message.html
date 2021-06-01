@@ -6,7 +6,8 @@
           x-show.transition.opacity.duration.500ms="show"
           x-text="statusMessageText"
           x-cloak
-          @status-message-display.window="receiveStatusMessageDisplay($event)">
+          @status-message-display.window="receiveStatusMessageDisplay($event)"
+          data-cy-id="status-message-notification">
   </button>
 </div>
 

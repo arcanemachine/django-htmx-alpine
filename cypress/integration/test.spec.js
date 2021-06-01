@@ -53,29 +53,28 @@ describe('tasks:task_list', () => {
 
     // #task-list-message tells user to login first
     cy.get('#task-list-message')
-      .contains('You must login');
+      .contains('You must login')
 
     // attempt to create new task
     cy.get('#new-task-input-text')
-      .type(newTaskDescription);
+      .type(newTaskDescription)
     cy.get('#new-task-button-create')
-      .click();
+      .click()
 
     // does not succeed, contains status message telling user to login
     cy.get('#status-message-notification')
-      .contains('You must login');
+      .contains('You must login')
   })
 
-  it('Allows authenticated user to create new task', () => {
+  xit('Allows authenticated user to create new task', () => {
     cy.login()
       .visit(testUrl)
-      // .contains('No tasks created');  // task list empty
 
     // create new task
     cy.get('#new-task-input-text')
       .type(newTaskDescription)
       .get('#new-task-button-create')
-      .click();
+      .click()
 
     // first task list item contains newTaskDescription
     cy.reload() // reload stale DOM after HTMX updates page content
@@ -85,6 +84,29 @@ describe('tasks:task_list', () => {
     })
 
   })
+
+  it('Allows authenticated user to delete an existing task', () => {
+    cy.login()
+      .visit(testUrl)
+
+    cy.get('#task-list').then(($ul) => {
+      // get newest task id
+      const taskId = $ul.children()[0].dataset.taskId;
+
+      // delete newest task
+      cy.get(`#list-item-${taskId}`)
+        .click() // click the delete icon
+      cy.get(`#icon-task-delete-${taskId}`)
+        .click() // click the delete modal 'Confirm' button
+      cy.reload()
+        .get(`#icon-task-delete-${taskId}`)
+        .should('not.exist')
+    })
+
+
+  })
+
+  // it('Allows authenticated user to delete an existing task', () => {})
 
   // it('Logs in the user using the login modal', () => {})
   // it('Registers a new user using the register modal', () => {})

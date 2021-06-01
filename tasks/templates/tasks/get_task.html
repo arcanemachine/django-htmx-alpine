@@ -28,7 +28,6 @@
        hx-vals='{"is_complete": "{{ task.is_complete|yesno:'false,true' }}"}'
        hx-target="#list-item-{{ task.id }}"
        hx-swap="outerHTML"
-       data-cy="task-item-description-{{ task.id }}">
     {{ task.description }}
   </div>
 
@@ -64,7 +63,8 @@
     <div id="icon-task-delete-{{ task.id }}"
           class="ml-2 p-2 cursor-pointer has-text-weight-bold icon-task-delete"
           title="Delete"
-          @click="taskDeleteModal{{ task.id }}IsActive = true;">
+          @click="taskDeleteModal{{ task.id }}IsActive = true;"
+          data-cy-id="icon-task-delete-{{ task.id }}">
       &times; <!-- delete icon -->
     </div>
 
@@ -95,7 +95,8 @@
                 <button id="task-button-delete-{{ task.id }}"
                         class="button is-block is-danger is-medium
                                is-fullwidth"
-                   @click="taskDelete({{ task.id }})">
+                   @click="taskDelete({{ task.id }})"
+                   data-cy-id="task-button-delete-{{ task.id }}">
                   Delete
                 </button>
                 <button class="ml-4 button is-block is-light
