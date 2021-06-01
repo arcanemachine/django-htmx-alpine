@@ -1,7 +1,7 @@
 import * as h from '../support/helpers.js';
 import * as keys from '../support/keys.js';
 
-xdescribe('commands.js: login(), loginByCsrf()', () => {
+describe('login and registration', () => {
   it('loginByCsrf() - Logs in the user using valid CSRF token', () => {
     cy.request(h.urls.loginForm)
       .its('body')
@@ -31,7 +31,10 @@ xdescribe('commands.js: login(), loginByCsrf()', () => {
     })
   })
 
-  xit('(slow) Logs in the user using form input', () => {
+  it('(slow) Logs in the user using form input', () => {
+    const username = keys.TEST_USER_USERNAME;
+    const password = keys.TEST_USER_PASSWORD;
+
     cy.visit(h.urls.loginForm);
 
     cy.get('#id_username').type(username);
@@ -56,9 +59,9 @@ describe('tasks:task_list', () => {
       .contains('You must login')
 
     // attempt to create new task
-    cy.get('#new-task-input-text')
+    cy.get('#task-create-input-description')
       .type(newTaskDescription)
-    cy.get('#new-task-button-create')
+    cy.get('#task-create-button-confirm')
       .click()
 
     // does not succeed, contains status message telling user to login
@@ -70,9 +73,9 @@ describe('tasks:task_list', () => {
     cy.login().visit(testUrl)
 
     // create new task
-    cy.get('#new-task-input-text')
+    cy.get('#task-create-input-description')
         .type(newTaskDescription)  // enter task description
-      .get('#new-task-button-create')
+      .get('#task-create-button-confirm')
         .click()  // click submit button
 
     // first task list item contains newTaskDescription
@@ -93,15 +96,15 @@ describe('tasks:task_list', () => {
 
       // update newest task
       const updatedTaskMessage = new Date();
-      cy.get(`#task-item-description-${taskId}`)
+      cy.get(`#task-description-${taskId}`)
         .then(($descriptionEl) => {
           const originalTaskDescription = $descriptionEl.text()
-          cy.get(`#icon-task-edit-${taskId}`).click()  // click the edit icon
-          cy.get(`#task-update-input-text-${taskId}`)
+          cy.get(`#task-icon-edit-${taskId}`).click()  // click the edit icon
+          cy.get(`#task-update-description-${taskId}`)
             .type(String(updatedTaskMessage))  // edit the text
             .type('{enter}')  // submit
           cy.reload()
-            .get(`#task-item-description-${taskId}`)
+            .get(`#task-description-${taskId}`)
             .should('not.include.text', originalTaskDescription) // new description is different from old one
       })
     })
@@ -118,7 +121,7 @@ describe('tasks:task_list', () => {
       // delete newest task
       cy.get(`#list-item-${taskId}`)
         .then(() => {
-          cy.get(`#icon-task-delete-${taskId}`)
+          cy.get(`#task-icon-delete-${taskId}`)
             .click() // click the delete icon
           cy.get(`#task-button-delete-${taskId}`)
             .click() // click the delete modal 'Confirm' button

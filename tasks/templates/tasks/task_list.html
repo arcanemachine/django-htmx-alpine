@@ -10,11 +10,11 @@
       class="mt-4 mx-auto is-flex is-justify-content-center"
       @submit.prevent="taskCreate">
   <input type="text"
-         id="new-task-input-text"
+         id="task-create-input-description"
          class="input is-inline is-medium btn-group-left-side"
          placeholder="Enter new task...">
   <button type="submit"
-          id="new-task-button-create"
+          id="task-create-button-confirm"
           class="button is-info is-medium btn-group-right-side">
     Create
   </button>
@@ -38,7 +38,8 @@
         }
         else {
           // get the value of the text input, then clear it
-          let textInput = document.querySelector("#new-task-input-text");
+          let textInput = document
+            .querySelector("#task-create-input-description");
           let description = textInput.value;
           textInput.value = '';
 

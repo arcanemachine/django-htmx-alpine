@@ -10,13 +10,13 @@
   function updateDivToggle(id) {
     let updateDiv = document.querySelector(`#update-div-${id}`);
     let descriptionDiv = document
-      .querySelector(`#task-item-description-${id}`);
+      .querySelector(`#task-description-${id}`);
     updateDiv.classList.toggle('is-hidden');
     descriptionDiv.classList.toggle('is-hidden');
 
     if (!updateDiv.classList.contains('is-hidden')) {
       // select the text input when showing the div
-      document.querySelector(`#task-update-input-text-${id}`).select();
+      document.querySelector(`#task-update-description-${id}`).select();
     } else {
       // reset the text input when hiding the div
       document.querySelector(`#task-update-form-${id}`).reset();
@@ -25,10 +25,10 @@
   }
 
   function updateConfirm(id) {
-    let input = document.querySelector(`#task-update-input-text-${id}`);
+    let input = document.querySelector(`#task-update-description-${id}`);
     let updateDiv = document.querySelector(`#update-div-${id}`)
     let descriptionDiv = document
-      .querySelector(`#task-item-description-${id}`);
+      .querySelector(`#task-description-${id}`);
     updateDiv.classList.add('is-hidden');
     descriptionDiv.classList.remove('is-hidden');
     let result = input.value;

@@ -17,12 +17,12 @@
   </div>
 
   <!-- task description -->
-  <div id="task-item-description-{{ task.id }}"
+  <div id="task-description-{{ task.id }}"
        class="w-max-35rem is-centered cursor-pointer trans-color-1000
               {% if task.is_complete %}
                 text-strikethrough has-text-grey-light
               {% endif %}
-              task-item-description"
+              task-description"
        title="Task ID#: {{ task.id }}"
        hx-put="{% url 'tasks:task_update' task_id=task.id %}"
        hx-vals='{"is_complete": "{{ task.is_complete|yesno:'false,true' }}"}'
@@ -37,7 +37,7 @@
           hx-target="#list-item-{{ task.id }}"
           hx-swap="outerHTML">
       <input type="text"
-             id="task-update-input-text-{{ task.id }}"
+             id="task-update-description-{{ task.id }}"
              class="mr-0 input is-small is-inline button-group-left-side"
              value="{{ task.description }}">
       <input type="submit"
@@ -52,17 +52,17 @@
   <!-- task edit/delete icons -->
   <div class="w-5rem is-size-4 is-flex is-justify-content-center"
        x-data="{ taskDeleteModal{{ task.id }}IsActive: false }">
-    <div id="icon-task-edit-{{ task.id }}"
-          class="p-2 pt-3 cursor-pointer has-text-weight-bold icon-task-edit"
+    <div id="task-icon-edit-{{ task.id }}"
+          class="p-2 pt-3 cursor-pointer has-text-weight-bold task-icon-edit"
           onclick="updateDivToggle({{ task.id }})"
           title="Edit">
       &#9998; <!-- edit icon -->
     </div>
-    <div id="icon-task-delete-{{ task.id }}"
-          class="ml-2 p-2 cursor-pointer has-text-weight-bold icon-task-delete"
+    <div id="task-icon-delete-{{ task.id }}"
+          class="ml-2 p-2 cursor-pointer has-text-weight-bold task-icon-delete"
           title="Delete"
           @click="taskDeleteModal{{ task.id }}IsActive = true;"
-          data-cy-id="icon-task-delete-{{ task.id }}">
+          data-cy-id="task-icon-delete-{{ task.id }}">
       &times; <!-- delete icon -->
     </div>
 
