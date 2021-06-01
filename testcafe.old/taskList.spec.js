@@ -22,8 +22,7 @@ test('unauthenticated user cannot create new task', async t => {
   let newTaskMessage = 'New task';
   let newTaskInputText = await Selector('#new-task-input-text');
   let taskListMessage = await Selector('#task-list-message');
-  let statusMessageNotification = await Selector(
-    '#status-message-notification');
+  let statusMessageNotification = await Selector('#status-message');
 
   // #task-list-message warns user to login first
   await t.expect(taskListMessage.textContent).contains("You must login");
