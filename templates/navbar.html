@@ -24,7 +24,8 @@
          aria-label="menu"
          aria-expanded="false"
          data-target="navbarMain"
-         @click="navbarIsActive = !navbarIsActive">
+         @click="navbarIsActive = !navbarIsActive"
+         data-cy="navbar-burger">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -72,14 +73,16 @@
                            autocorrect="off"
                            autocapitalize="none"
                            placeholder="Username"
-                           required>
+                           required
+                           data-cy="login-input-username">
                   </div>
                   <div class="mt-4 control">
                     <input type="password"
                            name="password"
                            class="input"
                            placeholder="Password"
-                           required>
+                           required
+                           data-cy="login-input-password">
                   </div>
                   <div class="mt-4 control">
                     <div class="is-flex">
@@ -96,7 +99,8 @@
                              id="login-input-captcha"
                              class="ml-2 input"
                              placeholder="Human test"
-                             required>
+                             required
+                             data-cy="login-input-captcha">
                     </div>
                   </div>
                 </div>
@@ -104,7 +108,8 @@
                         id="login-button-submit"
                         class="mt-4 button is-block is-info
                                is-medium is-fullwidth"
-                        :class="{ 'is-loading': loginSubmitButtonIsLoading }">
+                        :class="{ 'is-loading': loginSubmitButtonIsLoading }"
+                        data-cy="login-button-confirm">
                   Login
                 </button>
 
@@ -160,7 +165,7 @@
                            autocapitalize="none"
                            placeholder="Username"
                            required
-                           x-ref="registerFormFieldUsername">
+                           data-cy="register-input-username">
                     <input type="hidden"
                            name="name"
                            required>
@@ -171,7 +176,8 @@
                            class="input"
                            placeholder="Password"
                            required
-                           x-ref="registerFormFieldPassword1">
+                           x-ref="registerFormFieldPassword1"
+                           data-cy="register-input-password1">
                   </div>
                   <div class="mt-4 control">
                     <input type="password"
@@ -179,7 +185,8 @@
                            class="input"
                            placeholder="Confirm password"
                            required
-                           x-ref="registerFormFieldPassword2">
+                           x-ref="registerFormFieldPassword2"
+                           data-cy="register-input-password2">
                   </div>
                   <div class="mt-4 control">
                     <div class="is-flex">
@@ -198,7 +205,7 @@
                              class="ml-2 input"
                              placeholder="Human test"
                              required
-                             x-ref="registerFormFieldCaptcha">
+                             data-cy="register-input-captcha">
                     </div>
                   </div>
                 </div>
@@ -207,7 +214,8 @@
                         class="mt-4 button is-block is-info
                                is-medium is-fullwidth"
                         :class="{
-                          'is-loading': registerSubmitButtonIsLoading }">
+                          'is-loading': registerSubmitButtonIsLoading }"
+                        data-cy="register-button-confirm">
                   Register
                 </button>
 
@@ -263,7 +271,8 @@
               <div class="mt-6 is-flex is-justify-content-space-between">
                 <a id="logout-button"
                    class="button is-block is-info is-medium is-fullwidth"
-                   href="{% url 'users:logout' %}">
+                   href="{% url 'users:logout' %}"
+                   data-cy="logout-button-confirm">
                   Logout
                 </a>
                 <a class="ml-4 button is-block is-light is-medium is-fullwidth"

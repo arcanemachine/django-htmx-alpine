@@ -104,7 +104,7 @@ class UserLoginView(LoginView):
 
     def form_valid(self, form):
         auth_login(self.request, form.get_user())
-        messages.success(self.request, _('You are now logged in.'))
+        messages.success(self.request, _('Login successful'))
         if self.request.GET.get('form') == '1':
             return HttpResponseRedirect(reverse('tasks:task_list'))
         else:
@@ -113,7 +113,7 @@ class UserLoginView(LoginView):
 
 
 class UserLogoutView(LogoutView):
-    success_message = _("You have been logged out.")
+    success_message = _("Logout successful")
 
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):

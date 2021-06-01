@@ -1,13 +1,13 @@
-<div class="status-message-notification-container">
-  <button id="status-message-notification"
-          class="status-message-notification"
+<div class="status-message-container">
+  <button id="status-message"
+          class="status-message"
           @click="statusMessageClear"
           x-data="statusMessageNotificationData()"
           x-show.transition.opacity.duration.500ms="show"
           x-text="statusMessageText"
           x-cloak
           @status-message-display.window="receiveStatusMessageDisplay($event)"
-          data-cy-id="status-message-notification">
+          data-cy="status-message">
   </button>
 </div>
 
@@ -69,7 +69,7 @@ function statusMessageNotificationData() {
 
       // apply colors
       colors = this.getColors(messageType);
-      let currentEl = document.querySelector('#status-message-notification');
+      let currentEl = document.querySelector('#status-message');
       if (messageType) {
         if (currentEl) {
           // add colors
@@ -129,7 +129,7 @@ function statusMessageNotificationData() {
 
 <style>
 
-.status-message-notification {
+.status-message {
   background-color: #3298DC;
   position: fixed;
   max-width: 25rem;

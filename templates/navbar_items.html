@@ -5,21 +5,25 @@
     Home
   </a>
   <a class="navbar-item"
-     href="{% url 'about' %}">
+     href="{% url 'about' %}"
+     data-cy="navbar-item-about">
     About
   </a>
   {% if not user.is_authenticated %}
     <a class="navbar-item"
-       @click="loginModalEnable">
+       @click="loginModalEnable"
+       data-cy="navbar-item-login">
       Sign In
     </a>
     <a class="navbar-item"
-       @click="registerModalEnable">
+       @click="registerModalEnable"
+       data-cy="navbar-item-register">
       Register
     </a>
   {% elif user.is_authenticated %}
     <a class="navbar-item"
-       @click="logoutModalEnable">
+       @click="logoutModalEnable"
+       data-cy="navbar-item-logout">
       Logout
     </a>
   {% endif %}
