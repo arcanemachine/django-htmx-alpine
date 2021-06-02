@@ -17,8 +17,6 @@ staticfiles/
 mediafiles/
 server_config.py
 
-# testcafe
-
 # npm #
 node_modules/
 
