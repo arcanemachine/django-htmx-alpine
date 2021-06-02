@@ -128,20 +128,17 @@ describe('auth (registration, login, logout)', () => {
 describe("view: about", () => {
   const testUrl = h.urls.about;
 
-  it.only("Alpine.JS demo works properly", () => {
+  it("Alpine.JS demo adds 1 to counter when pressing the button", () => {
     cy.visit(testUrl)
 
-    /*
-
-      // example using .then() chain and expect()
+      /* example using .then() chain and expect()
     cy.get('[data-cy="demo-alpine-counter-text"]').then((counter) => {
       cy.expect(counter.text()).to.equal('0')
     })
 
-      // example using should()
+      /* example using should()
     cy.get('[data-cy="demo-alpine-counter-text"]').should('have.text', '0')
-
-    */
+      */
 
     cy.get('[data-cy="demo-alpine-counter-button"]').then(($counterButton) => {
       cy.get('[data-cy="demo-alpine-counter-text"]').then(($counterText) => {
@@ -159,9 +156,18 @@ describe("view: about", () => {
 
       })
     })
-
   })
 
+  it.only("HTMX demo works properly", () => {
+    const cityName = 'New York City';
+
+    cy.visit(testUrl)
+    cy.get('[data-cy="demo-htmx-input-city"]').clear().type('New York City')
+    cy.get('[data-cy="demo-htmx-input-submit"]').click()
+    cy.get('[data-cy="demo-htmx-target"]')
+      .should('contain.text', `The temperature in ${cityName}`)
+      .should('contain.text', 'degrees Celsius')
+  })
 })
 
 describe("view: tasks:task_list", () => {

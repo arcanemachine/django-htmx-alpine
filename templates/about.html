@@ -66,7 +66,7 @@
       <div class="is-size-5">Get City Weather</div>
 
       <form hx-post="{% url 'get_weather' %}"
-            hx-target="#about-htmx-response">
+            hx-target="#demo-htmx-target">
 
         <div class="mt-4 field">
           <label class="label"
@@ -93,7 +93,7 @@
                      name="units"
                      value="metric"
                      checked
-                     data-cy="demo-htmx-input-temperature-metric">
+                     data-cy="demo-htmx-input-units-metric">
               Celsius
             </label>
             <label for="units_imperial">
@@ -102,13 +102,17 @@
                      class="radio ml-2"
                      name="units"
                      value="imperial"
-                     data-cy="demo-htmx-input-temperature-imperial">
+                     data-cy="demo-htmx-input-units-imperial">
               Fahrenheit
             </label>
           </div>
         </div>
 
-        <div id="about-htmx-response" class="my-4">&nbsp;</div>
+        <div id="demo-htmx-target"
+             class="my-4"
+             data-cy="demo-htmx-target">
+          &nbsp;
+        </div>
 
         <div class="control">
           <input type="submit"
@@ -123,7 +127,7 @@
     <p>The above example is made using a basic HTML form, with one notable difference:</p>
 
     <pre class="w-max-30rem mx-auto n-box n-box-gray-lighter">&lt;form hx-post=&quot;{% url 'get_weather' %}&quot;
-      hx-target=&quot;#about-htmx-response&quot;&gt;</pre>
+      hx-target=&quot;#demo-htmx-target&quot;&gt;</pre>
 
     <p>Simply adding a couple attributes to the HTML completely changes the dynamic of the form. Now, instead of completely refreshing the page, the client can replace fragments of the page. The server will send back the proper fragment, and it will be put in the desired location. This gives a more integrated, app-like feel, instead of refreshing the whole page and breaking the user experience.</p>
     <p>In short, using HTMX allows us to extend HTML to provide a modern web experience. It can also help us to move our business logic onto the server, which can be useful for preventing sensitive data from being exposed (such as the API key used to access the weather service, or even the name of the weather service).</p>
