@@ -102,10 +102,10 @@ describe('auth (registration, login, logout)', () => {
           .then((resp) => {
             expect(resp.status).to.eq(200);
             expect(resp.body).to.include('Login successful');
-        })
+      })
     })
 
-    // user authentication check view returns 'true'
+    // user authentication check returns 'true'
     cy.visit(h.urls.userIsAuthenticated).contains('true')
   })
 
@@ -118,7 +118,7 @@ describe('auth (registration, login, logout)', () => {
   it("login() - Gets valid CSRF token and logs in the user", () => {
     cy.login()
 
-    // user authentication check view returns 'true'
+    // user authentication check returns 'true'
     cy.visit(h.urls.userIsAuthenticated).contains('true')
   })
 
@@ -207,24 +207,21 @@ describe("view: about", () => {
 
 describe("view: tasks:task_list", () => {
   const testUrl = h.urls.taskList;
-
   const newTaskDescription = new Date().toString();
 
   it("Does not allow unauthenticated user to create new task", () => {
     cy.visit(testUrl)
 
-    // #task-list-message tells user to login first
     cy.get('#task-list-message')
-      .contains('You must login')
+      .contains('You must login')  // contains message telling user to login
 
-    // attempt to create new task
     cy.get('#task-create-input-description')
-      .type(newTaskDescription)
+      .type(newTaskDescription)  // enter task description
       .get('#task-create-button-confirm')
-      .click()
+      .click()  // click 'Create' button
 
     // does not succeed, contains status message telling user to login
-      .get('[data-cy="status-message"]').contains('You must login')
+    cy.get('[data-cy="status-message"]').contains('You must login')
   })
 
   it("Allows authenticated user to create new task", () => {
@@ -237,22 +234,19 @@ describe("view: tasks:task_list", () => {
         .click()  // click submit button
 
     // first task list item contains newTaskDescription
-    cy.reload() // reload stale DOM after HTMX updates page content
-      .get('#task-list').then(($ul) => {
-        expect($ul.children(':first').text())
-          .contains(newTaskDescription)
+    cy.get('#task-list').then(($ul) => {
+        expect($ul.children(':first').text()).contains(newTaskDescription)
     })
 
   })
 
-  it("Allows authenticated user to update an existing task", () => {
-    cy.login().visit(testUrl)
+  it("Allows user to update an existing task", () => {
+    cy.login()
+      .visit(testUrl)
+      .get('#task-list').then(($ul) => {
+      
+      const taskId = $ul.children()[0].dataset.taskId;  // get newest task id
 
-    cy.get('#task-list').then(($ul) => {
-      // get newest task id
-      const taskId = $ul.children()[0].dataset.taskId;
-
-      // update newest task
       const updatedTaskMessage = new Date();
       cy.get(`#task-description-${taskId}`)
         .then(($descriptionEl) => {
@@ -268,22 +262,35 @@ describe("view: tasks:task_list", () => {
     })
   })
 
-  it("Allows authenticated user to delete an existing task", () => {
+  it("Allows user to delete an existing task", () => {
     cy.login()
       .visit(testUrl)
+      .get('#task-list').then(($ul) => {
+        const taskId = $ul.children()[0].dataset.taskId;  // get newest task id
 
-    cy.get('#task-list').then(($ul) => {
-      // get newest task id
-      const taskId = $ul.children()[0].dataset.taskId;
-
-      // delete newest task
-      cy.get(`#list-item-${taskId}`)
-        .then(() => {
-          cy.get(`#task-icon-delete-${taskId}`)
-            .click() // click the delete icon
-            .get(`#task-button-delete-${taskId}`)
-            .click() // click the delete modal 'Confirm' button
+        cy.get(`#list-item-${taskId}`)
+          .then(() => {
+            cy.get(`#task-icon-delete-${taskId}`)
+              .click() // click the delete icon
+              .get(`#task-button-delete-${taskId}`)
+              .click() // click the delete modal 'Confirm' button
       }).should('not.exist') // element no longer exists after deletion
+    })
+  })
+
+  it.only("Allows user to mark a task as complete", () => {
+    cy.login()
+      .visit(testUrl)
+      .get('.task-list-item').first().then(($li) => {
+
+        // if item is complete, then un-complete it
+        if ($li.find('.task-input-is-complete').attr('checked')) {
+          cy.get($li).find('.task-input-is-complete').click()
+        }
+
+        cy.get($li).find('.task-description').click()
+
+          
     })
   })
 
