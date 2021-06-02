@@ -128,7 +128,7 @@ describe('auth (registration, login, logout)', () => {
 describe("view: about", () => {
   const testUrl = h.urls.about;
 
-  it("Alpine.JS demo works properly", () => {
+  it.only("Alpine.JS demo works properly", () => {
     cy.visit(testUrl)
 
     /*
@@ -150,14 +150,12 @@ describe("view: about", () => {
         cy.get($counterText).should('have.text', '0')
 
         // counter text should be '1' after clicking the button
-        $counterButton.click()
-        cy.get($counterText).should('have.text', '1').then(() => {
+        cy.get($counterButton).click()
+        cy.get($counterText).should('have.text', '1')
 
-          // counter text should be '2' after clicking the button again
-          $counterButton.click()
-          cy.get($counterText).should('have.text', '2')
-
-        })
+        // counter text should be '2' after clicking the button again
+        cy.get($counterButton).click()
+        cy.get($counterText).should('have.text', '2')
 
       })
     })
