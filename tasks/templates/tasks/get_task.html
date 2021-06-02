@@ -1,6 +1,6 @@
-<li id="list-item-{{ task.id }}"
+<li id="task-item-{{ task.id }}"
     class="mx-auto is-flex is-justify-content-space-between
-           is-align-items-center task-list-item"
+           is-align-items-center task-item"
     data-task-id="{{ task.id }}">
 
   <!-- task completion checkbox -->
@@ -12,8 +12,9 @@
            hx-put="{% url 'tasks:task_update' task_id=task.id %}"
            hx-vals='{
              "is_complete": "{{ task.is_complete|yesno:"false,true" }}"}'
-           hx-target="#list-item-{{ task.id }}"
-           hx-swap="outerHTML">
+           hx-target="#task-item-{{ task.id }}"
+           hx-swap="outerHTML"
+           data-cy="task-input-is-complete-{{ task.id }}">
   </div>
 
   <!-- task description -->
@@ -26,7 +27,7 @@
        title="Task ID#: {{ task.id }}"
        hx-put="{% url 'tasks:task_update' task_id=task.id %}"
        hx-vals='{"is_complete": "{{ task.is_complete|yesno:'false,true' }}"}'
-       hx-target="#list-item-{{ task.id }}"
+       hx-target="#task-item-{{ task.id }}"
        hx-swap="outerHTML"
        data-cy="task-description-{{ task.id }}">{{ task.description }}</div>
 
@@ -35,7 +36,7 @@
     <form id="task-update-form-{{ task.id }}"
           hx-put="{% url 'tasks:task_update' task_id=task.id %}"
           hx-vals="javascript:{'description': updateConfirm({{ task.id }})}"
-          hx-target="#list-item-{{ task.id }}"
+          hx-target="#task-item-{{ task.id }}"
           hx-swap="outerHTML">
       <input type="text"
              id="task-update-description-{{ task.id }}"

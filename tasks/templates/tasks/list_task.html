@@ -1,6 +1,8 @@
 <div id="tasks">
   {% if tasks %}
-    <ul id="task-list" class="mt-4 box">
+    <ul id="task-list"
+        class="mt-4 box"
+        data-cy="task-list">
       {% for task in tasks %}
         {% include 'tasks/get_task.html' %}
       {% endfor %}
@@ -53,7 +55,7 @@
     </script>
 
   {% else %}
-    <div id="task-list-message" class="mt-5 is-italic has-text-centered">
+    <div id="task-list-message" class="mt-5 is-italic is-centered">
       {% if user.is_authenticated %}
         No tasks created
       {% else %}
