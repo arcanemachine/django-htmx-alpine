@@ -1,33 +1,25 @@
-## Custom ##
-*~
-*.sw*
-data.dump
-geckodriver.log
-secret_key.py
-keys.py
-keys.js
-gunicorn.sh 
-todo
-todo-test
-base_template.html
-menus/templatetags/
+# config
+local_config.py
+
+# misc
 deleteme/
 local-scripts/
 staticfiles/
 mediafiles/
-server_config.py
+*~
+*.sw*
+geckodriver.log
+todo*
 
 # npm #
 node_modules/
-
-## local scripts
-runserver_insecure.sh
 
 # Django #
 *.log
 *.pot
 *.pyc
 __pycache__
+data.dump
 db.sqlite3
 media
 

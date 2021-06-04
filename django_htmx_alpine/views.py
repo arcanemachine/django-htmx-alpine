@@ -1,10 +1,11 @@
 import json
 import requests
+from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.views.generic import TemplateView
 
-from project_folder import keys, helpers as h
+from project_folder import helpers as h
 
 
 @require_http_methods(['POST'])
@@ -14,7 +15,7 @@ def get_weather(request):
     units = request.POST.get('units')
 
     # build weather api url
-    api_key = keys.WEATHER_API_KEY
+    api_key = settings.WEATHER_API_KEY
     weather_api_url = 'https://api.openweathermap.org/data/2.5/weather'
     url = f'{weather_api_url}?q={city}&appid={api_key}&units={units}'
 

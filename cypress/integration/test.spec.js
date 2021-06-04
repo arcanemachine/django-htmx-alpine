@@ -9,6 +9,10 @@ describe('auth (registration, login, logout)', () => {
       .visit(h.urls.userIsAuthenticated).contains('true')
   })
 
+  it("(utility) Ensures a test user exists in the database", () => {
+    cy.registerNewUser();
+  })
+
   it("Registers a new user using the Register modal", () => {
     const username = h.randomString()
     const password = h.randomString()
@@ -124,7 +128,7 @@ describe('auth (registration, login, logout)', () => {
 
 })
 
-describe("view: about", () => {
+describe("views: 'About'", () => {
   const testUrl = h.urls.about;
 
   it("Alpine.JS demo adds 1 to counter when pressing the button", () => {

@@ -7,7 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # views
-    path('about/', views.AboutTemplateView.as_view(), name='about'),
+    path('', views.AboutTemplateView.as_view(), name='about'),
     path('get_weather/', views.get_weather, name='get_weather'),
     path('utility/user-is-authenticated/',
          views.user_is_authenticated,
@@ -16,5 +16,5 @@ urlpatterns = [
     # apps
     path('captcha/', include('captcha.urls')),
     path('users/', include('users.urls')),
-    path('', include('tasks.urls')),
+    path('tasks/', include('tasks.urls')),
 ]

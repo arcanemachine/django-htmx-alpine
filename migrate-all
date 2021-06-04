@@ -1,12 +1,3 @@
 #!/bin/bash
-
-if [[ -z "${VIRTUAL_ENV}" ]]; then
-  printf "Please activate your virtualenv before continuing.\n"
-  exit 1
-elif [[ -z "${PROJECT_ROOT}" ]]; then
-  printf "\nPlease do the following:\n\n- Ensure the file /scripts/postactivate points to the correct location for your project\n- Copy the postactivate/predeactivate scripts from the /scripts/ directory to your virtualenv's /bin/ directory.\n- Deactivate, then re-activate your virtualenv\n\n"
-  exit 1
-fi
-
-$PROJECT_ROOT/manage.py makemigrations
-$PROJECT_ROOT/manage.py migrate
+./manage.py makemigrations
+./manage.py migrate

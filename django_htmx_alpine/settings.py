@@ -1,9 +1,28 @@
-from project_folder import keys, server_config
+from os.path import join as os_path_join
+from pathlib import Path
 
-BASE_DIR = server_config.BASE_DIR
+from project_folder import helpers as h
 
-SECRET_KEY = keys.SECRET_KEY
-DEBUG = server_config.DEBUG
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# set custom debug status here; default is True
+DEBUG = None
+
+if not DEBUG:
+    DEBUG = h.get_settings_debug()
+
+# set a custom SECRET_KEY here; default is 'default_secret_key'
+SECRET_KEY = None
+
+if not SECRET_KEY:
+    SECRET_KEY = h.get_settings_secret_key()
+
+# set OpenWeather API key here; default is 'your_weather_api_key'
+WEATHER_API_KEY = None
+
+if not WEATHER_API_KEY:
+    WEATHER_API_KEY = h.get_settings_weather_api_key()
+
 
 ALLOWED_HOSTS = ['*']
 
@@ -34,8 +53,7 @@ TEMPLATES = [{'BACKEND': 'django.template.backends.django.DjangoTemplates',
                       'django.template.context_processors.debug',
                       'django.template.context_processors.request',
                       'django.contrib.auth.context_processors.auth',
-                      'django.contrib.messages.context_processors.messages',
-                      'project_folder.context_processors.helpers']}}]
+                      'django.contrib.messages.context_processors.messages']}}]
 
 WSGI_APPLICATION = 'django_htmx_alpine.wsgi.application'
 
@@ -51,7 +69,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': f'{PW_VALIDATION_PREFIX}.NumericPasswordValidator'}]
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = server_config.TIME_ZONE
+TIME_ZONE = 'UTC'
 USE_I18N = USE_L10N = USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -70,6 +88,7 @@ CAPTCHA_TIMEOUT = 3
 CAPTCHA_TEST_MODE = DEBUG  # enable captcha test mode if DEBUG == True
 
 # static
-STATIC_URL = server_config.STATIC_URL
-STATICFILES_DIRS = server_config.STATICFILES_DIRS
-STATIC_ROOT = server_config.STATIC_ROOT
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os_path_join(BASE_DIR, 'static')]
+STATIC_ROOT = None
+
