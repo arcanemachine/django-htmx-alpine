@@ -9,43 +9,6 @@
     </ul>
 
     <script>
-  function updateDivToggle(id) {
-    let updateDiv = document.querySelector(`#update-div-${id}`);
-    let descriptionDiv = document
-      .querySelector(`#task-description-${id}`);
-    updateDiv.classList.toggle('is-hidden');
-    descriptionDiv.classList.toggle('is-hidden');
-
-    if (!updateDiv.classList.contains('is-hidden')) {
-      // select the text input when showing the div
-      document.querySelector(`#task-update-description-${id}`).select();
-    } else {
-      // reset the text input when hiding the div
-      document.querySelector(`#task-update-form-${id}`).reset();
-    }
-
-  }
-
-  function updateConfirm(id) {
-    let input = document.querySelector(`#task-update-description-${id}`);
-    let updateDiv = document.querySelector(`#update-div-${id}`)
-    let descriptionDiv = document
-      .querySelector(`#task-description-${id}`);
-    updateDiv.classList.add('is-hidden');
-    descriptionDiv.classList.remove('is-hidden');
-    let result = input.value;
-    input.value = '';
-    return result;
-  }
-
-  function taskDelete(id) {
-    htmx.ajax('DELETE',
-      `{% url 'tasks:task_delete_noid' %}${id}/`, {
-      target: '#tasks'
-    });
-  }
-
-
   {% if task_deleted %}
   hDispatch('status-message-display', {
     message: 'Task deleted',
