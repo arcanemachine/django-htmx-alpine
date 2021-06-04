@@ -6,13 +6,21 @@ However, it is made using a combination of [Django](https://www.djangoproject.co
 
 ## Setup Instructions
 
-- Use [Poetry](https://python-poetry.org/docs/) to create a virtualenv and install the required dependencies
-  - `poetry install`
+- Create a virtualenv and install the required dependencies
+  - Using [Poetry](https://python-poetry.org/docs/):
+    - Create a virtualenv and install the required dependencies
+      - `poetry install`
+    - Activate the virtualenv
+      - `poetry shell`
+  - Using [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/):
+    - Create a new virtualenv
+      - `mkvirtualenv django-htmx-alpine`
+    - Activate the virtualenv
+      - `workon django-htmx-alpine` -or- `source ~/[your_virtualenv_dir]/bin/activate`
+    - From the project's root folder (`django_htmx_alpine`), install the required dependencies
+      - `pip install -r requirements.txt`
 
-- Activate the virtualenv
-  - `poetry shell`
-
-- You can generate a new secret key from the Django shell (`manage.py shell`) and set it as the `SECRET_KEY` in `settings.py`:
+- (optional) You can generate a new secret key from the Django shell (`manage.py shell`) and set it as the `SECRET_KEY` in `settings.py`:
 `from django.core.management import utils
     print(utils.get_random_secret_key())`
 
