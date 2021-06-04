@@ -6,7 +6,6 @@ certifi @ file:///home/serv/.cache/pypoetry/artifacts/a5/b1/71/0fb759c6550e4dc0a
 chardet @ file:///home/serv/.cache/pypoetry/artifacts/47/b7/82/19c2b887f87f3adbaf4e34c55189388e5132c78f6929d7001a78b0209b/chardet-4.0.0-py2.py3-none-any.whl
 decorator @ file:///home/serv/.cache/pypoetry/artifacts/43/a9/6d/a37c7e800e5a9b0230bae598f0be196f097ace94939963fa6eda69612c/decorator-5.0.7-py3-none-any.whl
 Django @ file:///home/serv/.cache/pypoetry/artifacts/c5/17/cd/facf18a0d4f7098dbc43263a5c0223c40108348c6dbdc4e9c239dea682/Django-3.2.2-py3-none-any.whl
-django-htmx==0.1.0
 django-ranged-response @ file:///home/serv/.cache/pypoetry/artifacts/e5/78/9d/60497f7ef46c84bfc02174c26a4478b0801decb315c48f39ddf060d599/django-ranged-response-0.2.0.tar.gz
 django-simple-captcha @ file:///home/serv/.cache/pypoetry/artifacts/71/5c/58/fce5cd7e2dde339e92f330e0d8b9c321b8b8ff65c6785b32ab84b945db/django-simple-captcha-0.5.14.zip
 idna @ file:///home/serv/.cache/pypoetry/artifacts/9e/f9/03/6066b92d35486e7f0d4f310126e3c60a6619726e43ef98e32e105b5c52/idna-2.10-py2.py3-none-any.whl
