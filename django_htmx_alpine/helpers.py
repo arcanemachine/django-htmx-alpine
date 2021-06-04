@@ -27,7 +27,7 @@ def get_settings_secret_key():
     except (ImportError, AttributeError):
         print("\nWarning: You are using the default SECRET_KEY. "
               "For security purposes, this is not recommended.\n")
-        return 'your_secret_key_890cVw348jhVr9433HLsc89283jHc98sd'
+        return 'your_secret_key'
 
 
 def get_settings_weather_api_key():

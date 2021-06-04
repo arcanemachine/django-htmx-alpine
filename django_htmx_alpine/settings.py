@@ -11,7 +11,7 @@ DEBUG = None
 if not DEBUG:
     DEBUG = h.get_settings_debug()
 
-# set a custom SECRET_KEY here; default is 'default_secret_key'
+# set a custom SECRET_KEY here; default is 'your_secret_key'
 SECRET_KEY = None
 
 if not SECRET_KEY:
