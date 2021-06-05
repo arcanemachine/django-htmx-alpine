@@ -1,4 +1,4 @@
-from helpers import BASE_DIR
+from project_folder.helpers import BASE_DIR
 from os.path import join as os_path_join
 
 """
