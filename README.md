@@ -4,6 +4,8 @@ This project is just a basic todo list.
 
 However, it is made using a combination of [Django](https://www.djangoproject.com/), [Alpine.JS](https://openweathermap.org/api) and [HTMX](https://htmx.org/), and shows how you can get the reactivity of a frontend JS framework without sacrificing the benefits of your server-side framework (Session authentication, templating, etc).
 
+A live demo can be seen [here](https://django-htmx-alpine.nicholasmoen.com/).
+
 ## Setup Instructions
 
 - Create a virtualenv and install the required dependencies
