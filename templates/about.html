@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
 
 {% block title %}About this Project{% endblock title %}
-
 {% block body_title %}About this Project{% endblock body_title %}
+
+{% block meta_description %}
+  {% with meta_description_content="An introduction to the HTMX + Alpine.JS demo."%}
+    {{ block.super }}
+  {% endwith %}
+{% endblock meta_description %}
 
 {% block content %}
 <div class="p-0 section">

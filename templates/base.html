@@ -2,9 +2,22 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block title %}{% endblock title %} - Alpine.JS & HTMX</title>
+    <title>{% block title %}{% endblock title %} - HTMX & Alpine.JS</title>
+
+    {% block meta_description %}
+      <meta name="description"{% if meta_description_content %}
+            description="{{ meta_description_content }}"{% else %}
+            description="A demo that demonstrates how HTMX and Alpine.JS can work together"{% endif %}>
+    {% endblock meta_description %}
+
+    {% block meta_robots %}
+      <meta name="robots"{% if norobots %}
+            content="noindex, nofollow"{% else %}
+            content="index, follow"{% endif %}>
+    {% endblock meta_robots %}
+
 
     <!-- favicon -->
     <link rel="shortcut icon"
