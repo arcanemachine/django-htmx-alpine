@@ -1,27 +1,30 @@
-from os.path import join as os_path_join
-from pathlib import Path
-
 from project_folder import helpers as h
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = h.BASE_DIR
 
-# set custom debug status here; default is True
-DEBUG = None
 
-if not DEBUG:
-    DEBUG = h.get_settings_debug()
+# *********************** BEGIN local config *********************** #
 
-# set a custom SECRET_KEY here; default is 'your_secret_key'
-SECRET_KEY = None
+# This section contains some values that may differ between servers.
+#
+# The default values are set to allow for easy deployment. They may be
+# overridden in project_folder/local_config.py (an example template is
+# available in local_settings.default.py). You may also override the
+# settings directly below. However, setting them in local_config.py will
+# prevent any sensitive/server-specific information from getting into the
+# repo, with no additional effort required on your part.
 
-if not SECRET_KEY:
-    SECRET_KEY = h.get_settings_secret_key()
+# important stuff
+DEBUG = h.get_debug()                        # default: True
+SECRET_KEY = h.get_secret_key()              # default: 'your_secret_key'
+WEATHER_API_KEY = h.get_weather_api_key()    # default: 'your_weather_api_key'
 
-# set OpenWeather API key here; default is 'your_weather_api_key'
-WEATHER_API_KEY = None
+# static files
+STATIC_ROOT = h.get_static_root()
+STATIC_URL = h.get_static_url()
+STATICFILES_DIRS = h.get_staticfiles_dirs()
 
-if not WEATHER_API_KEY:
-    WEATHER_API_KEY = h.get_settings_weather_api_key()
+# *********************** END local config *********************** #
 
 
 ALLOWED_HOSTS = ['*']
@@ -86,9 +89,3 @@ CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)
 CAPTCHA_LETTER_ROTATION = (-15, 20)
 CAPTCHA_TIMEOUT = 3
 CAPTCHA_TEST_MODE = DEBUG  # enable captcha test mode if DEBUG == True
-
-# static
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [os_path_join(BASE_DIR, 'static')]
-STATIC_ROOT = None
-
