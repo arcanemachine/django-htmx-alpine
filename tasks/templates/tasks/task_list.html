@@ -84,8 +84,7 @@
   }
 
   function taskDelete(id) {
-    htmx.ajax('DELETE',
-      `{% url 'tasks:task_delete_noid' %}${id}/`, {
+    htmx.ajax('DELETE', `{% url 'tasks:task_delete_noid' %}${id}/`, {
       target: '#tasks'
     });
   }
