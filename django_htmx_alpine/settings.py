@@ -19,10 +19,14 @@ DEBUG = h.get_debug()                        # default: True
 SECRET_KEY = h.get_secret_key()              # default: 'your_secret_key'
 WEATHER_API_KEY = h.get_weather_api_key()    # default: 'your_weather_api_key'
 
+# analytics
+USER_ANALYTICS_SCRIPT = h.get_user_analytics_script()
+
 # static files
 STATIC_ROOT = h.get_static_root()
 STATIC_URL = h.get_static_url()
 STATICFILES_DIRS = h.get_staticfiles_dirs()
+
 
 # *********************** END local config *********************** #
 
@@ -56,7 +60,8 @@ TEMPLATES = [{'BACKEND': 'django.template.backends.django.DjangoTemplates',
                       'django.template.context_processors.debug',
                       'django.template.context_processors.request',
                       'django.contrib.auth.context_processors.auth',
-                      'django.contrib.messages.context_processors.messages']}}]
+                      'django.contrib.messages.context_processors.messages',
+                      'project_folder.context_processors.helpers']}}]
 
 WSGI_APPLICATION = 'django_htmx_alpine.wsgi.application'
 

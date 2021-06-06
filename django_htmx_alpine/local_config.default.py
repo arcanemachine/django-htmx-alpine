@@ -1,5 +1,6 @@
-from project_folder.helpers import BASE_DIR
 from os.path import join as os_path_join
+
+from project_folder.helpers import BASE_DIR
 
 """
 To generate a new SECRET_KEY, run these commands from django shell:
@@ -9,6 +10,7 @@ print(utils.get_random_secret_key())
 
 """
 
+# important stuff
 DEBUG = True
 SECRET_KEY = 'your_secret_key'
 WEATHER_API_KEY = 'your_weather_api_key'  # OpenWeatherMap API key
@@ -22,3 +24,6 @@ STATICFILES_DIRS = [os_path_join(BASE_DIR, 'static')]
 STATIC_ROOT = None
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os_path_join(BASE_DIR, 'static')]
+
+# user analytics
+USER_ANALYTICS_SCRIPT = ''

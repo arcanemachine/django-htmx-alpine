@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block title %}{% endblock title %} - HTMX + Alpine.JS Demo</title>
+    <title>{% block title %}{% endblock title %} - HTMX & Alpine.JS</title>
 
     {% block meta_description %}
       <meta name="description"{% if meta_description_content %}
@@ -39,6 +39,7 @@
 
     <!-- js -->
     <script src="{% static 'js/alpine@2.8.2.min.js' %}" defer></script>
+    {{ USER_ANALYTICS_SCRIPT|safe }}
 
   </head>
 

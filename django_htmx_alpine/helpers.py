@@ -76,3 +76,11 @@ def get_staticfiles_dirs():
         return local_config.STATICFILES_DIRS
     except (ImportError, AttributeError):
         return [os_path_join(BASE_DIR, 'static')]
+
+
+def get_user_analytics_script():
+    try:
+        from project_folder import local_config
+        return local_config.USER_ANALYTICS_SCRIPT
+    except (ImportError, AttributeError):
+        return ''
