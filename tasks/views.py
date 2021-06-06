@@ -36,12 +36,12 @@ def task_create(request):
             user=request.user,
             description=request.POST['description'])
     else:
-        return HttpResponse(
-            '<script>'
-            '  hDispatch('
-            '    `status-message-display`, "Description must not be empty."'
-            '  );'
-            '</script>')
+        return HttpResponse("""
+            <script>
+              hDispatch(
+                `status-message-display`, "Description must not be empty."
+              );
+            </script>""")
 
     tasks = Task.objects.filter(user=request.user)
     context = {'tasks': tasks}
