@@ -20,6 +20,7 @@ STATIC_ROOT = os_path_join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/staticfiles/'
 STATICFILES_DIRS = [os_path_join(BASE_DIR, 'static')]
 
+# Note: these settings will override the 3 identical variables listed above
 # static files - development server - basic config
 STATIC_ROOT = None
 STATIC_URL = '/static/'
