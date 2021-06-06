@@ -20,9 +20,11 @@
   {% else %}
     <div id="task-list-message" class="mt-5 is-italic has-text-centered">
       {% if user.is_authenticated %}
-        No tasks created
+        <div>No tasks created</div>
       {% else %}
-        You must login before you can create any todo items.
+        <div>You must login before you can create any todo items.</div>
+        <div class="mt-5">No email is required to register.</div>
+        <div class="mt-2">You will be instantly logged in after registering.</div>
       {% endif %}
     </div>
   {% endif %}
