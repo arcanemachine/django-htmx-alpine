@@ -83,9 +83,6 @@
     {% block body_end_script %}{% endblock body_end_script %}
 
     <!-- js -->
-    <!--script{% if DEBUG %}
-         src="{% static 'js/spruce@2.7.1.umd.js' %}"{% else %}
-         src="https://cdn.jsdelivr.net/gh/ryangjchandler/spruce@2.7.1/dist/spruce.umd.min.js"{% endif %}></script-->
     <script {% if DEBUG %}
       src="{% static 'js/htmx@1.4.1.min.js' %}"{% else %}
       src="https://cdn.jsdelivr.net/npm/htmx.org@1.4.1/dist/htmx.min.js"{% endif %}></script>
@@ -96,7 +93,6 @@
       document.body.addEventListener('htmx:configRequest', (event) => {
         event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
       })
-
     </script>
 
     {% include 'status_message.html' %}
