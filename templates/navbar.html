@@ -104,14 +104,13 @@
                     </div>
                   </div>
                 </div>
-                <button type="submit"
-                        id="login-button-submit"
-                        class="mt-4 button is-block is-info
-                               is-medium is-fullwidth"
-                        :class="{ 'is-loading': loginSubmitButtonIsLoading }"
-                        data-cy="login-button-confirm">
-                  Login
-                </button>
+                <input type="submit"
+                       id="login-button-submit"
+                       class="mt-4 button is-block is-info
+                              is-medium is-fullwidth"
+                       :class="{ 'is-loading': loginSubmitButtonIsLoading }"
+                       data-cy="login-button-confirm"
+                       value="Login">
 
               </form>
               <div class="w-max-25rem pt-4 pb-3 is-size-6
@@ -204,20 +203,18 @@
                              id="register-input-captcha"
                              class="ml-2 input"
                              placeholder="Human test"
-                             required
-                             data-cy="register-input-captcha">
+                             data-cy="register-input-captcha"
+                             required>
                     </div>
                   </div>
                 </div>
-                <button type="submit"
-                        id="register-button-submit"
-                        class="mt-4 button is-block is-info
-                               is-medium is-fullwidth"
-                        :class="{
-                          'is-loading': registerSubmitButtonIsLoading }"
-                        data-cy="register-button-confirm">
-                  Register
-                </button>
+                <input type="submit"
+                       id="register-button-submit"
+                       class="mt-4 button is-block is-info
+                              is-medium is-fullwidth"
+                       :class="{ 'is-loading': registerSubmitButtonIsLoading }"
+                       data-cy="register-button-confirm"
+                       value="Register">
 
               </form>
               <div class="w-max-25rem pt-4 pb-3 is-size-6

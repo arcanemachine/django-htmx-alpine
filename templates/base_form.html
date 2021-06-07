@@ -25,16 +25,11 @@
   <div class="field">
     <div class="control mt-4 has-text-centered">
       <span>
-        <button type="submit"
-                id="form-button-submit"
-                data-cy="form-button-submit"
-          class="button is-{% if confirm_style %}{{ confirm_style }}{% else %}success{% endif %}">
-          {% if submit_button_text %}
-            {{ submit_button_text }}
-          {% else %}
-            Submit
-          {% endif %}
-        </button>
+        <input type="submit"
+               id="form-button-submit"
+               data-cy="form-button-submit"
+               class="button is-{% if confirm_style %}{{ confirm_style }}{% else %}success{% endif %}"
+               value="{% if submit_button_text %}{{ submit_button_text }}{% else %}Submit{% endif %}">
       </span>
 
       {% if not cancel_button == False %}
