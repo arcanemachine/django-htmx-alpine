@@ -26,5 +26,5 @@ STATIC_ROOT = None
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os_path_join(BASE_DIR, 'static')]
 
-# user analytics
+# user analytics - include full script, e.g <script src="script.js"></script>
 USER_ANALYTICS_SCRIPT = ''
