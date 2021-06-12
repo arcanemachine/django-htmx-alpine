@@ -22,26 +22,6 @@ body {
 }
 
 
-/* COMPONENTS */
-.n-box {
-  background-color: #eee;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid black;
-}
-
-.n-box-gray-lighter {
-  background-color: #ddd;
-  border-color: #ccc;
-}
-
-.n-box-gray-light {
-  background-color: #ccc;
-  border-color: #bbb;
-}
-
 /* BULMA */
 p {
   margin-top: 1.5rem;
@@ -80,6 +60,14 @@ p {
   position: absolute;
   width: 100vw;
   min-height: 3.5rem;
+}
+
+.notification {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid #aaa;
 }
 
 .section {

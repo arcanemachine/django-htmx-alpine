@@ -33,8 +33,8 @@
     <p>Alpine.js is designed to act as a lighter version of Vue.JS. It allows you to easily add the power of reactivity, but allows the functionality to be sprinkled into your code as desired. It works with the paradigm of a predominantly server-driven experience, not against it.</p>
     <p>Here is an example of how an Alpine.JS component can be easily added to a page:</p>
 
-    <div class="w-max-30rem mx-auto n-box n-box-gray-light
-                has-text-centered border-radius-0.5rem"
+    <div class="w-max-30rem mx-auto notification has-text-centered
+                border-radius-0.5rem"
          x-data="{ counter: 0 }">
       <div>
         <button class="button is-success"
@@ -51,7 +51,7 @@
     </div>
 
     <p>Here is the basic structure for the example above:</p>
-    <pre class="w-max-30rem mx-auto n-box n-box-gray-lighter">&lt;div x-data=&quot;{ counter: 0 }&quot;&gt;
+    <pre class="w-max-30rem mx-auto notification has-background-grey-lighter">&lt;div x-data=&quot;{ counter: 0 }&quot;&gt;
   &lt;div&gt;
     &lt;button @click=&quot;counter++&quot;&gt;
       Click Me
@@ -67,8 +67,8 @@
     <p>HTMX is a interesting library that adds client-server interactivity to plain HTML tags. It is a tool that makes it easy to add REST-style interactions to your page, but with one difference from other such tools: It works with entire DOM elements (HTML tags), not just JSON.</p>
     <p>This means you don't have to process the data on the client-side; you can simply return page fragments from your server. As with Alpine.JS, this gives the power back to the server-based frameworks. For example, your Django server can render all the elements with the proper data, and you simply receive the data and pop it right where it needs to go, with no Javascript-based messing around with Fetch calls.</p>
 
-    <div class="w-max-30rem mx-auto px-5 n-box n-box-gray-light
-                border-radius-0.5rem has-text-centered">
+    <div class="w-max-30rem mx-auto px-5 notification border-radius-0.5rem
+                has-text-centered">
       <div class="is-size-5">Get City Weather</div>
 
       <form hx-post="{% url 'get_weather' %}"
@@ -132,14 +132,14 @@
 
     <p>The above example is made using a basic HTML form, with one notable difference:</p>
 
-    <pre class="w-max-30rem mx-auto n-box n-box-gray-lighter">&lt;form hx-post=&quot;{% url 'get_weather' %}&quot;
+    <pre class="w-max-30rem mx-auto notification has-background-grey-lighter">&lt;form hx-post=&quot;{% url 'get_weather' %}&quot;
       hx-target=&quot;#demo-htmx-target&quot;&gt;</pre>
 
     <p>Simply adding a couple attributes to the HTML completely changes the dynamic of the form. Now, instead of completely refreshing the page, the client can replace fragments of the page. The server will send back the proper fragment, and it will be put in the desired location. This gives a more integrated, app-like feel, instead of refreshing the whole page and breaking the user experience.</p>
 
     <p>In the above example, the server-side framework (Django) then queries the weather API server, processes the result, and returns the following HTTP response, which is placed into the <code>#demo-htmx-target</code> element in the box containing the demo:</p>
 
-    <pre class="w-max-30rem mx-auto n-box n-box-gray-lighter">return HttpResponse(
+    <pre class="w-max-30rem mx-auto notification has-background-grey-lighter">return HttpResponse(
     f'The temperature in {city} is '
     f'{temperature} degrees {units}.')</pre>
 
