@@ -26,6 +26,7 @@
          aria-expanded="false"
          data-target="navbarMain"
          @click="navbarIsActive = !navbarIsActive"
+         @keyup.enter="navbarIsActive = !navbarIsActive"
          data-cy="navbar-burger">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -50,15 +51,16 @@
 
   {% if not user.is_authenticated %}
     
-    <template x-if="loginModalIsActive">
+  <template x-if="loginModalIsActive">
       <div id="login-modal"
            class="modal is-active"
            x-show.transition.opacity.duration.500ms="loginModalIsActive"
+           @keyup.escape.window="loginModalDisable"
            x-cloak>
         <div class="modal-background"></div>
         <div class="modal-content">
           <div class="p-0 section">
-            <div @click.away="loginModalIsActive = false"
+            <div @click.away="loginModalDisable"
                  class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
                         is-justify-content-center is-align-items-center
                         has-text-centered">
@@ -74,6 +76,11 @@
                            autocorrect="off"
                            autocapitalize="none"
                            placeholder="Username"
+                           x-ref="loginModalFirstTabbable"
+                           x-init="() =>
+                             {$refs.loginModalFirstTabbable.focus()}"
+                           @keydown.shift.tab.prevent="
+                             $refs.loginModalLastTabbable.focus()"
                            required
                            data-cy="login-input-username">
                   </div>
@@ -105,13 +112,15 @@
                     </div>
                   </div>
                 </div>
-                <input type="submit"
-                       id="login-button-submit"
-                       class="mt-4 button is-block is-info
-                              is-medium is-fullwidth"
-                       :class="{ 'is-loading': loginSubmitButtonIsLoading }"
-                       data-cy="login-button-confirm"
-                       value="Login">
+                <button type="submit"
+                        id="login-button-submit"
+                        class="mt-4 button is-block is-info
+                               is-medium is-fullwidth"
+                        :class="{ 'is-loading': loginSubmitButtonIsLoading }"
+                        x-ref="loginModalSecondLastTabbable"
+                        data-cy="login-button-confirm">
+                  Login
+                </button>
 
               </form>
               <div class="w-max-25rem pt-4 pb-3 is-size-6
@@ -120,7 +129,11 @@
               </div>
               <div>
                 <a class="is-size-5 is-clickable"
-                   @click="registerModalEnable">
+                   tabindex="0"
+                   x-ref="loginModalLastTabbable"
+                   @click="registerModalEnable"
+                   @keyup.enter="registerModalEnable"
+                   @keydown.tab="loginModalHandleTabEvent">
                   Register a new account
                 </a>
               </div>
@@ -144,11 +157,12 @@
       <div id="register-modal"
            class="modal is-active"
            x-show.transition.opacity.duration.500ms="registerModalIsActive"
+           @keyup.escape.window="registerModalDisable"
            x-cloak>
         <div class="modal-background"></div>
         <div class="modal-content">
           <div class="p-0 section">
-            <div @click.away="registerModalIsActive = false"
+            <div @click.away="registerModalDisable"
                  class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
                         is-justify-content-center is-align-items-center
                         has-text-centered">
@@ -165,6 +179,9 @@
                            autocapitalize="none"
                            placeholder="Username"
                            required
+                           x-ref="registerModalFirstTabbable"
+                           @keydown.shift.tab.prevent="
+                             $refs.registerModalLastTabbable.focus()"
                            data-cy="register-input-username">
                     <input type="hidden"
                            name="name"
@@ -214,6 +231,7 @@
                        class="mt-4 button is-block is-info
                               is-medium is-fullwidth"
                        :class="{ 'is-loading': registerSubmitButtonIsLoading }"
+                       x-ref="registerModalSecondLastTabbable"
                        data-cy="register-button-confirm"
                        value="Register">
 
@@ -224,7 +242,11 @@
               </div>
               <div>
                 <a class="is-size-5 is-clickable"
-                   @click="loginModalEnable">
+                   tabindex="0"
+                   x-ref="registerModalLastTabbable"
+                   @click="loginModalEnable"
+                   @keyup.enter="loginModalEnable"
+                   @keydown.tab="registerModalHandleTabEvent">
                   Login to an existing account
                 </a>
               </div>
@@ -249,8 +271,8 @@
       <div id="logout-modal"
            class="modal is-active"
            x-show.transition.opacity.duration.500ms="logoutModalIsActive"
-           @keyup.enter.window="
-             document.querySelector('#logout-button').click()"
+           @keyup.enter.window="$refs.logoutButton.click()"
+           @keyup.escape.window="logoutModalDisable"
            x-cloak>
         <div class="modal-background"></div>
         <div class="w-max-25rem w-max-content modal-content">
@@ -267,14 +289,20 @@
               </div>
 
               <div class="mt-4 is-flex is-justify-content-space-between">
-                <a id="logout-button"
-                   class="button is-block is-info is-medium is-fullwidth"
+                <a class="button is-block is-info is-medium is-fullwidth"
                    href="{% url 'users:logout' %}"
+                   x-ref="logoutModalButtonConfirm"
+                   @keydown.tab.prevent="
+                     $refs.logoutModalButtonCancel.focus()"
                    data-cy="logout-button-confirm">
                   Logout
                 </a>
                 <a class="ml-4 button is-block is-light is-medium is-fullwidth"
-                   @click="logoutModalIsActive = false">
+                   tabindex="0"
+                   x-ref="logoutModalButtonCancel"
+                   @click="logoutModalIsActive = false"
+                   @keydown.tab.prevent="
+                     $refs.logoutModalButtonConfirm.focus()">
                   Cancel
                 </a>
               </div>
@@ -296,7 +324,7 @@
       navbarIsActive: false,
       loginModalIsActive: false,
       loginSubmitButtonIsLoading: false,
-      logoutModalIsActive: false,
+      logoutModalIsActive: true,
       registerModalIsActive: false,
       registerSubmitButtonIsLoading: false,
       // methods
@@ -311,9 +339,25 @@
         this.navbarClearAll();
         this.loginModalIsActive = true;
       },
+      loginModalDisable() {
+        this.navbarClearAll();
+        this.loginModalIsActive = false;
+      },
+      loginModalHandleTabEvent(e) {
+        e.preventDefault();
+        if (e.shiftKey) {
+          this.$refs.loginModalSecondLastTabbable.focus();
+        } else {
+          this.$refs.loginModalFirstTabbable.focus();
+        }
+      },
       logoutModalEnable() {
         this.navbarClearAll();
         this.logoutModalIsActive = true;
+      },
+      logoutModalDisable() {
+        this.navbarClearAll();
+        this.logoutModalIsActive = false;
       },
       navbarClearAll() {
         this.navbarIsActive = false;
@@ -343,6 +387,18 @@
       registerModalEnable() {
         this.navbarClearAll();
         this.registerModalIsActive = true;
+      },
+      registerModalDisable() {
+        this.navbarClearAll();
+        this.registerModalIsActive = false;
+      },
+      registerModalHandleTabEvent(e) {
+        e.preventDefault();
+        if (e.shiftKey) {
+          this.$refs.registerModalSecondLastTabbable.focus();
+        } else {
+          this.$refs.registerModalFirstTabbable.focus();
+        }
       },
     }
   }

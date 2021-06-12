@@ -9,14 +9,20 @@
 <form x-data="taskCreateForm()"
       class="mt-4 mx-auto is-flex is-justify-content-center"
       @submit.prevent="taskCreate">
-  <input type="text"
-         id="task-create-input-description"
-         class="input is-inline is-medium btn-group-left-side"
-         placeholder="Enter new task...">
-  <input type="submit"
-         id="task-create-button-confirm"
-         class="button is-info is-medium btn-group-right-side"
-         value="Create">
+  <div class="field has-addons">
+    <span class="control">
+      <input type="text"
+             id="task-create-input-description"
+             class="input is-inline is-medium"
+             placeholder="Enter new task...">
+    </span>
+    <span class="control">
+      <input type="submit"
+             id="task-create-button-confirm"
+             class="button is-info is-medium"
+             value="Create">
+    </span>
+  </div>
 </form>
 
 <script>

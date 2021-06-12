@@ -10,19 +10,25 @@
     Todo List
   </a>
   {% if not user.is_authenticated %}
-    <a class="navbar-item"
+    <a class="navbar-item cursor-pointer"
+       tabindex="0"
        @click="loginModalEnable"
+       @keyup.enter="loginModalEnable"
        data-cy="navbar-item-login">
       Sign In
     </a>
     <a class="navbar-item"
+       tabindex="0"
        @click="registerModalEnable"
+       @keyup.enter="registerModalEnable"
        data-cy="navbar-item-register">
       Register
     </a>
   {% elif user.is_authenticated %}
     <a class="navbar-item"
+       tabindex="0"
        @click="logoutModalEnable"
+       @keyup.enter="logoutModalEnable"
        data-cy="navbar-item-logout">
       Logout
     </a>
