@@ -1,17 +1,9 @@
-html {
-  overflow-y: auto; /* bulma compatibility */
-}
-
 body {
   background-color: #eee;
 }
 
-::placeholder {  /* make text-input placeholders easier to read */
-  opacity: 1;
-}
-
 [x-cloak] {
-  display: none !important;
+  display: none !important; /* alpine.js compatibility */
 }
 
 #page-container {
@@ -23,16 +15,28 @@ body {
 
 
 /* BULMA */
+html {
+  overflow-y: auto; /* remove gap on right side of page */
+}
+
 p {
   margin-top: 1.5rem;
 }
 
+::placeholder {  /* more contrast */
+  opacity: 1;
+}
+
+.button:focus {
+  opacity: 0.8; /* more contrast */
+}
+
 .button.is-light {
-  background-color: #ddd;
+  background-color: #ddd; /* more contrast */
 }
 
 .button.is-light:hover {
-  background-color: #d4d4d4;
+  background-color: #d4d4d4; /* more contrast */
 }
 
 .is-bold {
@@ -52,11 +56,8 @@ p {
   font-size: 1.5rem;
 }
 
-.navbar-menu-main.is-hidden-touch {
-  padding-top: 0;
-}
-
 .navbar-menu-main.is-hidden-desktop {
+  /* widen the center of navbar; can be clicked to toggle the hamburger menu */
   position: absolute;
   width: 100vw;
   min-height: 3.5rem;
@@ -71,7 +72,7 @@ p {
 }
 
 .section {
-  padding: 2rem 1.5rem;
+  padding: 2rem 1.5rem; /* decrease bulma's giant section padding */
 }
 
 
