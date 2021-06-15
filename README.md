@@ -9,7 +9,7 @@ A live demo can be seen [here](https://django-htmx-alpine.nicholasmoen.com/).
 ## Setup Instructions
 
 - Create a virtualenv and install the required dependencies
-  - Using [Poetry](https://python-poetry.org/docs/):
+  - Using [Poetry](https://python-poetry.org/docs/) (recommended):
     - Create a virtualenv and install the required dependencies
       - `poetry install`
     - Activate the virtualenv
