@@ -27,6 +27,10 @@ p {
   opacity: 1;
 }
 
+.box {
+  padding: 1px 1.25rem 1.25rem;
+}
+
 .button {
   border-radius: 0.5rem;
 }
@@ -244,6 +248,14 @@ p {
 
 .w-max-90vw {
   max-width: 90vw;
+}
+
+.w-max-95vw {
+  max-width: 95vw;
+}
+
+.w-max-100vw {
+  max-width: 100vw;
 }
 
 .w-max-content {

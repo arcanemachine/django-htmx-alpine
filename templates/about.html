@@ -10,152 +10,147 @@
 {% endblock meta_description %}
 
 {% block content %}
-<div class="p-0 section">
-  <div @click.away="aboutModalIsActive = false"
-       class="px-5 pt-2 pb-5 box">
+<div>
 
-    <p>This project uses a mixture of Django, Alpine.JS, and HTMX to serve as a minimalist alternative to Javascript-based frontend frameworks such as React, Vue, Angular and Svelte.</p>
-    <p>There is no build step required, no VDOM, less boilerplate, and it provides the ability to use all the power of my server-side framework (Django) while retaining the features of a modern web experience, without the bloat.</p>
+  <p>This project uses a mixture of Django, Alpine.JS, and HTMX to serve as a minimalist alternative to Javascript-based frontend frameworks such as React, Vue, Angular and Svelte.</p>
+  <p>There is no build step required, no VDOM, less boilerplate, and it provides the ability to use all the power of my server-side framework (Django) while retaining the features of a modern web experience, without the bloat.</p>
 
-    <div class="my-5 has-text-centered">
-      <a href="{% url 'tasks:task_list' %}"
-         class="button is-info">
-        Take me to the demo!
-      </a>
+  <div class="my-5 has-text-centered">
+    <a href="{% url 'tasks:task_list' %}"
+       class="button is-info">
+      Take me to the demo!
+    </a>
+  </div>
+
+  <div class="mt-5 is-size-4 has-text-centered">Why Did I Make This Project?</div>
+  <p>Most frontend frameworks require a lot of extra steps to play nicely with a backend web framework such as Django. Using Alpine.JS and HTMX allows you to spice up your frontend experience, while keeping the convenience and versatility of your server-side framework's capabilities. For example, this setup allows you to use Django's built-in session authentication system, which is more secure that the token-based systems that many services use, which can be vulnerable to XSS hacking attacks.</p>
+  <p>With the whiz-bang frameworks (React, Vue, etc.), a lot of what makes the backend frameworks useful is stripped away, reducing them to mere API handlers and database ORMs. Using HTMX and Alpine.js puts the muscle back into your server-side framework.</p>
+
+  <div class="mt-6 is-size-4 has-text-centered">Why Alpine.JS?</div>
+  <p>Alpine.js is designed to act as a lighter version of Vue.JS. It allows you to easily add the power of reactivity, but allows the functionality to be sprinkled into your code as desired. It works with the paradigm of a predominantly server-driven experience, not against it.</p>
+  <p>Here is an example of how an Alpine.JS component can be easily added to a page:</p>
+
+  <div class="w-max-30rem mx-auto notification has-text-centered
+              border-radius-0.5rem"
+       x-data="{ counter: 0 }">
+    <div>
+      <button class="button is-success"
+              @click="counter++"
+              data-cy="demo-alpine-counter-button">
+        Click Me
+      </button>
     </div>
-
-    <div class="mt-5 is-size-4 has-text-centered">Why Did I Make This Project?</div>
-    <p>Most frontend frameworks require a lot of extra steps to play nicely with a backend web framework such as Django. Using Alpine.JS and HTMX allows you to spice up your frontend experience, while keeping the convenience and versatility of your server-side framework's capabilities. For example, this setup allows you to use Django's built-in session authentication system, which is more secure that the token-based systems that many services use, which can be vulnerable to XSS hacking attacks.</p>
-    <p>With the whiz-bang frameworks (React, Vue, etc.), a lot of what makes the backend frameworks useful is stripped away, reducing them to mere API handlers and database ORMs. Using HTMX and Alpine.js puts the muscle back into your server-side framework.</p>
-
-    <div class="mt-6 is-size-4 has-text-centered">Why Alpine.JS?</div>
-    <p>Alpine.js is designed to act as a lighter version of Vue.JS. It allows you to easily add the power of reactivity, but allows the functionality to be sprinkled into your code as desired. It works with the paradigm of a predominantly server-driven experience, not against it.</p>
-    <p>Here is an example of how an Alpine.JS component can be easily added to a page:</p>
-
-    <div class="w-max-30rem mx-auto notification has-text-centered
-                border-radius-0.5rem"
-         x-data="{ counter: 0 }">
-      <div>
-        <button class="button is-success"
-                @click="counter++"
-                data-cy="demo-alpine-counter-button">
-          Click Me
-        </button>
-      </div>
-      <div class="ml-2 pt-4">
-        Button click count: 
-        <span x-text="counter"
-              data-cy="demo-alpine-counter-text"></span>
-      </div>
+    <div class="ml-2 pt-4">
+      Button click count: 
+      <span x-text="counter"
+            data-cy="demo-alpine-counter-text"></span>
     </div>
+  </div>
 
-    <p>Here is the basic structure for the example above:</p>
-    <pre class="w-max-30rem mx-auto notification has-background-grey-lighter">&lt;div x-data=&quot;{ counter: 0 }&quot;&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;counter++&quot;&gt;
-      Click Me
-    &lt;/button&gt;
-  &lt;/div&gt;
-  &lt;div&gt;
-    Button click count:
-    &lt;span x-text=&quot;counter&quot;&gt;&lt;/span&gt;
-  &lt;/div&gt;
+  <p>Here is the basic structure for the example above:</p>
+  <pre class="w-max-30rem mx-auto notification has-background-grey-lighter">&lt;div x-data=&quot;{ counter: 0 }&quot;&gt;
+&lt;div&gt;
+  &lt;button @click=&quot;counter++&quot;&gt;
+    Click Me
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;div&gt;
+  Button click count:
+  &lt;span x-text=&quot;counter&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;
 &lt;/div&gt;</pre>
 
-    <div class="mt-6 is-size-4 has-text-centered">Why HTMX?</div>
-    <p>HTMX is a interesting library that adds client-server interactivity to plain HTML tags. It is a tool that makes it easy to add REST-style interactions to your page, but with one difference from other such tools: It works with entire DOM elements (HTML tags), not just JSON.</p>
-    <p>This means you don't have to process the data on the client-side; you can simply return page fragments from your server. As with Alpine.JS, this gives the power back to the server-based frameworks. For example, your Django server can render all the elements with the proper data, and you simply receive the data and pop it right where it needs to go, with no Javascript-based messing around with Fetch calls.</p>
+  <div class="mt-6 is-size-4 has-text-centered">Why HTMX?</div>
+  <p>HTMX is a interesting library that adds client-server interactivity to plain HTML tags. It is a tool that makes it easy to add REST-style interactions to your page, but with one difference from other such tools: It works with entire DOM elements (HTML tags), not just JSON.</p>
+  <p>This means you don't have to process the data on the client-side; you can simply return page fragments from your server. As with Alpine.JS, this gives the power back to the server-based frameworks. For example, your Django server can render all the elements with the proper data, and you simply receive the data and pop it right where it needs to go, with no Javascript-based messing around with Fetch calls.</p>
 
-    <div class="w-max-30rem mx-auto px-5 notification border-radius-0.5rem
-                has-text-centered">
-      <div class="is-size-5">Get City Weather</div>
+  <div class="w-max-30rem mx-auto px-5 notification border-radius-0.5rem
+              has-text-centered">
+    <div class="is-size-5">Get City Weather</div>
 
-      <form hx-post="{% url 'get_weather' %}"
-            hx-target="#demo-htmx-target">
+    <form hx-post="{% url 'get_weather' %}"
+          hx-target="#demo-htmx-target">
 
-        <div class="mt-4 field">
-          <label class="label"
-                 for="city">
-            City:
-          </label>
-          <div class="control">
-            <input type="text"
-                   class="w-max-20rem input has-text-centered"
-                   name="city"
-                   value="Rome"
-                   data-cy="demo-htmx-input-city">
-          </div>
+      <div class="mt-4 field">
+        <label class="label"
+               for="city">
+          City:
+        </label>
+        <div class="control">
+          <input type="text"
+                 class="w-max-20rem input has-text-centered"
+                 name="city"
+                 value="Rome"
+                 data-cy="demo-htmx-input-city">
         </div>
+      </div>
 
-        <div class="field">
-          <label class="label">Units:</label>
-
-          <div class="control">
-            <label for="units_metric">
-              <input type="radio"
-                     id="units_metric"
-                     class="radio"
-                     name="units"
-                     value="metric"
-                     checked
-                     data-cy="demo-htmx-input-units-metric">
-              Celsius
-            </label>
-            <label for="units_imperial">
-              <input type="radio"
-                     id="units_imperial"
-                     class="radio ml-2"
-                     name="units"
-                     value="imperial"
-                     data-cy="demo-htmx-input-units-imperial">
-              Fahrenheit
-            </label>
-          </div>
-        </div>
-
-        <div id="demo-htmx-target"
-             class="my-4"
-             data-cy="demo-htmx-target">
-          &nbsp;
-        </div>
+      <div class="field">
+        <label class="label">Units:</label>
 
         <div class="control">
-          <input type="submit"
-                 class="button is-success"
-                 value="Submit"
-                 data-cy="demo-htmx-input-submit">
+          <label for="units_metric">
+            <input type="radio"
+                   id="units_metric"
+                   class="radio"
+                   name="units"
+                   value="metric"
+                   checked
+                   data-cy="demo-htmx-input-units-metric">
+            Celsius
+          </label>
+          <label for="units_imperial">
+            <input type="radio"
+                   id="units_imperial"
+                   class="radio ml-2"
+                   name="units"
+                   value="imperial"
+                   data-cy="demo-htmx-input-units-imperial">
+            Fahrenheit
+          </label>
         </div>
+      </div>
 
-      </form>
-    </div>
+      <div id="demo-htmx-target"
+           class="my-4"
+           data-cy="demo-htmx-target">
+        &nbsp;
+      </div>
 
-    <p>The above example is made using a basic HTML form, with one notable difference:</p>
+      <div class="control">
+        <input type="submit"
+               class="button is-success"
+               value="Submit"
+               data-cy="demo-htmx-input-submit">
+      </div>
 
-    <pre class="w-max-30rem mx-auto notification has-background-grey-lighter">&lt;form hx-post=&quot;{% url 'get_weather' %}&quot;
-      hx-target=&quot;#demo-htmx-target&quot;&gt;</pre>
+    </form>
+  </div>
 
-    <p>Simply adding a couple attributes to the HTML completely changes the dynamic of the form. Now, instead of completely refreshing the page, the client can replace fragments of the page. The server will send back the proper fragment, and it will be put in the desired location. This gives a more integrated, app-like feel, instead of refreshing the whole page and breaking the user experience.</p>
+  <p>The above example is made using a basic HTML form, with one notable difference:</p>
 
-    <p>In the above example, the server-side framework (Django) then queries the weather API server, processes the result, and returns the following HTTP response, which is placed into the <code>#demo-htmx-target</code> element in the box containing the demo:</p>
+  <pre class="w-max-30rem mx-auto notification has-background-grey-lighter">&lt;form hx-post=&quot;{% url 'get_weather' %}&quot;
+    hx-target=&quot;#demo-htmx-target&quot;&gt;</pre>
 
-    <pre class="w-max-30rem mx-auto notification has-background-grey-lighter">return HttpResponse(
-    f'The temperature in {city} is '
-    f'{temperature} degrees {units}.')</pre>
+  <p>Simply adding a couple attributes to the HTML completely changes the dynamic of the form. Now, instead of completely refreshing the page, the client can replace fragments of the page. The server will send back the proper fragment, and it will be put in the desired location. This gives a more integrated, app-like feel, instead of refreshing the whole page and breaking the user experience.</p>
 
-    <p>In short, using HTMX allows us to easily extend HTML to provide a modern web experience without getting bogged down in Javascript boilerplate. It can also help us to move our business logic onto the server, which can be useful for preventing sensitive data from being exposed (such as the API key used to access the weather service, or even the name of the weather service).</p>
+  <p>In the above example, the server-side framework (Django) then queries the weather API server, processes the result, and returns the following HTTP response, which is placed into the <code>#demo-htmx-target</code> element in the box containing the demo:</p>
 
-    <div class="mt-6 is-size-4 has-text-centered">Conclusion</div>
-    <p>HTMX and Alpine.JS can be used to add interactivity and native app-like functionality to websites with a minimum of additional code. While this project could have been made without them, it showcases their usefulness, both by themselves, and also how they can be used together.</p>
+  <pre class="w-max-30rem mx-auto notification has-background-grey-lighter">return HttpResponse(
+  f'The temperature in {city} is '
+  f'{temperature} degrees {units}.')</pre>
 
-    <div class="mt-5 has-text-centered">
-      <a href="{% url 'tasks:task_list' %}"
-         class="button is-info">
-          Take me to the demo!
-      </a>
-    </div>
+  <p>In short, using HTMX allows us to easily extend HTML to provide a modern web experience without getting bogged down in Javascript boilerplate. It can also help us to move our business logic onto the server, which can be useful for preventing sensitive data from being exposed (such as the API key used to access the weather service, or even the name of the weather service).</p>
 
+  <div class="mt-6 is-size-4 has-text-centered">Conclusion</div>
+  <p>HTMX and Alpine.JS can be used to add interactivity and native app-like functionality to websites with a minimum of additional code. While this project could have been made without them, it showcases their usefulness, both by themselves, and also how they can be used together.</p>
+
+  <div class="mt-5 has-text-centered">
+    <a href="{% url 'tasks:task_list' %}"
+       class="button is-info">
+        Take me to the demo!
+    </a>
   </div>
 
 </div>
-
 {% endblock content %}
