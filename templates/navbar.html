@@ -55,8 +55,8 @@
       <div id="login-modal"
            class="modal is-active"
            x-show.transition.opacity.duration.500ms="loginModalIsActive"
-           @keyup.escape.window="loginModalDisable"
            @keydown.escape.window="loginModalDisable"
+           @keydown.tab.window="loginModalHandleTabEvent"
            x-cloak>
         <div class="modal-background"></div>
         <div class="modal-content">
@@ -73,22 +73,18 @@
                   <div class="control">
                     <input type="text"
                            name="username"
-                           class="input"
+                           class="input login-modal-tabbable"
                            autocorrect="off"
                            autocapitalize="none"
                            placeholder="Username"
-                           x-ref="loginModalFirstTabbable"
-                           x-init="() =>
-                             {$refs.loginModalFirstTabbable.focus()}"
-                           @keydown.shift.tab.prevent="
-                             $refs.loginModalLastTabbable.focus()"
+                           x-ref="loginModalFirstTabbableElement"
                            required
                            data-cy="login-input-username">
                   </div>
                   <div class="mt-4 control">
                     <input type="password"
                            name="password"
-                           class="input"
+                           class="input login-modal-tabbable"
                            placeholder="Password"
                            required
                            data-cy="login-input-password">
@@ -106,7 +102,7 @@
                       <input type="text"
                              name="captcha_1"
                              id="login-input-captcha"
-                             class="ml-2 input"
+                             class="ml-2 input login-modal-tabbable"
                              placeholder="Human test"
                              required
                              data-cy="login-input-captcha">
@@ -116,9 +112,8 @@
                 <button type="submit"
                         id="login-button-submit"
                         class="mt-4 button is-block is-info
-                               is-medium is-fullwidth"
+                               is-medium is-fullwidth login-modal-tabbable"
                         :class="{ 'is-loading': loginSubmitButtonIsLoading }"
-                        x-ref="loginModalSecondLastTabbable"
                         data-cy="login-button-confirm">
                   Login
                 </button>
@@ -129,13 +124,11 @@
                 &nbsp;<span id="login-form-response"></span>
               </div>
               <div>
-                <a class="is-size-5 is-clickable"
+                <a class="is-size-5 is-clickable login-modal-tabbable"
                    tabindex="0"
-                   x-ref="loginModalLastTabbable"
+                   x-ref="loginModalLastTabbableElement"
                    @click="registerModalEnable"
-                   @keyup.enter="registerModalEnable"
-                   @keydown.enter="registerModalEnable"
-                   @keydown.tab="loginModalHandleTabEvent">
+                   @keydown.enter="registerModalEnable">
                   Register a new account
                 </a>
               </div>
@@ -159,8 +152,8 @@
       <div id="register-modal"
            class="modal is-active"
            x-show.transition.opacity.duration.500ms="registerModalIsActive"
-           @keyup.escape.window="registerModalDisable"
            @keydown.escape.window="registerModalDisable"
+           @keydown.tab.window="registerModalHandleTabEvent"
            x-cloak>
         <div class="modal-background"></div>
         <div class="modal-content">
@@ -177,14 +170,12 @@
                   <div class="control">
                     <input type="text"
                            name="username"
-                           class="input"
+                           class="input register-modal-tabbable"
                            autocorrect="off"
                            autocapitalize="none"
                            placeholder="Username"
                            required
-                           x-ref="registerModalFirstTabbable"
-                           @keydown.shift.tab.prevent="
-                             $refs.registerModalLastTabbable.focus()"
+                           x-ref="registerModalFirstTabbableElement"
                            data-cy="register-input-username">
                     <input type="hidden"
                            name="name"
@@ -193,7 +184,7 @@
                   <div class="mt-4 control">
                     <input type="password"
                            name="password1"
-                           class="input"
+                           class="input register-modal-tabbable"
                            placeholder="Password"
                            required
                            x-ref="registerFormFieldPassword1"
@@ -202,7 +193,7 @@
                   <div class="mt-4 control">
                     <input type="password"
                            name="password2"
-                           class="input"
+                           class="input register-modal-tabbable"
                            placeholder="Confirm password"
                            required
                            x-ref="registerFormFieldPassword2"
@@ -222,7 +213,7 @@
                       <input type="text"
                              name="captcha_1"
                              id="register-input-captcha"
-                             class="ml-2 input"
+                             class="ml-2 input register-modal-tabbable"
                              placeholder="Human test"
                              data-cy="register-input-captcha"
                              required>
@@ -232,9 +223,8 @@
                 <input type="submit"
                        id="register-button-submit"
                        class="mt-4 button is-block is-info
-                              is-medium is-fullwidth"
+                              is-medium is-fullwidth register-modal-tabbable"
                        :class="{ 'is-loading': registerSubmitButtonIsLoading }"
-                       x-ref="registerModalSecondLastTabbable"
                        data-cy="register-button-confirm"
                        value="Register">
 
@@ -244,12 +234,11 @@
                 &nbsp;<span id="register-form-response"></span>
               </div>
               <div>
-                <a class="is-size-5 is-clickable"
+                <a class="is-size-5 is-clickable register-modal-tabbable"
                    tabindex="0"
-                   x-ref="registerModalLastTabbable"
+                   x-ref="registerModalLastTabbableElement"
                    @click="loginModalEnable"
-                   @keydown.enter="loginModalEnable"
-                   @keydown.tab="registerModalHandleTabEvent">
+                   @keydown.enter="loginModalEnable">
                   Login to an existing account
                 </a>
               </div>
@@ -276,6 +265,7 @@
            x-show.transition.opacity.duration.500ms="logoutModalIsActive"
            @keydown.enter.window="$refs.logoutButton.click()"
            @keydown.escape.window="logoutModalDisable"
+           @keydown.tab.window="logoutModalHandleTabEvent"
            x-cloak>
         <div class="modal-background"></div>
         <div class="w-max-25rem w-max-content modal-content">
@@ -292,20 +282,18 @@
               </div>
 
               <div class="mt-4 is-flex is-justify-content-space-between">
-                <a class="button is-block is-info is-medium is-fullwidth"
+                <a class="button is-block is-info is-medium is-fullwidth
+                          logout-modal-tabbable"
                    href="{% url 'users:logout' %}"
                    x-ref="logoutModalButtonConfirm"
-                   @keydown.tab.prevent="
-                     $refs.logoutModalButtonCancel.focus()"
                    data-cy="logout-button-confirm">
                   Logout
                 </a>
-                <a class="ml-4 button is-block is-light is-medium is-fullwidth"
+                <a class="ml-4 button is-block is-light is-medium is-fullwidth
+                          logout-modal-tabbable"
                    tabindex="0"
                    x-ref="logoutModalButtonCancel"
-                   @click="logoutModalIsActive = false"
-                   @keydown.tab.prevent="
-                     $refs.logoutModalButtonConfirm.focus()">
+                   @click="logoutModalIsActive = false">
                   Cancel
                 </a>
               </div>
@@ -327,7 +315,7 @@
       navbarIsActive: false,
       loginModalIsActive: false,
       loginSubmitButtonIsLoading: false,
-      logoutModalIsActive: true,
+      logoutModalIsActive: false,
       registerModalIsActive: false,
       registerSubmitButtonIsLoading: false,
       // methods
@@ -347,10 +335,10 @@
         this.loginModalIsActive = false;
       },
       loginModalHandleTabEvent(e) {
-        e.preventDefault();
         hHandleTabEvent(e,
-          this.$refs.loginModalFirstTabbable,
-          this.$refs.loginModalSecondLastTabbable
+          'login-modal-tabbable',
+          this.$refs.loginModalFirstTabbableElement,
+          this.$refs.loginModalLastTabbableElement,
         );
       },
       logoutModalEnable() {
@@ -360,6 +348,13 @@
       logoutModalDisable() {
         this.navbarClearAll();
         this.logoutModalIsActive = false;
+      },
+      logoutModalHandleTabEvent(e) {
+        hHandleTabEvent(e,
+          'logout-modal-tabbable',
+          this.$refs.logoutModalButtonConfirm,
+          this.$refs.logoutModalButtonCancel,
+        );
       },
       navbarClearAll() {
         this.navbarIsActive = false;
@@ -395,10 +390,10 @@
         this.registerModalIsActive = false;
       },
       registerModalHandleTabEvent(e) {
-        e.preventDefault();
         hHandleTabEvent(e,
-          this.$refs.registerModalFirstTabbable,
-          this.$refs.registerModalSecondLastTabbable
+          'register-modal-tabbable',
+          this.$refs.registerModalFirstTabbableElement,
+          this.$refs.registerModalLastTabbableElement,
         );
       },
     }
