@@ -32,7 +32,8 @@
   <!-- mobile navbar -->
   <div class="navbar-menu navbar-menu-main is-active is-hidden-desktop"
        aria-label="navigation menu items"
-       x-show.transition.opacity.duration.500ms="navbarIsActive"
+       x-show="navbarIsActive"
+       x-transition.opacity.duration.500ms
        x-cloak>
     {% include 'navbar_items.html' %}
   </div>
@@ -45,259 +46,249 @@
 
   {% if not user.is_authenticated %}
     
-  <template x-if="loginModalIsActive">
-      <div id="login-modal"
-           class="modal is-active"
-           x-show.transition.opacity.duration.500ms="loginModalIsActive"
+    <template x-if="loginModalIsActive">
+      <div x-init="loginModalInitialize"
            @keydown.escape.window="loginModalDisable"
-           @keydown.tab.window="loginModalHandleTabEvent"
-           x-cloak>
-        <div class="modal-background"></div>
-        <div class="modal-content">
-          <div class="p-0 section">
-            <div @click.away="loginModalDisable"
-                 class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
-                        is-justify-content-center is-align-items-center
-                        has-text-centered">
-              <div class="my-3 is-size-4">Account Login</div>
-              <form id="login-form"
-                    class="mt-3"
-                    @submit.prevent="loginFormSubmit">
-                <div class="field">
-                  <div class="control">
-                    <input type="text"
-                           name="username"
-                           class="input login-modal-tabbable"
-                           autocorrect="off"
-                           autocapitalize="none"
-                           placeholder="Username"
-                           x-ref="loginModalFirstTabbableElement"
-                           required
-                           data-cy="login-input-username">
-                  </div>
-                  <div class="mt-4 control">
-                    <input type="password"
-                           name="password"
-                           class="input login-modal-tabbable"
-                           placeholder="Password"
-                           required
-                           data-cy="login-input-password">
-                  </div>
-                  <div class="mt-4 control">
-                    <div class="is-flex">
-                      <div id="login-captcha-container"
-                           class="is-flex-grow-1">
-                        <div id="login-captcha-img-container">
-                          <input type="hidden"
-                                 name="captcha_0"
-                                 value="">
-                        </div>
+           @keydown.tab.window="loginModalHandleTabEvent"></div>
+    </template>
+
+    <div id="login-modal"
+         class="modal is-active"
+         x-show="loginModalIsActive"
+         x-transition.opacity.duration.500ms
+         x-cloak>
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="p-0 section">
+          <div @click.away="loginModalDisable"
+               class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
+                      is-justify-content-center is-align-items-center
+                      has-text-centered">
+            <div class="my-3 is-size-4">Account Login</div>
+            <form id="login-form"
+                  class="mt-3"
+                  @submit.prevent="loginFormSubmit">
+              <div class="field">
+                <div class="control">
+                  <input type="text"
+                         name="username"
+                         class="input login-modal-tabbable"
+                         autocorrect="off"
+                         autocapitalize="none"
+                         placeholder="Username"
+                         x-ref="loginModalFirstTabbableElement"
+                         required
+                         data-cy="login-input-username">
+                </div>
+                <div class="mt-4 control">
+                  <input type="password"
+                         name="password"
+                         class="input login-modal-tabbable"
+                         placeholder="Password"
+                         required
+                         data-cy="login-input-password">
+                </div>
+                <div class="mt-4 control">
+                  <div class="is-flex">
+                    <div id="login-captcha-container"
+                         class="is-flex-grow-1">
+                      <div id="login-captcha-img-container">
+                        <input type="hidden"
+                               name="captcha_0"
+                               value="">
                       </div>
-                      <input type="text"
-                             name="captcha_1"
-                             id="login-input-captcha"
-                             class="ml-2 input login-modal-tabbable"
-                             placeholder="Human test"
-                             required
-                             data-cy="login-input-captcha">
                     </div>
+                    <input type="text"
+                           name="captcha_1"
+                           id="login-input-captcha"
+                           class="ml-2 input login-modal-tabbable"
+                           placeholder="Human test"
+                           required
+                           data-cy="login-input-captcha">
                   </div>
                 </div>
-                <button type="submit"
-                        id="login-button-submit"
-                        class="mt-4 button is-block is-info
-                               is-medium is-fullwidth login-modal-tabbable"
-                        :class="{ 'is-loading': loginSubmitButtonIsLoading }"
-                        data-cy="login-button-confirm">
-                  Login
-                </button>
-
-              </form>
-              <div class="w-max-25rem pt-4 pb-3 is-size-6
-                          has-text-weight-bold">
-                &nbsp;<span id="login-form-response"></span>
               </div>
-              <div>
-                <a class="is-size-5 is-clickable login-modal-tabbable"
-                   tabindex="0"
-                   x-ref="loginModalLastTabbableElement"
-                   @click="registerModalEnable"
-                   @keydown.enter="registerModalEnable">
-                  Register a new account
-                </a>
-              </div>
+              <button type="submit"
+                      id="login-button-submit"
+                      class="mt-4 button is-block is-info
+                             is-medium is-fullwidth login-modal-tabbable"
+                      :class="{ 'is-loading': loginSubmitButtonIsLoading }"
+                      data-cy="login-button-confirm">
+                Login
+              </button>
 
+            </form>
+            <div class="w-max-25rem pt-4 pb-3 is-size-6
+                        has-text-weight-bold">
+              &nbsp;<span id="login-form-response"></span>
             </div>
+            <div>
+              <a class="is-size-5 is-clickable login-modal-tabbable"
+                 tabindex="0"
+                 x-ref="loginModalLastTabbableElement"
+                 @click="registerModalEnable"
+                 @keydown.enter="registerModalEnable">
+                Register a new account
+              </a>
+            </div>
+
           </div>
         </div>
-        <button class="modal-close is-large" aria-label="close"></button>
-
-        <script>
-          // get captcha when loaded
-          htmx.ajax('GET', '{% url 'users:login' %}', {
-            target: '#login-captcha-img-container'
-          });
-        </script>
-
       </div>
-    </template>
+      <button class="modal-close is-large" aria-label="close"></button>
+
+    </div>
 
     <template x-if="registerModalIsActive">
-      <div id="register-modal"
-           class="modal is-active"
-           x-show.transition.opacity.duration.500ms="registerModalIsActive"
+      <div x-init="registerModalInitialize"
            @keydown.escape.window="registerModalDisable"
-           @keydown.tab.window="registerModalHandleTabEvent"
-           x-cloak>
-        <div class="modal-background"></div>
-        <div class="modal-content">
-          <div class="p-0 section">
-            <div @click.away="registerModalDisable"
-                 class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
-                        is-justify-content-center is-align-items-center
-                        has-text-centered">
-              <div class="my-3 is-size-4">Register New Account</div>
-              <form id="register-form"
-                    class="mt-3"
-                    @submit.prevent="registerFormSubmit">
-                <div class="field">
-                  <div class="control">
+           @keydown.tab.window="registerModalHandleTabEvent"></div>
+    </template>
+
+    <div id="register-modal"
+         class="modal is-active"
+         x-show="registerModalIsActive"
+         x-transition.opacity.duration.500ms
+         x-cloak>
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="p-0 section">
+          <div @click.away="registerModalDisable"
+               class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
+                      is-justify-content-center is-align-items-center
+                      has-text-centered">
+            <div class="my-3 is-size-4">Register New Account</div>
+            <form id="register-form"
+                  class="mt-3"
+                  @submit.prevent="registerFormSubmit">
+              <div class="field">
+                <div class="control">
+                  <input type="text"
+                         name="username"
+                         class="input register-modal-tabbable"
+                         autocorrect="off"
+                         autocapitalize="none"
+                         placeholder="Username"
+                         required
+                         x-ref="registerModalFirstTabbableElement"
+                         data-cy="register-input-username">
+                  <input type="hidden"
+                         name="name"
+                         required>
+                </div>
+                <div class="mt-4 control">
+                  <input type="password"
+                         name="password1"
+                         class="input register-modal-tabbable"
+                         placeholder="Password"
+                         required
+                         x-ref="registerFormFieldPassword1"
+                         data-cy="register-input-password1">
+                </div>
+                <div class="mt-4 control">
+                  <input type="password"
+                         name="password2"
+                         class="input register-modal-tabbable"
+                         placeholder="Confirm password"
+                         required
+                         x-ref="registerFormFieldPassword2"
+                         data-cy="register-input-password2">
+                </div>
+                <div class="mt-4 control">
+                  <div class="is-flex">
+                    <div id="register-captcha-container"
+                         class="is-flex-grow-1">
+                      <div id="register-captcha-img-container">
+                        <input type="hidden"
+                               name="captcha_0"
+                               id="register-captcha-key"
+                               value="">
+                      </div>
+                    </div>
                     <input type="text"
-                           name="username"
-                           class="input register-modal-tabbable"
-                           autocorrect="off"
-                           autocapitalize="none"
-                           placeholder="Username"
-                           required
-                           x-ref="registerModalFirstTabbableElement"
-                           data-cy="register-input-username">
-                    <input type="hidden"
-                           name="name"
+                           name="captcha_1"
+                           id="register-input-captcha"
+                           class="ml-2 input register-modal-tabbable"
+                           placeholder="Human test"
+                           data-cy="register-input-captcha"
                            required>
                   </div>
-                  <div class="mt-4 control">
-                    <input type="password"
-                           name="password1"
-                           class="input register-modal-tabbable"
-                           placeholder="Password"
-                           required
-                           x-ref="registerFormFieldPassword1"
-                           data-cy="register-input-password1">
-                  </div>
-                  <div class="mt-4 control">
-                    <input type="password"
-                           name="password2"
-                           class="input register-modal-tabbable"
-                           placeholder="Confirm password"
-                           required
-                           x-ref="registerFormFieldPassword2"
-                           data-cy="register-input-password2">
-                  </div>
-                  <div class="mt-4 control">
-                    <div class="is-flex">
-                      <div id="register-captcha-container"
-                           class="is-flex-grow-1">
-                        <div id="register-captcha-img-container">
-                          <input type="hidden"
-                                 name="captcha_0"
-                                 id="register-captcha-key"
-                                 value="">
-                        </div>
-                      </div>
-                      <input type="text"
-                             name="captcha_1"
-                             id="register-input-captcha"
-                             class="ml-2 input register-modal-tabbable"
-                             placeholder="Human test"
-                             data-cy="register-input-captcha"
-                             required>
-                    </div>
-                  </div>
                 </div>
-                <input type="submit"
-                       id="register-button-submit"
-                       class="mt-4 button is-block is-info
-                              is-medium is-fullwidth register-modal-tabbable"
-                       :class="{ 'is-loading': registerSubmitButtonIsLoading }"
-                       data-cy="register-button-confirm"
-                       value="Register">
-
-              </form>
-              <div class="w-max-25rem pt-4 pb-3 is-size-6
-                          has-text-weight-bold">
-                &nbsp;<span id="register-form-response"></span>
               </div>
-              <div>
-                <a class="is-size-5 is-clickable register-modal-tabbable"
-                   tabindex="0"
-                   x-ref="registerModalLastTabbableElement"
-                   @click="loginModalEnable"
-                   @keydown.enter="loginModalEnable">
-                  Login to an existing account
-                </a>
-              </div>
+              <input type="submit"
+                     id="register-button-submit"
+                     class="mt-4 button is-block is-info
+                            is-medium is-fullwidth register-modal-tabbable"
+                     :class="{ 'is-loading': registerSubmitButtonIsLoading }"
+                     data-cy="register-button-confirm"
+                     value="Register">
 
+            </form>
+            <div class="w-max-25rem pt-4 pb-3 is-size-6
+                        has-text-weight-bold">
+              &nbsp;<span id="register-form-response"></span>
             </div>
+            <div>
+              <a class="is-size-5 is-clickable register-modal-tabbable"
+                 tabindex="0"
+                 x-ref="registerModalLastTabbableElement"
+                 @click="loginModalEnable"
+                 @keydown.enter="loginModalEnable">
+                Login to an existing account
+              </a>
+            </div>
+
           </div>
         </div>
-        <button class="modal-close is-large" aria-label="close"></button>
-
-        <script>
-          // get captcha when loaded
-          htmx.ajax('GET', '{% url 'users:register' %}', {
-            target: '#register-captcha-img-container'
-          });
-        </script>
-
       </div>
-    </template>
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
 
   {% elif user.is_authenticated %}
     <template x-if="logoutModalIsActive">
-      <div id="logout-modal"
-           class="modal is-active"
-           x-show.transition.opacity.duration.500ms="logoutModalIsActive"
-           @keydown.enter.window="$refs.logoutButton.click()"
-           @keydown.escape.window="logoutModalDisable"
-           @keydown.tab.window="logoutModalHandleTabEvent"
-           x-cloak>
-        <div class="modal-background"></div>
-        <div class="w-max-25rem w-max-content modal-content">
-          <div class="p-0 section">
-            <div @click.away="logoutModalIsActive = false"
-                 class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
-                        is-justify-content-center is-align-items-center
-                        has-text-centered">
-
-              <div class="my-3 is-size-4">Account Logout</div>
-
-              <div class="is-size-6 has-text-centered">
-                Are you sure you want to log out?
-              </div>
-
-              <div class="mt-4 is-flex is-justify-content-space-between">
-                <a class="button is-block is-info is-medium is-fullwidth
-                          logout-modal-tabbable"
-                   href="{% url 'users:logout' %}"
-                   x-ref="logoutModalButtonConfirm"
-                   data-cy="logout-button-confirm">
-                  Logout
-                </a>
-                <a class="ml-4 button is-block is-light is-medium is-fullwidth
-                          logout-modal-tabbable"
-                   tabindex="0"
-                   x-ref="logoutModalButtonCancel"
-                   @click="logoutModalIsActive = false">
-                  Cancel
-                </a>
-              </div>
-
-            </div>
-          </div>
-          <button class="modal-close is-large" aria-label="close"></button>
-        </div>
-      </div>
+      <div @keydown.escape.window="logoutModalDisable"
+           @keydown.tab.window="logoutModalHandleTabEvent"></div>
     </template>
+
+    <div id="logout-modal"
+         class="modal is-active"
+         x-show="logoutModalIsActive"
+         x-transition.opacity.duration.500ms
+         x-cloak>
+      <div class="modal-background"></div>
+      <div class="w-max-25rem w-max-content modal-content">
+        <div class="p-0 section">
+          <div @click.away="logoutModalIsActive = false"
+               class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
+                      is-justify-content-center is-align-items-center
+                      has-text-centered">
+
+            <div class="my-3 is-size-4">Account Logout</div>
+
+            <div class="is-size-6 has-text-centered">
+              Are you sure you want to log out?
+            </div>
+
+            <div class="mt-4 is-flex is-justify-content-space-between">
+              <a class="button is-block is-info is-medium is-fullwidth
+                        logout-modal-tabbable"
+                 href="{% url 'users:logout' %}"
+                 x-ref="logoutModalButtonConfirm"
+                 data-cy="logout-button-confirm">
+                Logout
+              </a>
+              <button class="ml-4 button is-block is-light is-medium
+                             is-fullwidth logout-modal-tabbable"
+                      @click="logoutModalDisable">
+                Cancel
+              </a>
+            </div>
+
+          </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+      </div>
+    </div>
   {% endif %}
  
 </nav>
@@ -330,10 +321,15 @@
       },
       loginModalHandleTabEvent(e) {
         hHandleTabEvent(e,
-          'login-modal-tabbable',
           this.$refs.loginModalFirstTabbableElement,
           this.$refs.loginModalLastTabbableElement,
+          'login-modal-tabbable',
         );
+      },
+      loginModalInitialize() {
+        htmx.ajax('GET', '{% url 'users:login' %}', {
+          target: '#login-captcha-img-container'
+        });
       },
       logoutModalEnable() {
         this.navbarClearAll();
@@ -345,7 +341,6 @@
       },
       logoutModalHandleTabEvent(e) {
         hHandleTabEvent(e,
-          'logout-modal-tabbable',
           this.$refs.logoutModalButtonConfirm,
           this.$refs.logoutModalButtonCancel,
         );
@@ -385,11 +380,16 @@
       },
       registerModalHandleTabEvent(e) {
         hHandleTabEvent(e,
-          'register-modal-tabbable',
           this.$refs.registerModalFirstTabbableElement,
           this.$refs.registerModalLastTabbableElement,
+          'register-modal-tabbable',
         );
       },
+      registerModalInitialize() {
+        htmx.ajax('GET', '{% url 'users:register' %}', {
+          target: '#register-captcha-img-container'
+        });
+      }
     }
   }
 </script>

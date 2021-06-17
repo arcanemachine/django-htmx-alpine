@@ -53,68 +53,103 @@
 
   <!-- task edit/delete icons -->
   <div class="w-5rem is-size-4 is-flex is-justify-content-center"
-       x-data="{ taskDeleteModal{{ task.id }}IsActive: false }">
+       x-data="taskDeleteComponent{{ task.id }}">
     <div id="task-icon-edit-{{ task.id }}"
-          class="p-2 pt-3 cursor-pointer has-text-weight-bold task-icon-edit"
-          onclick="updateDivToggle({{ task.id }})"
-          title="Edit">
+         tabindex="0"
+         class="p-2 pt-3 cursor-pointer has-text-weight-bold task-icon-edit"
+         @click="updateDivToggle({{ task.id }})"
+         @keydown.enter="updateDivToggle({{ task.id }})"
+         title="Edit">
       &#9998; <!-- edit icon -->
     </div>
     <div id="task-icon-delete-{{ task.id }}"
-          class="ml-2 p-2 cursor-pointer has-text-weight-bold task-icon-delete"
-          title="Delete"
-          @click="taskDeleteModal{{ task.id }}IsActive = true;"
-          data-cy-id="task-icon-delete-{{ task.id }}">
+         tabindex="0"
+         class="ml-2 p-2 cursor-pointer has-text-weight-bold task-icon-delete"
+         title="Delete"
+         @click="taskDeleteModalIsActive = true;"
+         data-cy-id="task-icon-delete-{{ task.id }}">
       &times; <!-- delete icon -->
     </div>
 
     <!-- item delete modal -->
-    <template x-if="taskDeleteModal{{ task.id }}IsActive">
-      <div id="item-delete-modal-{{ task.id }}"
-           class="modal is-active outline-none"
-           tabindex="-1"
-           x-show.transition.opacity.duration.500ms="
-             taskDeleteModal{{ task.id }}IsActive"
-           @keydown.enter.window="taskDelete({{ task.id }})"
-           @keydown.escape.window="
-             taskDeleteModal{{ task.id }}IsActive = false">
-        <div class="modal-background"></div>
-        <div class="w-max-25rem modal-content">
-          <div class="p-0 section">
-            <div @click.away="taskDeleteModal{{ task.id }}IsActive = false"
-                 class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
-                        is-justify-content-center is-align-items-center
-                        has-text-centered">
-
-              <div class="my-3 is-size-4">Delete Item</div>
-
-              <div class="is-size-6 has-text-centered">
-                Are you sure you want to delete this item?
-              </div>
-
-              <div class="mt-5 is-flex is-justify-content-space-between">
-                <button id="task-button-delete-{{ task.id }}"
-                        class="button is-block is-danger is-medium
-                               is-fullwidth"
-                   @click="taskDelete({{ task.id }})"
-                   data-cy-id="task-button-delete-{{ task.id }}">
-                  Delete
-                </button>
-                <button class="ml-4 button is-block is-light
-                               is-medium is-fullwidth"
-                        @click="taskDeleteModal{{ task.id }}IsActive = false">
-                  Cancel
-                </button>
-              </div>
-
-            </div>
-          </div>
-          <button class="modal-close is-large" aria-label="close"></button>
-        </div>
-
-      </div>
+    <template x-if="taskDeleteModalIsActive">
+      <div x-init="taskDeleteModalInitialize"
+           @keydown.escape.window="taskDeleteModalDisable"
+           @keydown.tab.window="handleTabKey"></div>
     </template>
 
+    <div class="modal is-active"
+         x-show="taskDeleteModalIsActive"
+         x-transition.opacity.duration.500ms
+         x-cloak>
+      <div class="modal-background"></div>
+      <div class="w-max-25rem modal-content">
+
+        <div @click.away="taskDeleteModalDisable"
+             class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
+                    is-justify-content-center is-align-items-center
+                    has-text-centered">
+
+          <div class="my-3 is-size-4">Delete Item</div>
+
+          <div class="is-size-6 has-text-centered">
+            Are you sure you want to delete this item?
+          </div>
+
+          <div class="mt-5 is-flex is-justify-content-space-between">
+            <button id="task-button-delete-{{ task.id }}"
+                    class="button is-block is-danger is-medium is-fullwidth"
+                    x-ref="taskDeleteModalButtonConfirm"
+                    @click="handleTaskDelete({{ task.id }})"
+                    @keydown.enter="handleTaskDelete({{ task.id }})"
+                    data-cy-id="task-button-delete-{{ task.id }}">
+              Delete
+            </button>
+            <button class="ml-4 button is-block is-light
+                           is-medium is-fullwidth"
+                    x-ref="taskDeleteModalButtonCancel"
+                    @click="taskDeleteModalIsActive = false"
+                    @keydown.enter="taskDeleteModalIsActive = false">
+              Cancel
+            </button>
+          </div>
+
+        </div>
+
+        <button class="modal-close is-large" aria-label="close"></button>
+      </div>
+
+    </div>
   </div>
+
+  <script>
+
+function taskDeleteComponent{{ task.id }}() {
+  return {
+    // data
+    taskDeleteModalIsActive: false,
+    // methods
+    handleTabEvent() {
+      hHandleTabEvent()
+    },
+    handleTaskDelete(id) {
+      this.taskDeleteModalIsActive = false;
+      setTimeout(() => {
+        taskDelete(id);
+      }, defaultTransitionLength);
+    },
+    taskDeleteModalEnable() {
+      taskDeleteModalIsActive = true;
+    },
+    taskDeleteModalDisable() {
+      taskDeleteModalIsActive = false;
+    },
+    taskDeleteModalInitialize() {
+      document.querySelector('#task-button-delete-{{ task.id }}').focus()
+    }
+  }
+}
+
+  </script>
 
 </li>

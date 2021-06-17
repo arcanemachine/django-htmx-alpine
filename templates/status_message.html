@@ -2,11 +2,12 @@
   <button id="status-message"
           class="status-message"
           @click="statusMessageClear"
+          @status-message-display.window="receiveStatusMessageDisplay($event)"
           x-data="statusMessageNotificationData()"
-          x-show.transition.opacity.duration.500ms="show"
+          x-show="show"
+          x-transition.opacity.duration.500ms
           x-text="statusMessageText"
           x-cloak
-          @status-message-display.window="receiveStatusMessageDisplay($event)"
           data-cy="status-message">
   </button>
 </div>

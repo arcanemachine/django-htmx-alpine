@@ -5,7 +5,8 @@ const hDispatch = (eventName, params={}) => {
   return window.dispatchEvent(new CustomEvent(eventName, { detail: params }));
 }
 
-function hHandleTabEvent(e, tabbableClass, firstElement, lastElement) {
+function hHandleTabEvent(
+    e, firstElement, lastElement, tabbableClass) {
   if (!document.activeElement.classList.contains(tabbableClass)) {
     if (!e.shiftKey) {
       e.preventDefault();

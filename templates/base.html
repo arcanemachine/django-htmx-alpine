@@ -39,9 +39,10 @@
     {% block head_script %}{% endblock head_script %}
 
     <!-- js -->
+    <script src="{% static 'js/helpers.js' %}"></script>
     <script{% if DEBUG %}
-      src="{% static 'js/alpine@2.8.2.min.js' %}"{% else %}
-      src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js"{% endif %} defer></script>
+      src="{% static 'js/alpine@3.0.6.min.js' %}"{% else %}
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.0.6/dist/cdn.min.js"{% endif %} defer></script>
 
     {{ USER_ANALYTICS_SCRIPT|safe }}
 
@@ -91,7 +92,6 @@
     <script {% if DEBUG %}
       src="{% static 'js/htmx@1.4.1.min.js' %}"{% else %}
       src="https://cdn.jsdelivr.net/npm/htmx.org@1.4.1/dist/htmx.min.js"{% endif %}></script>
-    <script src="{% static 'js/helpers.js' %}"></script>
 
     <script>
       // add CSRFToken to HTMX headers

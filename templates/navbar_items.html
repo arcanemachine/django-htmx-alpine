@@ -1,5 +1,5 @@
 <div class="navbar-end has-text-centered"
-     @click.away="navbarIsActive = false">
+     @click.outside="navbarIsActive = false">
   <a class="navbar-item"
      href="{% url 'about' %}"
      data-cy="navbar-item-about">
