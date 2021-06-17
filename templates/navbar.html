@@ -1,5 +1,8 @@
-<div class="outline-none"
+<nav id="navbar-main"
+     class="navbar outline-none has-background-grey-lighter"
      tabindex="-1"
+     role="navigation"
+     aria-label="main navigation menu"
      x-data="navbarMainContainerData()"
      x-ref="navbarMainContainer"
      @keydown.escape="navbarClearAll()"
@@ -7,47 +10,38 @@
      @register-submit-button-enable.window="
        registerSubmitButtonIsLoading = false">
 
-  <nav id="navbar-main"
-       class="navbar has-background-grey-lighter"
-       role="navigation"
-       aria-label="main navigation">
-    <div class="navbar-brand">
-      <a class="navbar-item brand-text is-size-4 has-text-dark" href="/">
-        HTMX + Alpine.JS
-      </a>
-      <a class="w-100"
-         @click="navbarIsActive = !navbarIsActive">
-        &nbsp;
-      </a>
-      <a role="button"
-         tabindex="0"
-         class="px-5 navbar-burger"
-         aria-label="menu"
-         aria-expanded="false"
-         data-target="navbarMain"
-         @click="navbarIsActive = !navbarIsActive"
-         @keydown.enter="navbarIsActive = !navbarIsActive"
-         data-cy="navbar-burger">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
+  <div class="navbar-brand">
+    <a class="navbar-item brand-text is-size-4 has-text-dark" href="/">
+      HTMX + Alpine.JS
+    </a>
+    <a role="button"
+       tabindex="0"
+       class="px-5 navbar-burger"
+       aria-label="menu"
+       aria-expanded="false"
+       data-target="navbarMain"
+       @click="navbarIsActive = !navbarIsActive"
+       @keydown.enter="navbarIsActive = !navbarIsActive"
+       data-cy="navbar-burger">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
 
-    <!-- mobile navbar -->
-    <div class="navbar-menu navbar-menu-main is-active is-hidden-desktop"
-         x-show.transition.opacity.duration.500ms="navbarIsActive"
-         x-cloak>
-      {% include 'navbar_items.html' %}
-    </div>
+  <!-- mobile navbar -->
+  <div class="navbar-menu navbar-menu-main is-active is-hidden-desktop"
+       aria-label="navigation menu items"
+       x-show.transition.opacity.duration.500ms="navbarIsActive"
+       x-cloak>
+    {% include 'navbar_items.html' %}
+  </div>
 
-    <!-- desktop navbar -->
-    <div class="navbar-menu navbar-end navbar-menu-main
-                is-active is-hidden-touch">
-      {% include 'navbar_items.html' %}
-    </div>
-
-  </nav>
+  <!-- desktop navbar -->
+  <div class="navbar-menu navbar-end navbar-menu-main
+              is-active is-hidden-touch">
+    {% include 'navbar_items.html' %}
+  </div>
 
   {% if not user.is_authenticated %}
     
@@ -306,7 +300,7 @@
     </template>
   {% endif %}
  
-</div>
+</nav>
 
 <script>
   function navbarMainContainerData() {

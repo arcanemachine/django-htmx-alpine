@@ -50,7 +50,8 @@
   <body>
     {% block body_start_script %}{% endblock body_start_script %}
 
-    <div id="page-container">
+    <div id="page-container"
+         aria-label="page container">
       {% include 'navbar.html' %}
 
       <noscript>
@@ -59,22 +60,24 @@
         </div>
       </noscript>
 
-      <div id="main-container"
+      <main id="main-container"
            class="w-100 container is-flex-grow-1 has-background-light-grey">
-        <div class="mt-4 has-text-centered">
+        <section class="mt-4 has-text-centered"
+                 aria-label="title">
           <div class="title">
             {% block body_title %}{% endblock body_title %}
           </div>
           <div class="subtitle">
             {% block body_subtitle %}{% endblock body_subtitle %}
             </div>
+        </section>
+
+        <div class="pt-4 section"
+             aria-label="content">
+          {% block content %}{% endblock content %}
         </div>
 
-        <main class="pt-4 section">
-          {% block content %}{% endblock content %}
-        </main>
-
-      </div>
+      </main>
 
       {% include 'status_message.html' %}
 
