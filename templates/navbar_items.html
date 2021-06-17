@@ -13,14 +13,14 @@
     <a class="navbar-item cursor-pointer"
        tabindex="0"
        @click="loginModalEnable"
-       @keyup.enter="loginModalEnable"
+       @keydown.enter="loginModalEnable"
        data-cy="navbar-item-login">
       Sign In
     </a>
     <a class="navbar-item"
        tabindex="0"
        @click="registerModalEnable"
-       @keyup.enter="registerModalEnable"
+       @keydown.enter="registerModalEnable"
        data-cy="navbar-item-register">
       Register
     </a>
@@ -28,7 +28,7 @@
     <a class="navbar-item"
        tabindex="0"
        @click="logoutModalEnable"
-       @keyup.enter="logoutModalEnable"
+       @keydown.enter="logoutModalEnable"
        data-cy="navbar-item-logout">
       Logout
     </a>

@@ -75,8 +75,9 @@
            tabindex="-1"
            x-show.transition.opacity.duration.500ms="
              taskDeleteModal{{ task.id }}IsActive"
-           @keyup.enter.window="taskDelete({{ task.id }})"
-           @keyup.escape.window="taskDeleteModal{{ task.id }}IsActive = false">
+           @keydown.enter.window="taskDelete({{ task.id }})"
+           @keydown.escape.window="
+             taskDeleteModal{{ task.id }}IsActive = false">
         <div class="modal-background"></div>
         <div class="w-max-25rem modal-content">
           <div class="p-0 section">
