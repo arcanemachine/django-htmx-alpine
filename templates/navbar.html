@@ -345,11 +345,10 @@
       },
       loginModalHandleTabEvent(e) {
         e.preventDefault();
-        if (e.shiftKey) {
-          this.$refs.loginModalSecondLastTabbable.focus();
-        } else {
-          this.$refs.loginModalFirstTabbable.focus();
-        }
+        hHandleTabEvent(e,
+          this.$refs.loginModalFirstTabbable,
+          this.$refs.loginModalSecondLastTabbable
+        );
       },
       logoutModalEnable() {
         this.navbarClearAll();
@@ -394,11 +393,10 @@
       },
       registerModalHandleTabEvent(e) {
         e.preventDefault();
-        if (e.shiftKey) {
-          this.$refs.registerModalSecondLastTabbable.focus();
-        } else {
-          this.$refs.registerModalFirstTabbable.focus();
-        }
+        hHandleTabEvent(e,
+          this.$refs.registerModalFirstTabbable,
+          this.$refs.registerModalSecondLastTabbable
+        );
       },
     }
   }
