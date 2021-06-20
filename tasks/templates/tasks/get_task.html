@@ -52,104 +52,24 @@
   </div>
 
   <!-- task edit/delete icons -->
-  <div class="w-5rem is-size-4 is-flex is-justify-content-center"
-       x-data="taskDeleteComponent{{ task.id }}">
-    <div id="task-icon-edit-{{ task.id }}"
+  <div class="w-5rem is-size-4 is-flex is-justify-content-center">
+    <a id="task-icon-edit-{{ task.id }}"
          tabindex="0"
-         class="p-2 pt-3 cursor-pointer has-text-weight-bold task-icon-edit"
+         class="p-2 pt-3 cursor-pointer has-text-black"
          @click="updateDivToggle({{ task.id }})"
          @keydown.enter="updateDivToggle({{ task.id }})"
          title="Edit">
       &#9998; <!-- edit icon -->
-    </div>
-    <div id="task-icon-delete-{{ task.id }}"
-         tabindex="0"
-         class="ml-2 p-2 cursor-pointer has-text-weight-bold task-icon-delete"
-         title="Delete"
-         @click="taskDeleteModalIsActive = true;"
-         data-cy-id="task-icon-delete-{{ task.id }}">
+    </a>
+    <a id="task-icon-delete-{{ task.id }}"
+       tabindex="0"
+       class="ml-2 p-2 pt-3 has-text-black cursor-pointer"
+       title="Delete"
+       @click="taskDeleteModalEnable({{ task.id }})"
+       data-cy-id="task-icon-delete-{{ task.id }}">
       &times; <!-- delete icon -->
-    </div>
+    </a>
 
-    <!-- item delete modal -->
-    <template x-if="taskDeleteModalIsActive">
-      <div x-init="taskDeleteModalInitialize"
-           @keydown.escape.window="taskDeleteModalDisable"
-           @keydown.tab.window="handleTabKey"></div>
-    </template>
-
-    <div class="modal is-active"
-         x-show="taskDeleteModalIsActive"
-         x-transition.opacity.duration.500ms
-         x-cloak>
-      <div class="modal-background"></div>
-      <div class="w-max-25rem modal-content">
-
-        <div @click.away="taskDeleteModalDisable"
-             class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
-                    is-justify-content-center is-align-items-center
-                    has-text-centered">
-
-          <div class="my-3 is-size-4">Delete Item</div>
-
-          <div class="is-size-6 has-text-centered">
-            Are you sure you want to delete this item?
-          </div>
-
-          <div class="mt-5 is-flex is-justify-content-space-between">
-            <button id="task-button-delete-{{ task.id }}"
-                    class="button is-block is-danger is-medium is-fullwidth"
-                    x-ref="taskDeleteModalButtonConfirm"
-                    @click="handleTaskDelete({{ task.id }})"
-                    @keydown.enter="handleTaskDelete({{ task.id }})"
-                    data-cy-id="task-button-delete-{{ task.id }}">
-              Delete
-            </button>
-            <button class="ml-4 button is-block is-light
-                           is-medium is-fullwidth"
-                    x-ref="taskDeleteModalButtonCancel"
-                    @click="taskDeleteModalIsActive = false"
-                    @keydown.enter="taskDeleteModalIsActive = false">
-              Cancel
-            </button>
-          </div>
-
-        </div>
-
-        <button class="modal-close is-large" aria-label="close"></button>
-      </div>
-
-    </div>
   </div>
-
-  <script>
-
-function taskDeleteComponent{{ task.id }}() {
-  return {
-    // data
-    taskDeleteModalIsActive: false,
-    // methods
-    handleTabEvent() {
-      hHandleTabEvent()
-    },
-    handleTaskDelete(id) {
-      this.taskDeleteModalIsActive = false;
-      setTimeout(() => {
-        taskDelete(id);
-      }, defaultTransitionLength);
-    },
-    taskDeleteModalEnable() {
-      taskDeleteModalIsActive = true;
-    },
-    taskDeleteModalDisable() {
-      taskDeleteModalIsActive = false;
-    },
-    taskDeleteModalInitialize() {
-      document.querySelector('#task-button-delete-{{ task.id }}').focus()
-    }
-  }
-}
-
-  </script>
 
 </li>

@@ -41,8 +41,9 @@
     <!-- js -->
     <script src="{% static 'js/helpers.js' %}"></script>
     <script{% if DEBUG %}
-      src="{% static 'js/alpine@3.0.6.min.js' %}"{% else %}
-      src="https://cdn.jsdelivr.net/npm/alpinejs@3.0.6/dist/cdn.min.js"{% endif %} defer></script>
+      {# src="{% static 'js/alpine@3.0.6.min.js' %}"{% else %} #}
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.0.8/dist/cdn.min.js"{% else %}
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.0.8/dist/cdn.min.js"{% endif %} defer></script>
 
     {{ USER_ANALYTICS_SCRIPT|safe }}
 

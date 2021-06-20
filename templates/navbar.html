@@ -47,7 +47,7 @@
   {% if not user.is_authenticated %}
     
     <template x-if="loginModalIsActive">
-      <div x-init="loginModalInitialize"
+      <div x-init="loginModalInit"
            @keydown.escape.window="loginModalDisable"
            @keydown.tab.window="loginModalHandleTabEvent"></div>
     </template>
@@ -56,12 +56,13 @@
          class="modal is-active"
          x-show="loginModalIsActive"
          x-transition.opacity.duration.500ms
+         x-ref="deleteme"
          x-cloak>
       <div class="modal-background"></div>
       <div class="modal-content">
         <div class="p-0 section">
           <div @click.away="loginModalDisable"
-               class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
+               class="pt-2 px-5 pb-5 box is-flex is-flex-direction-column
                       is-justify-content-center is-align-items-center
                       has-text-centered">
             <div class="my-3 is-size-4">Account Login</div>
@@ -72,11 +73,11 @@
                 <div class="control">
                   <input type="text"
                          name="username"
+                         id="login-modal-first-tabbable"
                          class="input login-modal-tabbable"
                          autocorrect="off"
                          autocapitalize="none"
                          placeholder="Username"
-                         x-ref="loginModalFirstTabbableElement"
                          required
                          data-cy="login-input-username">
                 </div>
@@ -125,22 +126,24 @@
             <div>
               <a class="is-size-5 is-clickable login-modal-tabbable"
                  tabindex="0"
-                 x-ref="loginModalLastTabbableElement"
                  @click="registerModalEnable"
                  @keydown.enter="registerModalEnable">
-                Register a new account
+                Register new account
               </a>
             </div>
+            <button id="login-modal-last-tabbable"
+                    class="delete box-close login-modal-tabbable"
+                    aria-label="close"
+                    @click="loginModalDisable"></button>
 
           </div>
         </div>
       </div>
-      <button class="modal-close is-large" aria-label="close"></button>
 
     </div>
 
     <template x-if="registerModalIsActive">
-      <div x-init="registerModalInitialize"
+      <div x-init="registerModalInit"
            @keydown.escape.window="registerModalDisable"
            @keydown.tab.window="registerModalHandleTabEvent"></div>
     </template>
@@ -154,7 +157,7 @@
       <div class="modal-content">
         <div class="p-0 section">
           <div @click.away="registerModalDisable"
-               class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
+               class="pt-2 px-5 pb-5 box is-flex is-flex-direction-column
                       is-justify-content-center is-align-items-center
                       has-text-centered">
             <div class="my-3 is-size-4">Register New Account</div>
@@ -165,12 +168,12 @@
                 <div class="control">
                   <input type="text"
                          name="username"
+                         id="register-modal-first-tabbable"
                          class="input register-modal-tabbable"
                          autocorrect="off"
                          autocapitalize="none"
                          placeholder="Username"
                          required
-                         x-ref="registerModalFirstTabbableElement"
                          data-cy="register-input-username">
                   <input type="hidden"
                          name="name"
@@ -231,17 +234,20 @@
             <div>
               <a class="is-size-5 is-clickable register-modal-tabbable"
                  tabindex="0"
-                 x-ref="registerModalLastTabbableElement"
                  @click="loginModalEnable"
                  @keydown.enter="loginModalEnable">
                 Login to an existing account
               </a>
             </div>
 
+            <button id="register-modal-last-tabbable"
+                    class="delete box-close register-modal-tabbable"
+                    aria-label="close"
+                    @click="registerModalDisable"></button>
+
           </div>
         </div>
       </div>
-      <button class="modal-close is-large" aria-label="close"></button>
     </div>
 
   {% elif user.is_authenticated %}
@@ -259,7 +265,7 @@
       <div class="w-max-25rem w-max-content modal-content">
         <div class="p-0 section">
           <div @click.away="logoutModalIsActive = false"
-               class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
+               class="pt-2 px-5 pb-5 box is-flex is-flex-direction-column
                       is-justify-content-center is-align-items-center
                       has-text-centered">
 
@@ -270,15 +276,15 @@
             </div>
 
             <div class="mt-4 is-flex is-justify-content-space-between">
-              <a class="button is-block is-info is-medium is-fullwidth
-                        logout-modal-tabbable"
+              <a id="logout-modal-first-tabbable"
+                 class="button is-block is-info is-medium is-fullwidth"
                  href="{% url 'users:logout' %}"
-                 x-ref="logoutModalButtonConfirm"
                  data-cy="logout-button-confirm">
                 Logout
               </a>
-              <button class="ml-4 button is-block is-light is-medium
-                             is-fullwidth logout-modal-tabbable"
+              <button id="logout-modal-last-tabbable"
+                      class="ml-4 button is-block is-light is-medium
+                             is-fullwidth"
                       @click="logoutModalDisable">
                 Cancel
               </a>
@@ -286,7 +292,6 @@
 
           </div>
         </div>
-        <button class="modal-close is-large" aria-label="close"></button>
       </div>
     </div>
   {% endif %}
@@ -321,12 +326,12 @@
       },
       loginModalHandleTabEvent(e) {
         hHandleTabEvent(e,
-          this.$refs.loginModalFirstTabbableElement,
-          this.$refs.loginModalLastTabbableElement,
-          'login-modal-tabbable',
+          document.querySelector('#login-modal-first-tabbable'),
+          document.querySelector('#login-modal-last-tabbable'),
+          'login-modal-tabbable'
         );
       },
-      loginModalInitialize() {
+      loginModalInit() {
         htmx.ajax('GET', '{% url 'users:login' %}', {
           target: '#login-captcha-img-container'
         });
@@ -341,8 +346,8 @@
       },
       logoutModalHandleTabEvent(e) {
         hHandleTabEvent(e,
-          this.$refs.logoutModalButtonConfirm,
-          this.$refs.logoutModalButtonCancel,
+          document.querySelector('#logout-modal-first-tabbable'),
+          document.querySelector('#logout-modal-last-tabbable'),
         );
       },
       navbarClearAll() {
@@ -380,12 +385,12 @@
       },
       registerModalHandleTabEvent(e) {
         hHandleTabEvent(e,
-          this.$refs.registerModalFirstTabbableElement,
-          this.$refs.registerModalLastTabbableElement,
-          'register-modal-tabbable',
+          document.querySelector('#register-modal-first-tabbable'),
+          document.querySelector('#register-modal-last-tabbable'),
+          'register-modal-tabbable'
         );
       },
-      registerModalInitialize() {
+      registerModalInit() {
         htmx.ajax('GET', '{% url 'users:register' %}', {
           target: '#register-captcha-img-container'
         });

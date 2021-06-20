@@ -6,8 +6,10 @@ const hDispatch = (eventName, params={}) => {
 }
 
 function hHandleTabEvent(
-    e, firstElement, lastElement, tabbableClass) {
-  if (!document.activeElement.classList.contains(tabbableClass)) {
+    e, firstElement, lastElement, tabbableClass=undefined) {
+  let activeElement = document.activeElement;
+
+  if (tabbableClass && !activeElement.classList.contains(tabbableClass)) {
     if (!e.shiftKey) {
       e.preventDefault();
       firstElement.focus();
@@ -16,16 +18,17 @@ function hHandleTabEvent(
       lastElement.focus();
     }
   } else {
-    if (document.activeElement === firstElement) {
+    if (activeElement === firstElement) {
       if (e.shiftKey) {
         e.preventDefault();
         lastElement.focus();
       }
-    } else if (document.activeElement === lastElement) {
+    } else if (activeElement === lastElement) {
       if (!e.shiftKey) {
         e.preventDefault();
         firstElement.focus();
       }
     }
   }
+
 }

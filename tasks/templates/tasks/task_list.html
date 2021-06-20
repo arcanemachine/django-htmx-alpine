@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<form x-data="taskCreateForm()"
+<form x-data="todoList()"
       class="mt-4 mx-auto is-flex is-justify-content-center"
       @submit.prevent="taskCreate">
   <div class="field has-addons">
@@ -23,75 +23,151 @@
              value="Create">
     </span>
   </div>
+
+  <!-- item delete modal -->
+  <template x-if="taskDeleteModalIsActive">
+    <div @keydown.escape.window="taskDeleteModalDisable"
+         @keydown.tab.window="taskDeleteModalHandleTabEvent"></div>
+  </template>
+
+  <div class="modal is-active"
+       x-show="taskDeleteModalIsActive"
+       x-transition.opacity.duration.500ms
+       x-cloak>
+    <div class="modal-background"></div>
+    <div class="w-max-25rem modal-content">
+
+      <div @click.away="taskDeleteModalDisable"
+           class="px-5 pt-2 pb-5 box is-flex is-flex-direction-column
+                  is-justify-content-center is-align-items-center
+                  has-text-centered">
+
+        <div class="my-3 is-size-4">Delete Item</div>
+
+        <div class="is-size-6 has-text-centered">
+          Are you sure you want to delete this item?
+        </div>
+
+        <div class="mt-5 is-flex is-justify-content-space-between">
+          <button id="task-button-delete-{{ task.id }}"
+                  class="button is-block is-danger is-medium is-fullwidth"
+                  id="task-delete-modal-button-confirm"
+                  x-init="$el.focus()"
+                  @click="taskDeleteHandler"
+                  @keydown.enter="handleTaskDelete"
+                  data-cy-id="task-button-delete">
+            Delete
+          </button>
+          <button class="ml-4 button is-block is-light
+                         is-medium is-fullwidth"
+                  id="task-delete-modal-button-cancel"
+                  @click="taskDeleteModalIsActive = false"
+                  @keydown.enter="taskDeleteModalIsActive = false">
+            Cancel
+          </button>
+        </div>
+
+      </div>
+
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+  </div>
+
 </form>
 
 <script>
-  function taskCreateForm() {
-    return {
-      // methods
-      userIsAuthenticated() {
-        return {{ user.is_authenticated|yesno:'true,false' }};
-      },
-      taskCreate() {
-        if (!this.userIsAuthenticated()) {
-          // do not continue if user is not authenticated
-          hDispatch(
-            'status-message-display',
-            "You must login before you can add any tasks.");
-          return false;
-        }
-        else {
-          // get the value of the text input, then clear it
-          let textInput = document
-            .querySelector("#task-create-input-description");
-          let description = textInput.value;
-          textInput.value = '';
 
-          // issue a POST request using HTMX
-          htmx.ajax('POST', '{% url 'tasks:task_create' %}', {
-            target: '#tasks',
-            values: { description },
-          });
-        }
+function todoList() {
+  return {
+    taskDeleteModalIsActive: false,
+    taskDeleteId: undefined,
+
+    userIsAuthenticated() {
+      return {{ user.is_authenticated|yesno:'true,false' }};
+    },
+    taskCreate() {
+      if (!this.userIsAuthenticated()) {
+        // do not continue if user is not authenticated
+        hDispatch(
+          'status-message-display',
+          "You must login before you can add any tasks.");
+        return false;
       }
+      else {
+        // get the value of the text input, then clear it
+        let textInput = document
+          .querySelector("#task-create-input-description");
+        let description = textInput.value;
+        textInput.value = '';
+
+        // issue a POST request using HTMX
+        htmx.ajax('POST', '{% url 'tasks:task_create' %}', {
+          target: '#tasks',
+          values: { description },
+        });
+      }
+    },
+    taskDeleteModalHandleTabEvent(e) {
+      hHandleTabEvent(e,
+        document.querySelector(
+          `#task-delete-modal-first-tabbable`),
+        document.querySelector(
+          `#task-logout-modal-last-tabbable`),
+      );
+    },
+    taskDeleteHandler() {
+      // delete the task
+      let id = this.taskDeleteId;
+      htmx.ajax('DELETE', `{% url 'tasks:task_delete_noid' %}${id}/`, {
+        target: '#tasks'
+      });
+
+      // hide the modal
+      this.taskDeleteModalDisable();
+    },
+    taskDeleteModalEnable(id) {
+      this.taskDeleteModalIsActive = true;
+      this.taskDeleteId = id;
+    },
+    taskDeleteModalDisable() {
+      this.taskDeleteModalIsActive = false;
+      this.taskDeleteId = undefined;
+    },
+    taskDeleteModalInitialize() {
+      document.querySelector(`#task-button-delete`).focus();
     }
   }
+}
 
-  // CRUD functions
-  function updateDivToggle(id) {
-    let updateDiv = document.querySelector(`#update-div-${id}`);
-    let descriptionDiv = document
-      .querySelector(`#task-description-${id}`);
-    updateDiv.classList.toggle('is-hidden');
-    descriptionDiv.classList.toggle('is-hidden');
+// CRUD functions
+function updateDivToggle(id) {
+  let updateDiv = document.querySelector(`#update-div-${id}`);
+  let descriptionDiv = document
+    .querySelector(`#task-description-${id}`);
+  updateDiv.classList.toggle('is-hidden');
+  descriptionDiv.classList.toggle('is-hidden');
 
-    if (!updateDiv.classList.contains('is-hidden')) {
-      // select the text input when showing the div
-      document.querySelector(`#task-update-description-${id}`).select();
-    } else {
-      // reset the text input when hiding the div
-      document.querySelector(`#task-update-form-${id}`).reset();
-    }
-
+  if (!updateDiv.classList.contains('is-hidden')) {
+    // select the text input when showing the div
+    document.querySelector(`#task-update-description-${id}`).select();
+  } else {
+    // reset the text input when hiding the div
+    document.querySelector(`#task-update-form-${id}`).reset();
   }
 
-  function updateConfirm(id) {
-    let input = document.querySelector(`#task-update-description-${id}`);
-    let updateDiv = document.querySelector(`#update-div-${id}`)
-    let descriptionDiv = document
-      .querySelector(`#task-description-${id}`);
-    updateDiv.classList.add('is-hidden');
-    descriptionDiv.classList.remove('is-hidden');
-    let result = input.value;
-    input.value = '';
-    return result;
-  }
+}
 
-  function taskDelete(id) {
-    htmx.ajax('DELETE', `{% url 'tasks:task_delete_noid' %}${id}/`, {
-      target: '#tasks'
-    });
-  }
+function updateConfirm(id) {
+  let input = document.querySelector(`#task-update-description-${id}`);
+  let updateDiv = document.querySelector(`#update-div-${id}`)
+  let descriptionDiv = document
+    .querySelector(`#task-description-${id}`);
+  updateDiv.classList.add('is-hidden');
+  descriptionDiv.classList.remove('is-hidden');
+  let result = input.value;
+  input.value = '';
+  return result;
+}
 
 </script>
 

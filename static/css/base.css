@@ -27,6 +27,17 @@ p {
   opacity: 1;
 }
 
+.box-close {
+  position: absolute;
+  max-height: 30px;
+  max-width: 30px;
+  min-height: 30px;
+  min-width: 30px;
+  top: 1rem;
+  right: 1.1rem;
+  border-radius: 100%;
+}
+
 .button {
   border-radius: 0.5rem;
 }
@@ -41,6 +52,10 @@ p {
 
 .button.is-light:hover {
   background-color: #d4d4d4; /* more contrast */
+}
+
+.has-font-weight-bold {
+  font-weight: bold;
 }
 
 .input {
