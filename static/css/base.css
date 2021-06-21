@@ -13,6 +13,10 @@ body {
   justify-content: space-between;
 }
 
+.captcha-img {
+  height: 2.5em;
+  width: 7em;
+}
 
 /* BULMA */
 html {
@@ -44,6 +48,10 @@ p {
 
 .button:focus {
   opacity: 0.8; /* more contrast */
+}
+
+.button:hover {
+  opacity: 0.7; /* more contrast */
 }
 
 .button.is-light {
@@ -102,6 +110,15 @@ p {
 /* UTILITY */
 .border-radius-0\.5rem {
   border-radius: 0.5rem;
+}
+
+.button-unstyled {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
 }
 
 .cursor-pointer {

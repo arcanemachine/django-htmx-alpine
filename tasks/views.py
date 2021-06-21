@@ -29,6 +29,7 @@ def task_list(request):
 
 @require_http_methods(['POST'])
 def task_create(request):
+    context = {}
     if not request.user.is_authenticated:
         return authorization_required(request)
     if request.POST.get('description'):
@@ -36,17 +37,13 @@ def task_create(request):
             user=request.user,
             description=request.POST['description'])
     else:
-        return HttpResponse("""
-            <script>
-              hDispatch(
-                `status-message-display`, "Description must not be empty."
-              );
-            </script>""")
+        context.update({'error_task_description_empty': True})
+
 
     tasks = Task.objects.filter(user=request.user)
-    context = {'tasks': tasks}
+    context.update({'tasks': tasks})
 
-    return render(request, 'tasks/list_task.html', context)
+    return render(request, 'tasks/list_tasks.html', context)
 
 
 @require_http_methods(['PUT'])
@@ -85,12 +82,13 @@ def task_update(request, task_id):
 def task_delete(request, task_id):
     if not request.user.is_authenticated:
         return authorization_required(request)
+
     task = get_object_or_404(Task, id=task_id, user=request.user)
     task.delete()
 
     tasks = Task.objects.filter(user=request.user)
     context = {'tasks': tasks,
                'task': task,
-               'item_deleted': True}
+               'task_deleted': True}
 
-    return render(request, 'tasks/list_task.html', context)
+    return render(request, 'tasks/list_tasks.html', context)

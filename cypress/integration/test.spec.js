@@ -297,7 +297,7 @@ describe("view: tasks:task_list", () => {
         const taskDescriptionSelector = 
           `[data-cy="task-description-${taskId}"]`
         const taskInputIsCompleteSelector = 
-          `[data-cy="task-input-is-complete-${taskId}"]`
+          `[data-cy="task-checkbox-is-complete-${taskId}"]`
 
         // if the task is complete, then first mark it incomplete
         cy.get(taskInputIsCompleteSelector)
@@ -326,7 +326,7 @@ describe("view: tasks:task_list", () => {
         const taskDescriptionSelector = 
           `[data-cy="task-description-${taskId}"]`
         const taskInputIsCompleteSelector = 
-          `[data-cy="task-input-is-complete-${taskId}"]`
+          `[data-cy="task-checkbox-is-complete-${taskId}"]`
 
         // if the task is complete, then first mark it incomplete
         cy.get(taskInputIsCompleteSelector)
@@ -355,7 +355,7 @@ describe("view: tasks:task_list", () => {
         const taskDescriptionSelector = 
           `[data-cy="task-description-${taskId}"]`
         const taskInputIsCompleteSelector = 
-          `[data-cy="task-input-is-complete-${taskId}"]`
+          `[data-cy="task-checkbox-is-complete-${taskId}"]`
 
         // if the task is complete, then first mark it incomplete
         cy.get(taskInputIsCompleteSelector)
@@ -384,7 +384,7 @@ describe("view: tasks:task_list", () => {
         const taskDescriptionSelector = 
           `[data-cy="task-description-${taskId}"]`
         const taskInputIsCompleteSelector = 
-          `[data-cy="task-input-is-complete-${taskId}"]`
+          `[data-cy="task-checkbox-is-complete-${taskId}"]`
 
         // if the task is complete, then first mark it incomplete
         cy.get(taskInputIsCompleteSelector)

@@ -3,6 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon"
+          type="image/png"
+          href="{% static 'img/favicon.ico' %}">
 
     <title>{% block title %}{% endblock title %} - HTMX & Alpine.JS</title>
 
@@ -18,32 +21,32 @@
             content="index, follow"{% endif %}>
     {% endblock meta_robots %}
 
-
-    <!-- favicon -->
-    <link rel="shortcut icon"
-          type="image/png"
-          href="{% static 'img/favicon.ico' %}">
-
-    <!-- css -->
+    {# css #}
     <link rel="stylesheet"
           type="text/css"{% if DEBUG %}
           href="{% static '/css/bulma@0.9.2.min.css' %}"{% else %}
           href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css"{% endif %}>
     <link rel="stylesheet"
-          type="text/css" href="{% static 'css/base.css' %}">
+          type="text/css"
+          href="{% static 'css/base.css' %}">
 
     <style>
-{% block style %}{% endblock style %}
+      {% block style %}{% endblock style %}
     </style>
 
     {% block head_script %}{% endblock head_script %}
 
-    <!-- js -->
-    <script src="{% static 'js/helpers.js' %}"></script>
-    <script{% if DEBUG %}
+    {# javascript - head #}
+    <script type="text/javascript" src="{% static 'js/helpers.js' %}"></script>
+    <script type="text/javascript"{% if DEBUG %}
       {# src="{% static 'js/alpine@3.0.6.min.js' %}"{% else %} #}
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.0.8/dist/cdn.min.js"{% else %}
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.0.8/dist/cdn.min.js"{% endif %} defer></script>
+
+    {# javascript - globals #}
+    <script>
+      var userIsAuthenticated = {{ user.is_authenticated|yesno:'true,false' }};
+    </script>
 
     {{ USER_ANALYTICS_SCRIPT|safe }}
 
@@ -55,6 +58,7 @@
     <div id="page-container"
          aria-label="page container">
       {% include 'navbar.html' %}
+      {% include 'status_message.html' %}
 
       <noscript>
         <div class="my-4 is-size-5 has-text-danger has-text-centered">
@@ -81,16 +85,14 @@
 
       </main>
 
-      {% include 'status_message.html' %}
-
       {% include 'footer.html' %}
 
     </div>
 
     {% block body_end_script %}{% endblock body_end_script %}
 
-    <!-- js -->
-    <script {% if DEBUG %}
+    {# javascript - body #}
+    <script type="text/javascript"{% if DEBUG %}
       src="{% static 'js/htmx@1.4.1.min.js' %}"{% else %}
       src="https://cdn.jsdelivr.net/npm/htmx.org@1.4.1/dist/htmx.min.js"{% endif %}></script>
 
@@ -100,7 +102,6 @@
         event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
       })
     </script>
-
 
 	</body>
 </html>

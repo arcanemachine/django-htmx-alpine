@@ -1,3 +1,6 @@
+{% load static %}
+<script src="{% static 'js/status_message.js' %}"></script>
+
 <div class="status-message-container">
   <button id="status-message"
           class="status-message"
@@ -14,118 +17,17 @@
 
 
 <script>
-function statusMessageNotificationData() {
-  return {
-    // data
-    show: false,
-    statusMessageText: '',
-    statusMessageTimeout: undefined,
-
-    // methods
-    getColors(messageType) {
-      let background = '';
-      let text = '';
-      if (messageType === '20' || messageType == 'info') {
-        background = 'info';
-        text = 'white';
-      } else if (messageType === '25' || messageType == 'success') {
-        background = 'success';
-        text = 'white';
-      } else if (messageType === '30' || messageType == 'warning') {
-        background = 'warning';
-        text = 'black';
-      } else if (messageType === '40' || messageType == 'danger') {
-        background = 'danger';
-        text = 'white';
-      }
-      if (background) {
-        return { background, text };
-      } else {
-        return {
-          background: 'info',
-          text: 'white'
-        };
-      }
-    },
-
-    statusMessageDisplay(message, timeout=undefined, messageType=undefined) {
-      // if a status message is already present,
-      // then clear it and display a new one
-      if (this.statusMessageText) {
-        this.statusMessageClear();
-        setTimeout(() => {
-          this.statusMessageDisplay(message, timeout, messageType);
-        }, defaultTransitionLength);
-        return false;
-      }
-
-      clearTimeout(this.statusMessageTimeout);
-      if (timeout === undefined) {
-        // if no timeout is given, display the message for 4 seconds
-        timeout = defaultMessageTimeout;
-      } else if (timeout === -1) {
-        // if timeout == -1, display the message forever
-        timeout = 9999999;
-      }
-
-      // apply colors
-      colors = this.getColors(messageType);
-      let currentEl = document.querySelector('#status-message');
-      if (messageType) {
-        if (currentEl) {
-          // add colors
-          currentEl.classList.add(`has-background-${colors.background}`);
-          currentEl.classList.add(`has-text-${colors.text}`);
-        }
-      }
-
-      // display the message
-      this.show = true;
-      this.statusMessageText = message;
-      this.statusMessageTimeout = setTimeout(() => {
-        // clear the message and remove any color classes
-        this.statusMessageClear();
-        if (Object.keys(colors).length) {
-          setTimeout(() => {
-            currentEl.classList
-              .remove(`has-background-${colors.background}`);
-            currentEl.classList
-              .remove(`has-text-${colors.text}`);
-          }, defaultTransitionLength);
-        }
-      }, timeout);
-    },
-
-    statusMessageClear() {
-      clearTimeout(this.statusMessageTimeout);
-      this.show = false;
+  // display messages from server as status messages
+  {% if messages %}
+    {% for message in messages %}
       setTimeout(() => {
-        this.statusMessageText = '';
-      }, defaultTransitionLength)
-    },
-
-    receiveStatusMessageDisplay(event) {
-      if (typeof(event.detail) === 'string') {
-        this.statusMessageDisplay(event.detail);
-      } else {
-        this.statusMessageDisplay(event.detail.message,
-          event.detail.timeout, event.detail.messageType);
-      }
-    }
-  }
-}
-
-// display messages from server as status messages
-{% if messages %}
-  {% for message in messages %}
-    setTimeout(() => {
-      hDispatch('status-message-display', {
-        message: "{{ message }}",
-        messageType: '{{ message.level }}'
-      })
-    }, {{ forloop.counter0 }} * defaultMessageTimeout);
-  {% endfor %}
-{% endif %}
+        hDispatch('status-message-display', {
+          message: "{{ message }}",
+          messageType: '{{ message.level }}'
+        })
+      }, {{ forloop.counter0 }} * defaultMessageTimeout);
+    {% endfor %}
+  {% endif %}
 </script>
 
 <style>
@@ -134,7 +36,7 @@ function statusMessageNotificationData() {
   background-color: #3298DC;
   position: fixed;
   max-width: 30rem;
-  bottom: 8.5rem;
+  top: 0.1rem;
   left: 0;
   right: 0;
   margin: 0 auto;

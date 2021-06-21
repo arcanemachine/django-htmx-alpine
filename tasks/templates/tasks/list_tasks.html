@@ -1,20 +1,25 @@
 <div id="tasks">
   {% if tasks %}
     <ul id="task-list"
-        class="mt-4 box"
+        class="mx-auto mt-4 box w-max-35rem"
         data-cy="task-list">
       {% for task in tasks %}
-        {% include 'tasks/get_task.html' %}
+        <li id="task-item-{{ task.id }}"
+            class="mx-auto is-flex is-justify-content-space-between
+                   is-align-items-center task-item"
+            data-task-id="{{ task.id }}">
+          {% include 'tasks/get_task.html' %}
+        </li>
       {% endfor %}
     </ul>
 
     <script>
-  {% if task_deleted %}
-  hDispatch('status-message-display', {
-    message: 'Task deleted',
-    messageType: 'success'
-  });
-  {% endif %}
+      {% if task_deleted %}
+        hDispatch('status-message-display', 'Task deleted');
+      {% elif error_task_description_empty %}
+        hDispatch(`status-message-display`, "Description must not be empty.");
+      {% endif %}
+
     </script>
 
   {% else %}
