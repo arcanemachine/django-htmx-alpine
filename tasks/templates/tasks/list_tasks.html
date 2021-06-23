@@ -13,22 +13,13 @@
       {% endfor %}
     </ul>
 
-    <script>
-      {% if task_deleted %}
-        hDispatch('status-message-display', 'Task deleted');
-      {% elif error_task_description_empty %}
-        hDispatch(`status-message-display`, "Description must not be empty.");
-      {% endif %}
-
-    </script>
-
   {% else %}
     <div id="task-list-message" class="mt-5 is-italic has-text-centered">
       {% if user.is_authenticated %}
         <div>No tasks created</div>
       {% else %}
         <div>
-          You must login before you can create any todo items.</div>
+          You must login before you can create any tasks.</div>
         <div class="mt-5">
           No email is required to register. You will be instantly logged in after registering.
         </div>

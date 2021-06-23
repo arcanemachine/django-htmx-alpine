@@ -12,10 +12,11 @@
 {% elif login_fail %}
 
   <span id="login-form-response-text"
-       class="has-text-danger"
-       x-data="{ show: false }"
-       x-show.transition.opacity.duration.500ms="show"
-       x-init="() => { show = true; }">
+        class="has-text-danger"
+        x-data="{ show: false }"
+        x-show="show"
+        x-transition.opacity.duration.500ms="show"
+        x-init="$nextTick(() => { show = true; })">
 
     {{ form_errors }}
 
@@ -34,10 +35,11 @@
 {% elif login_success %}
 
   <span id="login-form-response-text"
-       class="has-text-success"
-       x-data="{ show: false }"
-       x-show.transition.opacity.duration.500ms="show"
-       x-init="() => { show = true; }">
+        class="has-text-success"
+        x-data="{ show: false }"
+        x-show="show"
+        x-transition.opacity.duration.500ms="show"
+        x-init="$nextTick(() => { show = true; })">
     Success!
 
     <script>

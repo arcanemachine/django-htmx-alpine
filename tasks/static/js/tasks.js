@@ -12,8 +12,11 @@ function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
       if (!userIsAuthenticated) {
         // do not continue if user is not authenticated
         hDispatch(
-          'status-message-display',
-          `You must login before you can add any tasks.`);
+          'status-message-display', 
+          {
+            message: "You must login before you can add any tasks.",
+            messageType: 'warning'
+          });
       } else {
         // get the value of the text input, then clear it
         let descriptionInput = document
@@ -76,7 +79,9 @@ function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
       this.taskUpdateToggle(undefined);
       this.taskDeleteModalIsActive = true;
       this.taskDeleteId = id;
-      document.querySelector('#task-delete-modal-first-tabbable').focus();
+      this.$nextTick(() => {
+        document.querySelector('#task-delete-modal-first-tabbable').focus();
+      });
     },
     taskDeleteModalDisable() {
       console.log('taskDeleteModalDisable()');

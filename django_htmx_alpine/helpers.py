@@ -1,7 +1,17 @@
 from pathlib import Path
 from os.path import join as os_path_join
+from django.shortcuts import render
+from django.template.loader import render_to_string
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+def render_with_messages(request, template, context):
+    from django.contrib.messages import get_messages
+    messages_response = render(request, 'messages.html', context)
+    response = render(request, template, context)
+    response.content += messages_response.content
+    return response
 
 
 # misc

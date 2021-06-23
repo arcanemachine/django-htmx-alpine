@@ -10,7 +10,7 @@ function navbarMainContainerData(loginUrl, registerUrl) {
     // methods
     loginFormSubmit() {
       this.loginSubmitButtonIsLoading = true;
-      htmx.ajax('POST', '', {
+      htmx.ajax('POST', loginUrl, {
         source: '#login-form',
         target: '#login-form-response'
       });
@@ -38,7 +38,9 @@ function navbarMainContainerData(loginUrl, registerUrl) {
     logoutModalEnable() {
       this.navbarClearAll();
       this.logoutModalIsActive = true;
-      document.querySelector('#logout-modal-first-tabbable').focus();
+      this.$nextTick(() => {
+        document.querySelector('#logout-modal-first-tabbable').focus();
+      });
     },
     logoutModalDisable() {
       this.navbarClearAll();

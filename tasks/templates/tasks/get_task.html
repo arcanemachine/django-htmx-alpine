@@ -31,7 +31,7 @@
              id="task-update-description-{{ task.id }}"
              class="mr-0 input is-small is-inline button-group-left-side"
              value="{{ task.description }}"
-             x-init="setTimeout(() => { $el.select(); })">
+             x-init="$nextTick(() => { $el.select(); })">
       <input type="submit"
              class="ml-0 button is-info is-inline is-small
                     button-group-right-side"

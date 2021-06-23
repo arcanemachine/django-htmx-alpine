@@ -1,4 +1,4 @@
-function statusMessageNotificationData() {
+function statusMessageNotification() {
   return {
     // data
     show: false,
@@ -9,40 +9,47 @@ function statusMessageNotificationData() {
     getColors(messageType) {
       let background = '';
       let text = '';
-      if (messageType === '20' || messageType == 'info') {
+      if (messageType === 20 || messageType == 'info') {
         background = 'info';
         text = 'white';
-      } else if (messageType === '25' || messageType == 'success') {
+      } else if (messageType === 25 || messageType == 'success') {
         background = 'success';
         text = 'white';
-      } else if (messageType === '30' || messageType == 'warning') {
+      } else if (messageType === 30 || messageType == 'warning') {
         background = 'warning';
         text = 'black';
-      } else if (messageType === '40' || messageType == 'danger') {
+      } else if (messageType === 40 || messageType == 'danger') {
         background = 'danger';
         text = 'white';
-      }
-      if (background) {
-        return { background, text };
       } else {
-        return {
-          background: 'info',
-          text: 'white'
-        };
+        background = 'info';
+        text = 'white';
       }
+      return { background, text };
     },
-    receiveStatusMessageDisplay(event) {
-      if (typeof(event.detail) === 'string') {
-        this.statusMessageDisplay(event.detail);
-      } else {
-        this.statusMessageDisplay(event.detail.message,
-                                  event.detail.messageType,
-                                  event.detail.timeout);
+    // statusMessageDisplay(message, timeout=undefined, messageType=undefined) {
+    statusMessageDisplay(context) {
+      let message;
+      let timeout;
+      let messageType;
+
+      // abort with error if context is not object
+      if (typeof(context) === 'object') {
+        // extract properties from context
+        message = context.message;
+        timeout = context.timeout;
+        messageType = context.messageType;
+      } else if (typeof(context) === 'string') {
+        message = context;
       }
-    },
-    statusMessageDisplay(message, timeout=undefined, messageType=undefined) {
-      // if a status message is already present,
-      // then clear it and display a new one
+
+      // abort with error if no message present
+      if (message === undefined) {
+        console.error("Context must contain non-empty 'message'. Aborting...");
+        return false;
+      }
+
+      // if a status message is already present, clear it and display a new one
       if (this.statusMessageText) {
         this.statusMessageClear();
         setTimeout(() => {
@@ -51,13 +58,14 @@ function statusMessageNotificationData() {
         return false;
       }
 
+      // remove statusMessageTimeout
       clearTimeout(this.statusMessageTimeout);
-      if (timeout === undefined) {
-        // if no timeout is given, display the message for 4 seconds
+
+      // get timeout
+      if (!timeout) {
         timeout = defaultMessageTimeout;
       } else if (timeout === -1) {
-        // if timeout == -1, display the message forever
-        timeout = 9999999;
+        timeout = 9999999;  // display the message forever
       }
 
       // apply colors

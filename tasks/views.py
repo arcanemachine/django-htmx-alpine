@@ -1,7 +1,9 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, render
+from django.utils.translation import ugettext_lazy as _
 from urllib.parse import unquote as urllib_parse_unquote
 
 from .models import Task
@@ -36,20 +38,24 @@ def task_create(request):
         Task.objects.create(
             user=request.user,
             description=request.POST['description'])
+        context.update({'task_create_success': True})
+        messages.success(request, _('Task created'))
     else:
-        context.update({'error_task_description_empty': True})
-
+        context.update({'task_create_error_description_empty': True})
+        messages.error(request, 'Task description must not be empty')
 
     tasks = Task.objects.filter(user=request.user)
     context.update({'tasks': tasks})
 
-    return render(request, 'tasks/list_tasks.html', context)
+    return h.render_with_messages(request, 'tasks/list_tasks.html', context)
 
 
 @require_http_methods(['PUT'])
 def task_update(request, task_id):
     if not request.user.is_authenticated:
         return authorization_required(request)
+
+    context = {}
     task = get_object_or_404(Task, id=task_id, user=request.user)
 
     parsed_params = h.get_parsed_params(request)
@@ -63,18 +69,17 @@ def task_update(request, task_id):
             and updated_task_description != task.description:
         task.description = updated_task_description
         task.save()
+        messages.success(request, 'Task updated')
     elif updated_task_is_complete:
         if updated_task_is_complete == 'true':
             task.is_complete = True
-            task.save()
         elif updated_task_is_complete == 'false':
             task.is_complete = False
-            task.save()
+        task.save()
+        messages.success(request, 'Task updated')
 
-    context = {'task': task}
-    response = render(request, 'tasks/get_task.html', context)
-
-    return response
+    context.update({'task': task})
+    return h.render_with_messages(request, 'tasks/get_task.html', context)
 
 
 @login_required
@@ -83,12 +88,13 @@ def task_delete(request, task_id):
     if not request.user.is_authenticated:
         return authorization_required(request)
 
+    context = {}
     task = get_object_or_404(Task, id=task_id, user=request.user)
     task.delete()
+    messages.success(request, 'Task deleted')
 
     tasks = Task.objects.filter(user=request.user)
-    context = {'tasks': tasks,
-               'task': task,
-               'task_deleted': True}
+    context.update({'tasks': tasks,
+                    'task': task})
 
-    return render(request, 'tasks/list_tasks.html', context)
+    return h.render_with_messages(request, 'tasks/list_tasks.html', context)

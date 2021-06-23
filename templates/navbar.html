@@ -11,7 +11,7 @@
      tabindex="-1"
      role="navigation"
      aria-label="main navigation menu"
-     x-data="navbarMainContainerData(loginUrl)"
+     x-data="navbarMainContainerData(loginUrl, registerUrl)"
      x-ref="navbarMainContainer"
      @keydown.escape="navbarClearAll"
      @login-submit-button-enable.window="loginSubmitButtonIsLoading = false"
@@ -281,6 +281,7 @@
               <a id="logout-modal-first-tabbable"
                  class="button is-block is-info is-medium is-fullwidth"
                  href="{% url 'users:logout' %}"
+                 x-init="$nextTick(() => { $el.focus(); })"
                  data-cy="logout-button-confirm">
                 Logout
               </a>

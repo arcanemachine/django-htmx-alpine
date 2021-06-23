@@ -5,8 +5,8 @@
   <button id="status-message"
           class="status-message"
           @click="statusMessageClear"
-          @status-message-display.window="receiveStatusMessageDisplay($event)"
-          x-data="statusMessageNotificationData()"
+          @status-message-display.window="statusMessageDisplay($event.detail)"
+          x-data="statusMessageNotification()"
           x-show="show"
           x-transition.opacity.duration.500ms
           x-text="statusMessageText"
@@ -15,8 +15,8 @@
   </button>
 </div>
 
-
-<script>
+{% include 'messages.html' %}
+<!--script>
   // display messages from server as status messages
   {% if messages %}
     {% for message in messages %}
@@ -28,7 +28,9 @@
       }, {{ forloop.counter0 }} * defaultMessageTimeout);
     {% endfor %}
   {% endif %}
-</script>
+
+  console.log('{% lorem 5 w random %}');
+</script-->
 
 <style>
 

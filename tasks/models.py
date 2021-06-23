@@ -3,8 +3,7 @@ from django.db import models
 
 
 class Task(models.Model):
-    user = \
-        models.ForeignKey(
+    user = models.ForeignKey(
             settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     description = models.CharField(max_length=127, null=True)
     is_complete = models.BooleanField(default=False)
