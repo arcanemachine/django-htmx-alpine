@@ -27,7 +27,6 @@
          id="register-captcha-key"
          value="{{ captcha_key }}">
 
-  {% if captcha_audio_url %}
     <div id="register-captcha-button-reload"
          tabindex="0"
          class="ml-2 has-background-grey-lighter
@@ -41,6 +40,7 @@
       </svg>
     </div>
 
+  {% if captcha_audio_url %}
     <script>
       let registerCaptchaAudio = document.querySelector('#register-captcha-audio');
       let registerCaptchaAudioControl =
@@ -65,14 +65,17 @@
         padding-right: 0.35rem;
         border-radius: 0.5rem;
       }
+    </style>
 
+  {% endif %}
+
+    <style>
       #register-captcha-button-reload {
         padding-left: 0.45rem;
         padding-right: 0.45rem;
         border-radius: 0.5rem;
       }
     </style>
-  {% endif %}
 
 {% elif register_fail %}
 

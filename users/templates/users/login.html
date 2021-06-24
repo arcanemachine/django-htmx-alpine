@@ -28,7 +28,6 @@
          id="login-captcha-key"
          value="{{ captcha_key }}">
 
-  {% if captcha_audio_url %}
     <div id="login-captcha-button-reload"
          tabindex="0"
          class="ml-2 has-background-grey-lighter
@@ -42,6 +41,7 @@
       </svg>
     </div>
 
+  {% if captcha_audio_url %}
     <script>
       let loginCaptchaAudio = document.querySelector('#login-captcha-audio');
       let loginCaptchaAudioControl =
@@ -67,15 +67,17 @@
         padding-right: 0.35rem;
         border-radius: 0.5rem;
       }
+    </style>
 
+  {% endif %}
+
+    <style>
       #login-captcha-button-reload {
         padding-left: 0.45rem;
         padding-right: 0.45rem;
         border-radius: 0.5rem;
       }
     </style>
-  {% endif %}
-
 
 {% elif login_fail %}
 
