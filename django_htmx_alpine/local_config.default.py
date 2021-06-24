@@ -30,4 +30,6 @@ STATICFILES_DIRS = [os_path_join(BASE_DIR, 'static')]
 USER_ANALYTICS_SCRIPT = ''
 
 # django-simple-captcha
+# audio captcha requires flite binary path location
+# https://github.com/festvox/flite
 CAPTCHA_FLITE_PATH = None

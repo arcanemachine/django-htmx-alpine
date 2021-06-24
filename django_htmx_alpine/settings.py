@@ -15,20 +15,21 @@ BASE_DIR = h.BASE_DIR
 # repo, with no additional effort required on your part.
 
 # important stuff
-DEBUG = h.get_debug()                        # default: True
-SECRET_KEY = h.get_secret_key()              # default: 'your_secret_key'
-WEATHER_API_KEY = h.get_weather_api_key()    # default: 'your_weather_api_key'
+DEBUG = h.get_debug()  # default: True
+SECRET_KEY = h.get_secret_key()  # default: 'your_secret_key'
+WEATHER_API_KEY = h.get_weather_api_key()  # default: 'your_weather_api_key'
 
 # static files
-STATIC_ROOT = h.get_static_root()
-STATIC_URL = h.get_static_url()
-STATICFILES_DIRS = h.get_staticfiles_dirs()
+STATIC_ROOT = h.get_static_root()  # default: None
+STATIC_URL = h.get_static_url()  # default: '/static/'
+STATICFILES_DIRS = \
+    h.get_staticfiles_dirs()  # default: [os_path_join(BASE_DIR, 'static')]
 
 # analytics
-USER_ANALYTICS_SCRIPT = h.get_user_analytics_script()
+USER_ANALYTICS_SCRIPT = h.get_user_analytics_script()  # default: ''
 
 # django-simple-captcha
-CAPTCHA_FLITE_PATH = h.get_captcha_flite_path()
+CAPTCHA_FLITE_PATH = h.get_captcha_flite_path()  # default: None
 
 # *********************** END local config *********************** #
 

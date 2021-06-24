@@ -70,77 +70,72 @@
                class="pt-2 px-5 pb-5 box is-flex is-flex-direction-column
                       is-justify-content-center is-align-items-center
                       has-text-centered">
-            <div class="my-3 is-size-4">Account Login</div>
-            <form id="login-form"
-                  class="mt-3"
-                  @submit.prevent="loginFormSubmit">
-              <div class="field">
-                <div class="control">
-                  <input type="text"
-                         name="username"
-                         id="login-modal-first-tabbable"
-                         class="input login-modal-tabbable"
-                         autocorrect="off"
-                         autocapitalize="none"
-                         placeholder="Username"
-                         data-cy="login-input-username"
-                         required>
-                </div>
-                <div class="mt-4 control">
-                  <input type="password"
-                         name="password"
-                         class="input login-modal-tabbable"
-                         placeholder="Password"
-                         data-cy="login-input-password"
-                         required>
-                </div>
-                <div class="mt-4 control">
-                  <div class="is-flex">
-                    <div id="login-captcha-container"
-                         class="is-flex-grow-1">
-                      <div id="login-captcha-img-container"
-                           class="is-flex">
-                        <input type="hidden"
-                               name="captcha_0"
-                               value="">
-                      </div>
+            <div class="w-max-content mx-auto">
+              <div class="my-3 is-size-4">Account Login</div>
+              <form id="login-form"
+                    class="mt-3"
+                    @submit.prevent="loginFormSubmit">
+                <div class="field">
+                  <div class="control">
+                    <input type="text"
+                           name="username"
+                           id="login-modal-first-tabbable"
+                           class="input login-modal-tabbable"
+                           autocorrect="off"
+                           autocapitalize="none"
+                           placeholder="Username"
+                           data-cy="login-input-username"
+                           required>
+                  </div>
+                  <div class="mt-4 control">
+                    <input type="password"
+                           name="password"
+                           class="input login-modal-tabbable"
+                           placeholder="Password"
+                           data-cy="login-input-password"
+                           required>
+                  </div>
+                  <div class="my-4 control">
+                    <div id="login-captcha-img-container"
+                         class="mb-2 is-flex is-justify-content-center">
+                      <input type="hidden"
+                             name="captcha_0"
+                             value="">
                     </div>
                     <input type="text"
                            name="captcha_1"
-                           id="login-input-captcha"
-                           class="ml-2 input login-modal-tabbable"
+                           class="w-max-content input login-modal-tabbable"
                            placeholder="Human test"
                            data-cy="login-input-captcha"
-                           required>
+                           required />
                   </div>
                 </div>
+                <button type="submit"
+                        id="login-button-submit"
+                        class="mt-4 button is-block is-info
+                               is-medium is-fullwidth login-modal-tabbable"
+                        :class="{ 'is-loading': loginSubmitButtonIsLoading }"
+                        data-cy="login-button-confirm">
+                  Login
+                </button>
+
+              </form>
+              <div class="pt-4 pb-3 is-size-6
+                          has-text-weight-bold">
+                &nbsp;<span id="login-form-response"></span>
               </div>
-              <button type="submit"
-                      id="login-button-submit"
-                      class="mt-4 button is-block is-info
-                             is-medium is-fullwidth login-modal-tabbable"
-                      :class="{ 'is-loading': loginSubmitButtonIsLoading }"
-                      data-cy="login-button-confirm">
-                Login
-              </button>
-
-            </form>
-            <div class="w-max-25rem pt-4 pb-3 is-size-6
-                        has-text-weight-bold">
-              &nbsp;<span id="login-form-response"></span>
+              <div>
+                <button class="is-size-5 button-unstyled has-text-link
+                               login-modal-tabbable"
+                        @click="registerModalEnable">
+                  Register new account
+                </button>
+              </div>
+              <button id="login-modal-last-tabbable"
+                      class="delete box-close login-modal-tabbable"
+                      aria-label="close"
+                      @click="loginModalDisable"></button>
             </div>
-            <div>
-              <button class="is-size-5 button-unstyled has-text-link
-                             login-modal-tabbable"
-                      @click="registerModalEnable">
-                Register new account
-              </button>
-            </div>
-            <button id="login-modal-last-tabbable"
-                    class="delete box-close login-modal-tabbable"
-                    aria-label="close"
-                    @click="loginModalDisable"></button>
-
           </div>
         </div>
       </div>
@@ -308,10 +303,6 @@
 .captcha-img {
   height: 2.5em;
   width: 6em;
-}
-
-#login-input-captcha {
-  max-width: 10rem;
 }
 
 </style>
