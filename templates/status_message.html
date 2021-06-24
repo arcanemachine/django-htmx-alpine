@@ -16,20 +16,6 @@
 </div>
 
 {% include 'messages.html' %}
-<!--script>
-  // display messages from server as status messages
-  {% if messages %}
-    {% for message in messages %}
-      setTimeout(() => {
-        hDispatch('status-message-display', {
-          message: "{{ message }}",
-          messageType: '{{ message.level }}'
-        })
-      }, {{ forloop.counter0 }} * defaultMessageTimeout);
-    {% endfor %}
-  {% endif %}
-
-</script-->
 
 <style>
 

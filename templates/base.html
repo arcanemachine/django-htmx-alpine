@@ -101,6 +101,14 @@
       document.body.addEventListener('htmx:configRequest', (event) => {
         event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
       })
+
+      setTimeout(() => {
+        hDispatch('status-message-display', {
+          message: 'deleteme',
+          action: 'console.log('hello')'
+        });
+      }, 100);
+
     </script>
 
 	</body>
