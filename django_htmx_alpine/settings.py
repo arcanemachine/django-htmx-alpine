@@ -19,14 +19,16 @@ DEBUG = h.get_debug()                        # default: True
 SECRET_KEY = h.get_secret_key()              # default: 'your_secret_key'
 WEATHER_API_KEY = h.get_weather_api_key()    # default: 'your_weather_api_key'
 
-# analytics
-USER_ANALYTICS_SCRIPT = h.get_user_analytics_script()
-
 # static files
 STATIC_ROOT = h.get_static_root()
 STATIC_URL = h.get_static_url()
 STATICFILES_DIRS = h.get_staticfiles_dirs()
 
+# analytics
+USER_ANALYTICS_SCRIPT = h.get_user_analytics_script()
+
+# django-simple-captcha
+CAPTCHA_FLITE_PATH = h.get_captcha_flite_path()
 
 # *********************** END local config *********************** #
 

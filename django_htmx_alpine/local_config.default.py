@@ -28,3 +28,6 @@ STATICFILES_DIRS = [os_path_join(BASE_DIR, 'static')]
 
 # user analytics - include full script, e.g <script src="script.js"></script>
 USER_ANALYTICS_SCRIPT = ''
+
+# django-simple-captcha
+CAPTCHA_FLITE_PATH = None

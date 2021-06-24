@@ -94,3 +94,11 @@ def get_user_analytics_script():
         return local_config.USER_ANALYTICS_SCRIPT
     except (ImportError, AttributeError):
         return ''
+
+
+def get_captcha_flite_path():
+    try:
+        from project_folder import local_config
+        return local_config.CAPTCHA_FLITE_PATH
+    except (ImportError, AttributeError):
+        return None
