@@ -39,9 +39,8 @@
     {# javascript - head #}
     <script type="text/javascript" src="{% static 'js/helpers.js' %}"></script>
     <script type="text/javascript"{% if DEBUG %}
-      {# src="{% static 'js/alpine@3.0.6.min.js' %}"{% else %} #}
-      src="https://cdn.jsdelivr.net/npm/alpinejs@3.0.8/dist/cdn.min.js"{% else %}
-      src="https://cdn.jsdelivr.net/npm/alpinejs@3.0.8/dist/cdn.min.js"{% endif %} defer></script>
+      src="https://unpkg.com/alpinejs@3.1.0/dist/cdn.min.js"{% else %}
+      src="https://unpkg.com/alpinejs@3.1.0/dist/cdn.min.js"{% endif %} defer></script>
 
     {# javascript - globals #}
     <script>
@@ -93,8 +92,8 @@
 
     {# javascript - body #}
     <script type="text/javascript"{% if DEBUG %}
-      src="{% static 'js/htmx@1.4.1.min.js' %}"{% else %}
-      src="https://cdn.jsdelivr.net/npm/htmx.org@1.4.1/dist/htmx.min.js"{% endif %}></script>
+      src="https://unpkg.com/htmx.org@1.4.1/dist/htmx.min.js"{% else %}
+      src="https://unpkg.com/htmx.org@1.4.1/dist/htmx.min.js"{% endif %}></script>
 
     <script>
       // add CSRFToken to HTMX headers
