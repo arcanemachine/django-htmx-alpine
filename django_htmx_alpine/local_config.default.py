@@ -20,7 +20,7 @@ STATIC_ROOT = os_path_join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/staticfiles/'
 STATICFILES_DIRS = [os_path_join(BASE_DIR, 'static')]
 
-# Note: these settings will override the 3 identical variables listed above
+# Note: these 3 lines will override the 3 identical variables listed above
 # static files - development server - basic config
 STATIC_ROOT = None
 STATIC_URL = '/static/'
@@ -30,6 +30,4 @@ STATICFILES_DIRS = [os_path_join(BASE_DIR, 'static')]
 USER_ANALYTICS_SCRIPT = ''
 
 # django-simple-captcha
-# audio captcha requires flite binary path location
-# https://github.com/festvox/flite
-CAPTCHA_FLITE_PATH = None
+CAPTCHA_FLITE_PATH = None  # audio captcha - flite binary path
