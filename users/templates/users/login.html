@@ -15,7 +15,7 @@
         class="has-text-danger"
         x-data="{ show: false }"
         x-show="show"
-        x-transition.opacity.duration.500ms="show"
+        x-transition.opacity.duration.500ms
         x-init="$nextTick(() => { show = true; })">
 
     {{ form_errors }}
@@ -38,7 +38,7 @@
         class="has-text-success"
         x-data="{ show: false }"
         x-show="show"
-        x-transition.opacity.duration.500ms="show"
+        x-transition.opacity.duration.500ms
         x-init="$nextTick(() => { show = true; })">
     Success!
 
