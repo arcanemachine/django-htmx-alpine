@@ -8,7 +8,7 @@ function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
     taskUpdateId: undefined,
 
     taskCreate() {
-      if (!userIsAuthenticated) {
+      if (!this.$store.config.userIsAuthenticated) {
         // do not continue if user is not authenticated
         hDispatch(
           'status-message-display', {

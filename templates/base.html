@@ -42,17 +42,19 @@
       src="https://unpkg.com/alpinejs@3.1.0/dist/cdn.min.js"{% else %}
       src="https://unpkg.com/alpinejs@3.1.0/dist/cdn.min.js"{% endif %} defer></script>
 
-    {# javascript - globals #}
-    <script>
-      var userIsAuthenticated = {{ user.is_authenticated|yesno:'true,false' }};
-    </script>
-
     {{ USER_ANALYTICS_SCRIPT|safe }}
 
   </head>
 
   <body>
     {% block body_start_script %}{% endblock body_start_script %}
+    <script>
+      document.addEventListener('alpine:init', () => {
+        Alpine.store('config', {
+          userIsAuthenticated: {{ user.is_authenticated|yesno:'true,false' }} 
+        })
+      });
+    </script>
 
     <div id="page-container"
          aria-label="page container">
