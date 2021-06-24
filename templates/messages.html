@@ -9,7 +9,7 @@
           message: "{{ message }}",
           messageType: {{ message.level }}
         })
-      }, {{ forloop.counter0 }} * defaultMessageTimeout);
+      }, 100 + {{ forloop.counter0 }} * defaultMessageTimeout);
     {% endfor %}
   {% endif %}
 
