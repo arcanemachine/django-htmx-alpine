@@ -2,7 +2,7 @@ function navbarMainContainerData(loginUrl, registerUrl) {
   return {
     // data
     navbarIsActive: false,
-    loginModalIsActive: true,
+    loginModalIsActive: false,
     loginSubmitButtonIsLoading: false,
     logoutModalIsActive: false,
     registerModalIsActive: false,

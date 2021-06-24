@@ -87,6 +87,8 @@
                            data-cy="login-input-username"
                            required>
                   </div>
+                </div>
+                <div class="field">
                   <div class="mt-4 control">
                     <input type="password"
                            name="password"
@@ -95,6 +97,8 @@
                            data-cy="login-input-password"
                            required>
                   </div>
+                </div>
+                <div class="field">
                   <div class="my-4 control">
                     <div id="login-captcha-img-container"
                          class="mb-2 is-flex is-justify-content-center">
@@ -104,20 +108,22 @@
                     </div>
                     <input type="text"
                            name="captcha_1"
-                           class="w-max-content input login-modal-tabbable"
+                           class="input login-modal-tabbable"
                            placeholder="Human test"
                            data-cy="login-input-captcha"
                            required />
                   </div>
                 </div>
-                <button type="submit"
-                        id="login-button-submit"
-                        class="mt-4 button is-block is-info
-                               is-medium is-fullwidth login-modal-tabbable"
-                        :class="{ 'is-loading': loginSubmitButtonIsLoading }"
-                        data-cy="login-button-confirm">
-                  Login
-                </button>
+                <div class="control">
+                  <button type="submit"
+                          id="login-button-submit"
+                          class="mt-4 button is-block is-info
+                                 is-medium is-fullwidth login-modal-tabbable"
+                          :class="{ 'is-loading': loginSubmitButtonIsLoading }"
+                          data-cy="login-button-confirm">
+                    Login
+                  </button>
+                </div>
 
               </form>
               <div class="pt-4 pb-3 is-size-6
@@ -197,24 +203,30 @@
                          data-cy="register-input-password2"
                          required>
                 </div>
-                <div class="mt-4 control">
-                  <div class="is-flex">
-                    <div id="register-captcha-container"
-                         class="is-flex-grow-1">
-                      <div id="register-captcha-img-container">
-                        <input type="hidden"
-                               name="captcha_0"
-                               id="register-captcha-key"
-                               value="">
-                      </div>
+                <div class="field">
+                  <div class="mt-4 control">
+                    <input type="password"
+                           name="password"
+                           class="input register-modal-tabbable"
+                           placeholder="Password"
+                           data-cy="register-input-password"
+                           required>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="my-4 control">
+                    <div id="register-captcha-img-container"
+                         class="mb-2 is-flex is-justify-content-center">
+                      <input type="hidden"
+                             name="captcha_0"
+                             value="">
                     </div>
                     <input type="text"
                            name="captcha_1"
-                           id="register-input-captcha"
-                           class="ml-2 input register-modal-tabbable"
+                           class="input register-modal-tabbable"
                            placeholder="Human test"
                            data-cy="register-input-captcha"
-                           required>
+                           required />
                   </div>
                 </div>
               </div>

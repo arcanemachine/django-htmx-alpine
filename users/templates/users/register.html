@@ -1,5 +1,24 @@
 {% if request.method == 'GET' %}
 
+  {% if captcha_audio_url %}
+    <div id="register-captcha-button-audio"
+         tabindex="0"
+         class="mr-2 has-background-grey-lighter
+                is-flex is-justify-content-center is-align-items-center
+                cursor-pointer register-modal-tabbable">
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M9 4a.5.5 0 0 0-.812-.39L5.825 5.5H3.5A.5.5 0 0 0 3 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 9 12V4zm3.025 4a4.486 4.486 0 0 1-1.318 3.182L10 10.475A3.489 3.489 0 0 0 11.025 8 3.49 3.49 0 0 0 10 5.525l.707-.707A4.486 4.486 0 0 1 12.025 8z"/>
+      </svg>
+    </div>
+    <audio id="register-captcha-audio"
+           class="h-1.5rem is-hidden"
+           preload="none">
+      <source src="{{ captcha_audio_url }}" type="audio/wav" />
+    </audio>
+  {% endif %}
+
+
   <img id="register-captcha-img"
        class="captcha-img"
        src="{{ captcha_img_url }}">
@@ -7,6 +26,53 @@
          name="captcha_0"
          id="register-captcha-key"
          value="{{ captcha_key }}">
+
+  {% if captcha_audio_url %}
+    <div id="register-captcha-button-reload"
+         tabindex="0"
+         class="ml-2 has-background-grey-lighter
+                is-flex is-justify-content-center is-align-items-center
+                cursor-pointer register-modal-tabbable"
+         hx-get="{% url 'users:register' %}"
+         hx-target="#register-captcha-img-container">
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+        <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+      </svg>
+    </div>
+
+    <script>
+      let registerCaptchaAudio = document.querySelector('#register-captcha-audio');
+      let registerCaptchaAudioControl =
+        document.querySelector('#register-captcha-button-audio');
+
+      registerCaptchaAudioControl.onclick = function() {
+        // Update the Audio
+        registerCaptchaAudio['play']();
+
+          // Prevent Default Action
+          return false;
+      };
+    </script>
+
+    <style>
+      .register-captcha-button {
+        border-radius: 0.5rem;
+      }
+
+      #register-captcha-button-audio {
+        padding-left: 0.45rem;
+        padding-right: 0.35rem;
+        border-radius: 0.5rem;
+      }
+
+      #register-captcha-button-reload {
+        padding-left: 0.45rem;
+        padding-right: 0.45rem;
+        border-radius: 0.5rem;
+      }
+    </style>
+  {% endif %}
 
 {% elif register_fail %}
 
@@ -20,7 +86,7 @@
 
     <script>
       // get register captcha
-      htmx.ajax('GET', '{% url 'users:login' %}', {
+      htmx.ajax('GET', '{% url 'users:register' %}', {
         target: '#register-captcha-img-container'
       });
 
