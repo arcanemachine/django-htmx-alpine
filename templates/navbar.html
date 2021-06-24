@@ -98,7 +98,8 @@
                   <div class="is-flex">
                     <div id="login-captcha-container"
                          class="is-flex-grow-1">
-                      <div id="login-captcha-img-container">
+                      <div id="login-captcha-img-container"
+                           class="is-flex">
                         <input type="hidden"
                                name="captcha_0"
                                value="">
@@ -301,3 +302,16 @@
   {% endif %}
  
 </nav>
+
+<style>
+
+.captcha-img {
+  height: 2.5em;
+  width: 6em;
+}
+
+#login-input-captcha {
+  max-width: 10rem;
+}
+
+</style>

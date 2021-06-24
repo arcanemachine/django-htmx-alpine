@@ -1,13 +1,49 @@
 {% if request.method == 'GET' %}
 
+  <a id="login-captcha-audio-control"
+     class="has-background-grey-lighter"
+     tabindex="0">
+    &#128264;
+  </a>
+  <audio id="login-captcha-audio"
+         class="w-3rem h-1.5rem is-hidden"
+         preload="none">
+    <source src="{{ captcha_audio_url }}" type="audio/wav" />
+  </audio>
+
   <img id="login-captcha-img"
-       class="captcha-img"
+       class="ml-1 captcha-img"
        src="{{ captcha_img_url }}"
        alt="CAPTCHA image">
+
   <input type="hidden"
          name="captcha_0"
          id="login-captcha-key"
          value="{{ captcha_key }}">
+
+<script>
+  let loginCaptchaAudio = document.querySelector('#login-captcha-audio');
+  let loginCaptchaAudioControl =
+    document.querySelector('#login-captcha-audio-control');
+
+  loginCaptchaAudioControl.onclick = function() {
+    // Update the Audio
+    loginCaptchaAudio['play']();
+
+      // Prevent Default Action
+      return false;
+  };
+</script>
+
+
+<style>
+#login-captcha-audio-control {
+  display: inline;
+  padding: 0.5rem 0.25rem 0.5rem 0.65rem;
+  border-radius: 0.5rem;
+}
+</style>
+
 
 {% elif login_fail %}
 
@@ -54,3 +90,4 @@
   </span>
 
 {% endif %}
+

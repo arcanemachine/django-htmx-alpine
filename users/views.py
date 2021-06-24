@@ -92,8 +92,11 @@ class UserLoginView(LoginView):
                 captcha_key = captcha_models.CaptchaStore.pick()
                 captcha_img_url = \
                     captcha_helpers.captcha_image_url(captcha_key)
+                captcha_audio_url = \
+                    captcha_helpers.captcha_audio_url(captcha_key)
                 context = {'captcha_key': captcha_key,
-                           'captcha_img_url': captcha_img_url}
+                           'captcha_img_url': captcha_img_url,
+                           'captcha_audio_url': captcha_audio_url}
                 return render(request, self.template_name, context)
         return super().dispatch(request, *args, **kwargs)
 

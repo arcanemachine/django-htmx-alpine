@@ -13,11 +13,6 @@ body {
   justify-content: space-between;
 }
 
-.captcha-img {
-  height: 2.5em;
-  width: 7em;
-}
-
 /* BULMA */
 html {
   overflow-y: auto; /* remove gap on right side of page */
@@ -129,6 +124,46 @@ p {
   display: none;
 }
 
+.h-0\.5rem {
+  height: 0.5rem;
+}
+
+.h-1rem {
+  height: 1rem;
+}
+
+.h-1\.5rem {
+  height: 1.5rem;
+}
+
+.h-2rem {
+  height: 2rem;
+}
+
+.h-2\.5rem {
+  height: 2.5rem;
+}
+
+.h-3rem {
+  height: 3rem;
+}
+
+.h-3\.5rem {
+  height: 3.5rem;
+}
+
+.h-4rem {
+  height: 4rem;
+}
+
+.h-4\.5rem {
+  height: 4.5rem;
+}
+
+.h-5rem {
+  height: 5rem;
+}
+
 .list-unstyled {
   list-style-type: none;
 }
@@ -170,8 +205,48 @@ p {
   transition: opacity 1s;
 }
 
+.w-0 {
+  width: 0;
+}
+
 .w-100 {
   width: 100%;
+}
+
+.w-0\.5rem {
+  width: 0.5rem;
+}
+
+.w-1rem {
+  width: 1rem;
+}
+
+.w-1\.5rem {
+  width: 1.5rem;
+}
+
+.w-2rem {
+  width: 2rem;
+}
+
+.w-2\.5rem {
+  width: 2.5rem;
+}
+
+.w-3rem {
+  width: 3rem;
+}
+
+.w-3\.5rem {
+  width: 3.5rem;
+}
+
+.w-4rem {
+  width: 4rem;
+}
+
+.w-4\.5rem {
+  width: 4.5rem;
 }
 
 .w-5rem {
