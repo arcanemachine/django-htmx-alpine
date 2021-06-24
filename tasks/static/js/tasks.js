@@ -11,11 +11,12 @@ function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
       if (!userIsAuthenticated) {
         // do not continue if user is not authenticated
         hDispatch(
-          'status-message-display', 
-          {
+          'status-message-display', {
             message: "You must login before you can add any tasks.",
-            messageType: 'warning'
+            messageType: 'warning',
+            eventName: 'login-modal-enable'
           });
+        return false;
       } else {
         // get the value of the text input, then clear it
         let descriptionInput = document

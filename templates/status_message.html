@@ -4,7 +4,7 @@
 <div class="status-message-container">
   <button id="status-message"
           class="status-message"
-          @click="statusMessageClear"
+          @click="handleStatusMessageClick('login-modal-enable')"
           @status-message-display.window="statusMessageDisplay($event.detail)"
           x-data="statusMessageNotification()"
           x-show="show"

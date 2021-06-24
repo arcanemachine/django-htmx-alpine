@@ -5,11 +5,11 @@ function statusMessageNotification() {
     statusMessageText: '',
     statusMessageTimeout: undefined,
     colors: {},
-
+    eventName: undefined,
+    eventParams: {},
 
     // methods
     getColors(messageType) {
-      // info: #3E8ED0, success: #48C78E, warning: #FFE08A, danger: #F14668
       let background = '';
       let text = '';
       if (messageType === 20 || messageType == 'info') {
@@ -30,6 +30,10 @@ function statusMessageNotification() {
       }
       return { background, text };
     },
+    handleStatusMessageClick() {
+      setTimeout(() => { hDispatch(this.eventName, this.eventParams); })
+      this.statusMessageClear();
+    },
     statusMessageDisplay(context) {
       let message;
       let timeout;
@@ -41,6 +45,13 @@ function statusMessageNotification() {
         message = context.message;
         timeout = context.timeout;
         messageType = context.messageType;
+        if (context.eventName) {
+          this.eventName = context.eventName;
+          this.eventParams = context.eventParams;
+        } else {
+          this.eventName = undefined;
+          this.eventParams = {};
+        }
       } else if (typeof(context) === 'string') {
         message = context;
       }

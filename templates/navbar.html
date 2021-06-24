@@ -14,6 +14,7 @@
      x-data="navbarMainContainerData(loginUrl, registerUrl)"
      x-ref="navbarMainContainer"
      @keydown.escape="navbarClearAll"
+     @login-modal-enable.window="loginModalEnable"
      @login-submit-button-enable.window="loginSubmitButtonIsLoading = false"
      @register-submit-button-enable.window="
        registerSubmitButtonIsLoading = false">
