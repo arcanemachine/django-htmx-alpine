@@ -8,7 +8,6 @@ function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
     taskUpdateId: undefined,
 
     taskCreate() {
-      console.log('taskCreate()');
       if (!userIsAuthenticated) {
         // do not continue if user is not authenticated
         hDispatch(
@@ -31,7 +30,6 @@ function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
       }
     },
     taskUpdateDescription(id) {
-      console.log('taskUpdateDescription()');
       let description = document
         .querySelector(`#task-update-description-${id}`).value
       let url = urlTaskUpdateNoId + id + '/';
@@ -43,7 +41,6 @@ function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
       this.taskUpdateId = undefined;
     },
     taskUpdateIsComplete(id, isComplete) {
-      console.log('taskUpdateIsComplete()');
       let url = urlTaskUpdateNoId + id + '/';
       htmx.ajax('PUT', url, {
         target: `#task-item-${id}`,
@@ -51,7 +48,6 @@ function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
       });
     },
     taskUpdateToggle(id) {
-      console.log('taskUpdateToggle()');
       if (this.taskUpdateId !== id) {
         this.taskUpdateId = id;
       } else {
@@ -59,14 +55,12 @@ function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
       }
     },
     taskDeleteModalHandleTabEvent(e) {
-      console.log('taskDeleteModalHandleTabEvent()');
       hHandleTabEvent(e,
         document.querySelector('#task-delete-modal-first-tabbable'),
         document.querySelector('#task-delete-modal-last-tabbable')
       );
     },
     taskDelete() {
-      console.log('taskDeleteHandler()');
       // delete the task
       let url = urlTaskDeleteNoId + this.taskDeleteId + '/';
       htmx.ajax('DELETE', url, { target: '#tasks' });
@@ -75,7 +69,6 @@ function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
       this.taskDeleteModalDisable();
     },
     taskDeleteModalEnable(id) {
-      console.log('taskDeleteModalEnable()');
       this.taskUpdateToggle(undefined);
       this.taskDeleteModalIsActive = true;
       this.taskDeleteId = id;
@@ -84,7 +77,6 @@ function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
       });
     },
     taskDeleteModalDisable() {
-      console.log('taskDeleteModalDisable()');
       this.taskDeleteModalIsActive = false;
       this.taskDeleteId = undefined;
     },

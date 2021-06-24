@@ -303,7 +303,6 @@ describe("view: tasks:task_list", () => {
         cy.get(taskInputIsCompleteSelector)
           .then(($taskInputIsComplete) => {
             if ($taskInputIsComplete.prop('checked')) {
-              console.log('hello')
               $taskInputIsComplete.click()
             }
         })
@@ -332,7 +331,6 @@ describe("view: tasks:task_list", () => {
         cy.get(taskInputIsCompleteSelector)
           .then(($taskInputIsComplete) => {
             if ($taskInputIsComplete.prop('checked')) {
-              console.log('hello')
               $taskInputIsComplete.click()
             }
         })
@@ -361,7 +359,6 @@ describe("view: tasks:task_list", () => {
         cy.get(taskInputIsCompleteSelector)
           .then(($taskInputIsComplete) => {
             if (!$taskInputIsComplete.prop('checked')) {
-              console.log('hello')
               $taskInputIsComplete.click()
             }
         })
@@ -390,7 +387,6 @@ describe("view: tasks:task_list", () => {
         cy.get(taskInputIsCompleteSelector)
           .then(($taskInputIsComplete) => {
             if (!$taskInputIsComplete.prop('checked')) {
-              console.log('hello')
               $taskInputIsComplete.click()
             }
         })

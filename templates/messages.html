@@ -3,7 +3,6 @@
   // display messages from server as status messages
   {% if messages %}
     {% for message in messages %}
-      console.log('should display message: {{ message }}');
       setTimeout(() => {
         hDispatch('status-message-display', {
           message: "{{ message }}",
@@ -12,8 +11,5 @@
       }, 100 + {{ forloop.counter0 }} * defaultMessageTimeout);
     {% endfor %}
   {% endif %}
-
-  console.log({{ messages.length }});
-  console.log('messages.html included');
 </script>
 
