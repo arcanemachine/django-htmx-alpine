@@ -16,7 +16,10 @@
         x-data="{ show: false }"
         x-show="show"
         x-transition.opacity.duration.500ms
-        x-init="$nextTick(() => { show = true; })">
+        x-init="$nextTick(() => {
+          show = true;
+          setTimeout(() => { show = false; }, defaultMessageTimeout);
+        })">
 
     {{ form_errors }}
 
@@ -28,6 +31,7 @@
 
       // re-enable the login submit button
       hDispatch('login-submit-button-enable');
+
     </script>
 
   </span>
