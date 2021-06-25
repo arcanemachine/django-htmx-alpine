@@ -23,13 +23,15 @@
         <input type="text"
                id="task-create-input-description"
                class="input is-inline"
-               placeholder="Enter new task...">
+               placeholder="Enter new task..."
+               data-cy="task-create-input-description">
       </span>
       <span class="control">
         <input type="submit"
                id="task-create-button-confirm"
                class="button is-info"
-               value="Create">
+               value="Create"
+               data-cy="task-create-button-confirm">
       </span>
     </div>
   </form>
@@ -62,7 +64,7 @@
           <button id="task-delete-modal-first-tabbable"
                   class="button is-block is-danger is-medium is-fullwidth"
                   @click="taskDelete"
-                  data-cy-id="task-button-delete">
+                  data-cy="task-button-delete">
             Delete
           </button>
           <button id="task-delete-modal-last-tabbable"

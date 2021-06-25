@@ -32,28 +32,23 @@ let password = keys.TEST_USER_PASSWORD;
 
 let loginFormUrl = h.urls.loginForm;
 
-Cypress.Commands.add('loginByCsrf', (csrfToken) => {
-  cy.request({
-    method: 'POST',
-    url: h.urls.login,
-    failOnStatusCode: false, // dont fail so we can make assertions
-    form: true, // we are submitting a regular form body
-    body: {
-      username,
-      password,
-      captcha_0: 'PASSED',
-      captcha_1: 'PASSED',
-      csrfmiddlewaretoken: csrfToken, // insert this as part of form body
-    },
-  })
-})
-
 Cypress.Commands.add('login', () => {
-  cy.request(h.urls.getCsrfToken)
-    .its('body')
-    .then((resp) => {
-      cy.loginByCsrf(resp);
-  })
+  cy.request(h.urls.getCsrfToken).then((resp) => {
+    const csrfToken = resp.body;
+    cy.request({
+      method: 'POST',
+      url: h.urls.login,
+      failOnStatusCode: false, // don't fail so we can make assertions
+      form: true, // we are submitting a regular form body
+      body: {
+        username,
+        password,
+        captcha_0: 'PASSED',
+        captcha_1: 'PASSED',
+        csrfmiddlewaretoken: csrfToken, // insert this as part of form body
+      },
+    });
+  });
 })
 
 Cypress.Commands.add('registerNewUser', (csrfToken) => {

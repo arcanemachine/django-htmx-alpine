@@ -1,5 +1,7 @@
 {% if request.method == 'GET' %}
 
+  {% csrf_token %}
+
   {% if captcha_audio_url %}
     <button id="register-captcha-button-audio"
             class="mr-2 has-background-grey-lighter button

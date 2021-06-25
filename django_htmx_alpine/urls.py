@@ -9,6 +9,9 @@ urlpatterns = [
     # views
     path('', views.AboutTemplateView.as_view(), name='about'),
     path('get_weather/', views.get_weather, name='get_weather'),
+    path('utility/get-csrf-token/',
+         views.get_csrf_token,
+         name='get_csrf_token'),
     path('utility/user-is-authenticated/',
          views.user_is_authenticated,
          name="user_is_authenticated"),

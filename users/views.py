@@ -4,8 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import authenticate, login as auth_login, \
     get_user_model
-from django.http import HttpResponseRedirect, HttpResponse
-from django.middleware.csrf import get_token
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
@@ -27,10 +26,6 @@ def get_form_errors(form):
 
 def users_root(request):
     return HttpResponseRedirect(reverse(settings.LOGIN_URL))
-
-
-def get_csrf_token(request):
-    return HttpResponse(get_token(request))
 
 
 class UserRegisterView(CreateView):

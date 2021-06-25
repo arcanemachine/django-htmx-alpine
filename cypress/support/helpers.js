@@ -6,7 +6,7 @@ export const randomString = (length=12) => {
 
 export const urls = {
   about: serverUrl,
-  getCsrfToken: serverUrl + '/users/get-csrf-token/',
+  getCsrfToken: serverUrl + '/utility/get-csrf-token/',
   login: serverUrl + '/users/login/',
   register: serverUrl + '/users/register/',
   taskList: serverUrl + '/tasks/',

@@ -3,14 +3,14 @@ import * as keys from '../support/keys.js';
 
 describe('auth (registration, login, logout)', () => {
 
+  it("(utility) Ensures a test user exists in the database", () => {
+    cy.registerNewUser();
+  })
+
   it("userIsAuthenticated view reflects authentication state", () => {
     cy.visit(h.urls.userIsAuthenticated).contains('false')
       .login()
       .visit(h.urls.userIsAuthenticated).contains('true')
-  })
-
-  it("(utility) Ensures a test user exists in the database", () => {
-    cy.registerNewUser();
   })
 
   it("Registers a new user using the Register modal", () => {
@@ -33,7 +33,7 @@ describe('auth (registration, login, logout)', () => {
     // form response contains success message
     cy.contains('[data-cy="register-form-response"]', 'Success!')
 
-    // after redirect, #status-message contains success message
+    // after redirect, status-message contains success message
     cy.contains('[data-cy="status-message"]', 'Registration successful')
 
     // user authentication check view returns 'true'
@@ -59,7 +59,7 @@ describe('auth (registration, login, logout)', () => {
     // form response contains success message
     cy.contains('[data-cy="login-form-response"]', 'Success!')
 
-    // after redirect, #status-message contains success message
+    // after redirect, status-message contains success message
     cy.contains('[data-cy="status-message"]', 'Login successful')
 
     // user authentication check view returns 'true'
@@ -76,17 +76,11 @@ describe('auth (registration, login, logout)', () => {
     // click the confirm button
     cy.get('[data-cy="logout-button-confirm"]').click()
 
-    // after redirect, #status-message contains success message
+    // after redirect, status-message contains success message
     cy.contains('[data-cy="status-message"]', 'Logout successful')
 
     // user authentication check view returns 'true'
     cy.visit(h.urls.userIsAuthenticated).contains('false')
-  })
-
-  it("loginByCsrf() - Returns 403 without CSRF token", () => {
-    cy.loginByCsrf('invalid-token')
-      .its('status')
-      .should('eq', 403);
   })
 
   it("login() - Gets valid CSRF token and logs in the user", () => {
@@ -186,13 +180,13 @@ describe("view: tasks:task_list", () => {
   it("Unauthenticated user cannot create a new task", () => {
     cy.visit(testUrl)
 
-    cy.get('#task-list-message')
-      .contains('You must login')  // contains message telling user to login
+    cy.get('[data-cy="tasks-message"]')
+      .contains('You must login') // contains message telling user to login
 
-    cy.get('#task-create-input-description')
-      .type(newTaskDescription)  // enter task description
-      .get('#task-create-button-confirm')
-      .click()  // click 'Create' button
+    cy.get('[data-cy="task-create-input-description"]')
+      .type(newTaskDescription) // enter task description
+      .get('[data-cy="task-create-button-confirm"]')
+      .click() // click 'Create' button
 
     // does not succeed, contains status message telling user to login
     cy.get('[data-cy="status-message"]').contains('You must login')
@@ -201,22 +195,22 @@ describe("view: tasks:task_list", () => {
   it("Authenticated user can create a new task", () => {
     cy.login().visit(testUrl)
 
-    cy.get('#task-create-input-description')
-      .type(newTaskDescription)  // enter task description
-      .get('#task-create-button-confirm')
-      .click()  // click submit button
-      .get('#task-list')
+    cy.get('[data-cy="task-create-input-description"]')
+      .type(newTaskDescription) // enter task description
+      .get('[data-cy="task-create-button-confirm"]')
+      .click() // click submit button
+      .get('[data-cy="task-list"]')
       .should('contain', newTaskDescription)
   })
 
   it("New task appears at the top of the list", () => {
     cy.login().visit(testUrl)
 
-    cy.get('#task-create-input-description')
-      .type(newTaskDescription)  // enter task description
-      .get('#task-create-button-confirm')
-      .click()  // click submit button
-      .get('#task-list').then(($ul) => {
+    cy.get('[data-cy="task-create-input-description"]')
+      .type(newTaskDescription) // enter task description
+      .get('[data-cy="task-create-button-confirm"]')
+      .click() // click submit button
+      .get('[data-cy="task-list"]').then(($ul) => {
         cy.get($ul.children(':first'))
           .should('contain', newTaskDescription)
     })
@@ -225,20 +219,21 @@ describe("view: tasks:task_list", () => {
   it("Update an existing task", () => {
     cy.login()
       .visit(testUrl)
-      .get('#task-list').then(($ul) => {
-        const taskId = $ul.children()[0].dataset.taskId;  // get newest task id
+      .get('[data-cy="task-list"]').then(($ul) => {
+        const taskId = $ul.children()[0].dataset.taskId; // get newest task id
 
         const updatedTaskMessage = new Date();
-        cy.get(`#task-description-${taskId}`)
+        cy.get(`[data-cy="task-description-${taskId}"]`)
           .then(($descriptionEl) => {
             const originalTaskDescription = $descriptionEl.text()
-            cy.get(`#task-icon-edit-${taskId}`).click()  // click the edit icon
-            cy.get(`#task-update-description-${taskId}`)
-              .type(String(updatedTaskMessage))  // edit the text
-              .type('{enter}')  // submit
+            cy.get(`[data-cy="task-icon-edit-${taskId}"]`).click()
+              .get(`[data-cy="task-update-description-${taskId}"]`)
+              .type(String(updatedTaskMessage)) // edit the text
+              .type('{enter}') // submit
             cy.reload()
-              .get(`#task-description-${taskId}`)
-              .should('not.include.text', originalTaskDescription) // new description is different from old one
+              .get(`[data-cy="task-description-${taskId}"]`)
+                // new description is different from old one
+              .should('not.include.text', originalTaskDescription)
         })
     })
   })
@@ -246,23 +241,26 @@ describe("view: tasks:task_list", () => {
   it("Delete an existing task", () => {
     cy.login()
       .visit(testUrl)
-      .get('#task-list').then(($ul) => {
-        const taskId = $ul.children()[0].dataset.taskId;  // get newest task id
+      .get('[data-cy="task-list"]').then(($ul) => {
+        const taskId = $ul.children()[0].dataset.taskId; // get newest task id
 
-        cy.get(`#task-item-${taskId}`)
+        cy.get(`[data-cy="task-item-${taskId}"]`)
           .then(() => {
-            cy.get(`#task-icon-delete-${taskId}`)
+            cy.get(`[data-cy="task-icon-delete-${taskId}"]`)
               .click() // click the delete icon
-              .get(`#task-button-delete-${taskId}`)
+              .get(`[data-cy="task-button-delete"]`)
               .click() // click the delete modal 'Confirm' button
-      }).should('not.exist') // element no longer exists after deletion
+        }).then(() => {
+          cy.get(`[data-cy="task-item-${taskId}"]`)
+            .should('not.exist') // element no longer exists after deletion
+        });
     })
   })
 
   it("Mark incomplete task as complete using the checkbox", () => {
     cy.login()
       .visit(testUrl)
-      .get('.task-item').first().then(($task) => {  // get the first task
+      .get('.task-item').first().then(($task) => { // get the first task
         const taskId = $task.data().taskId;
         const taskDescriptionSelector = 
           `[data-cy="task-description-${taskId}"]`
@@ -279,38 +277,10 @@ describe("view: tasks:task_list", () => {
 
         // task should not be strikethrough
         cy.get(taskDescriptionSelector)
-          .should('not.have.class', 'text-strikethrough')  // not strikethrough
-          .get(taskInputIsCompleteSelector).click()  // click the checkbox
+          .should('not.have.class', 'text-strikethrough') // not strikethrough
+          .get(taskInputIsCompleteSelector).click() // click the checkbox
           .get(taskDescriptionSelector)
-          .should('have.class', 'text-strikethrough')  // is now  strikethrough
-
-    })
-  })
-
-  it("Mark incomplete task as complete by clicking the description", () => {
-    cy.login()
-      .visit(testUrl)
-      .get('.task-item').first().then(($task) => {  // get the first task
-        const taskId = $task.data().taskId;
-        const taskDescriptionSelector = 
-          `[data-cy="task-description-${taskId}"]`
-        const taskInputIsCompleteSelector = 
-          `[data-cy="task-checkbox-is-complete-${taskId}"]`
-
-        // if the task is complete, then first mark it incomplete
-        cy.get(taskInputIsCompleteSelector)
-          .then(($taskInputIsComplete) => {
-            if ($taskInputIsComplete.prop('checked')) {
-              $taskInputIsComplete.click()
-            }
-        })
-
-        // task should not be strikethrough
-        cy.get(taskDescriptionSelector)
-          .should('not.have.class', 'text-strikethrough')  // not strikethrough
-          .click()  // click the description
-          .get(taskDescriptionSelector)
-          .should('have.class', 'text-strikethrough')  // is now  strikethrough
+          .should('have.class', 'text-strikethrough') // is now  strikethrough
 
     })
   })
@@ -318,7 +288,7 @@ describe("view: tasks:task_list", () => {
   it("Mark complete task as incomplete using the checkbox", () => {
     cy.login()
       .visit(testUrl)
-      .get('.task-item').first().then(($task) => {  // get the first task
+      .get('.task-item').first().then(($task) => { // get the first task
         const taskId = $task.data().taskId;
         const taskDescriptionSelector = 
           `[data-cy="task-description-${taskId}"]`
@@ -335,40 +305,11 @@ describe("view: tasks:task_list", () => {
 
         // task should not be strikethrough
         cy.get(taskDescriptionSelector)
-          .should('have.class', 'text-strikethrough')  // not strikethrough
-          .get(taskInputIsCompleteSelector).click()  // click the checkbox
+          .should('have.class', 'text-strikethrough') // not strikethrough
+          .get(taskInputIsCompleteSelector).click() // click the checkbox
           .get(taskDescriptionSelector)
-          .should('not.have.class', 'text-strikethrough')  // is strikethrough
+          .should('not.have.class', 'text-strikethrough') // is strikethrough
 
     })
   })
-
-  it("Mark complete task as incomplete by clicking the description", () => {
-    cy.login()
-      .visit(testUrl)
-      .get('.task-item').first().then(($task) => {  // get the first task
-        const taskId = $task.data().taskId;
-        const taskDescriptionSelector = 
-          `[data-cy="task-description-${taskId}"]`
-        const taskInputIsCompleteSelector = 
-          `[data-cy="task-checkbox-is-complete-${taskId}"]`
-
-        // if the task is complete, then first mark it incomplete
-        cy.get(taskInputIsCompleteSelector)
-          .then(($taskInputIsComplete) => {
-            if (!$taskInputIsComplete.prop('checked')) {
-              $taskInputIsComplete.click()
-            }
-        })
-
-        // task should not be strikethrough
-        cy.get(taskDescriptionSelector)
-          .should('have.class', 'text-strikethrough')  // not strikethrough
-          .click()  // click the description
-          .get(taskDescriptionSelector)
-          .should('not.have.class', 'text-strikethrough')  // is strikethrough
-
-    })
-  })
-
 })
