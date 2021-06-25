@@ -23,9 +23,8 @@
 
     {# css #}
     <link rel="stylesheet"
-          type="text/css"{% if DEBUG %}
-          href="{% static '/css/bulma@0.9.2.min.css' %}"{% else %}
-          href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css"{% endif %}>
+          type="text/css"
+          href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
     <link rel="stylesheet"
           type="text/css"
           href="{% static 'css/base.css' %}">
@@ -38,9 +37,9 @@
 
     {# javascript - head #}
     <script type="text/javascript" src="{% static 'js/helpers.js' %}"></script>
-    <script type="text/javascript"{% if DEBUG %}
-      src="https://unpkg.com/alpinejs@3.1.1/dist/cdn.min.js"{% else %}
-      src="https://unpkg.com/alpinejs@3.1.1/dist/cdn.min.js"{% endif %} defer></script>
+    <script type="text/javascript"
+            src="https://unpkg.com/alpinejs@3.1.1/dist/cdn.min.js"
+            defer></script>
 
     {{ USER_ANALYTICS_SCRIPT|safe }}
 
@@ -93,9 +92,10 @@
     {% block body_end_script %}{% endblock body_end_script %}
 
     {# javascript - body #}
-    <script type="text/javascript"{% if DEBUG %}
-      src="https://unpkg.com/htmx.org@1.4.1/dist/htmx.min.js"{% else %}
-      src="https://unpkg.com/htmx.org@1.4.1/dist/htmx.min.js"{% endif %}></script>
+    <script type="text/javascript"
+            src="https://unpkg.com/htmx.org@1.4.1"
+            integrity="sha384-1P2DfVFAJH2XsYTakfc6eNhTVtyio74YNA1tc6waJ0bO+IfaexSWXc2x62TgBcXe"
+            crossorigin="anonymous"></script>
 
     <script>
       // add CSRFToken to HTMX headers
