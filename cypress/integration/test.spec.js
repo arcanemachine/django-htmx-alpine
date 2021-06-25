@@ -1,7 +1,7 @@
 import * as h from '../support/helpers.js';
 import * as keys from '../support/keys.js';
 
-describe('auth (registration, login, logout)', () => {
+describe.only('auth (registration, login, logout)', () => {
 
   it("userIsAuthenticated view reflects authentication state", () => {
     cy.visit(h.urls.userIsAuthenticated).contains('false')
@@ -29,6 +29,9 @@ describe('auth (registration, login, logout)', () => {
       .get('[data-cy="register-input-password2"]').type(password)
       .get('[data-cy="register-input-captcha"]').type('PASSED')
       .get('[data-cy="register-button-confirm"]').click()
+
+    // form response contains success message
+    cy.contains('[data-cy="register-form-response"]', 'Success!')
 
     // after redirect, #status-message contains success message
     cy.contains('[data-cy="status-message"]', 'Registration successful')
@@ -75,25 +78,6 @@ describe('auth (registration, login, logout)', () => {
 
     // user authentication check view returns 'true'
     cy.visit(h.urls.userIsAuthenticated).contains('false')
-  })
-
-  it("Logs in the user using special form input view", () => {
-    const username = keys.TEST_USER_USERNAME;
-    const password = keys.TEST_USER_PASSWORD;
-
-    cy.visit(h.urls.loginForm)
-
-    // fill out and submit the form
-    cy.get('#id_username').type(username)
-      .get('#id_password').type(password)
-      .get('#id_captcha_1').type('PASSED')
-      .get('#form-button-submit').click()
-
-    // after redirect, #status-message contains success message
-    cy.contains('[data-cy="status-message"]', 'Login successful')
-
-    // user authentication check view returns 'true'
-    cy.visit(h.urls.userIsAuthenticated).contains('true')
   })
 
   it("loginByCsrf() - Logs in the user using valid CSRF token", () => {

@@ -145,7 +145,6 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <template x-if="registerModalIsActive">
@@ -185,6 +184,8 @@
                          name="name"
                          required>
                 </div>
+              </div>
+              <div class="field">
                 <div class="mt-4 control">
                   <input type="password"
                          name="password1"
@@ -194,6 +195,8 @@
                          data-cy="register-input-password1"
                          required>
                 </div>
+              </div>
+              <div class="field">
                 <div class="mt-4 control">
                   <input type="password"
                          name="password2"
@@ -203,31 +206,21 @@
                          data-cy="register-input-password2"
                          required>
                 </div>
-                <div class="field">
-                  <div class="mt-4 control">
-                    <input type="password"
-                           name="password"
-                           class="input register-modal-tabbable"
-                           placeholder="Password"
-                           data-cy="register-input-password"
-                           required>
+              </div>
+              <div class="field">
+                <div class="my-4 control">
+                  <div id="register-captcha-img-container"
+                       class="mb-2 is-flex is-justify-content-center">
+                    <input type="hidden"
+                           name="captcha_0"
+                           value="">
                   </div>
-                </div>
-                <div class="field">
-                  <div class="my-4 control">
-                    <div id="register-captcha-img-container"
-                         class="mb-2 is-flex is-justify-content-center">
-                      <input type="hidden"
-                             name="captcha_0"
-                             value="">
-                    </div>
-                    <input type="text"
-                           name="captcha_1"
-                           class="input register-modal-tabbable"
-                           placeholder="Human test"
-                           data-cy="register-input-captcha"
-                           required />
-                  </div>
+                  <input type="text"
+                         name="captcha_1"
+                         class="input register-modal-tabbable"
+                         placeholder="Human test"
+                         data-cy="register-input-captcha"
+                         required />
                 </div>
               </div>
               <input type="submit"
@@ -241,7 +234,8 @@
             </form>
             <div class="w-max-25rem pt-4 pb-3 is-size-6
                         has-text-weight-bold">
-              &nbsp;<span id="register-form-response"></span>
+              &nbsp;<span id="register-form-response"
+                          data-cy="register-form-response"></span>
             </div>
             <div>
               <button class="is-size-5 button-unstyled has-text-link

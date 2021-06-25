@@ -35,7 +35,7 @@ let loginFormUrl = h.urls.loginForm;
 Cypress.Commands.add('loginByCsrf', (csrfToken) => {
   cy.request({
     method: 'POST',
-    url: h.urls.loginForm,
+    url: h.urls.login,
     failOnStatusCode: false, // dont fail so we can make assertions
     form: true, // we are submitting a regular form body
     body: {
