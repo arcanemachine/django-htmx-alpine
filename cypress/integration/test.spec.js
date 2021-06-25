@@ -1,7 +1,7 @@
 import * as h from '../support/helpers.js';
 import * as keys from '../support/keys.js';
 
-describe.only('auth (registration, login, logout)', () => {
+describe('auth (registration, login, logout)', () => {
 
   it("userIsAuthenticated view reflects authentication state", () => {
     cy.visit(h.urls.userIsAuthenticated).contains('false')
@@ -56,6 +56,9 @@ describe.only('auth (registration, login, logout)', () => {
       .get('[data-cy="login-input-captcha"]').type('PASSED')
       .get('[data-cy="login-button-confirm"]').click()
 
+    // form response contains success message
+    cy.contains('[data-cy="login-form-response"]', 'Success!')
+
     // after redirect, #status-message contains success message
     cy.contains('[data-cy="status-message"]', 'Login successful')
 
@@ -78,23 +81,6 @@ describe.only('auth (registration, login, logout)', () => {
 
     // user authentication check view returns 'true'
     cy.visit(h.urls.userIsAuthenticated).contains('false')
-  })
-
-  it("loginByCsrf() - Logs in the user using valid CSRF token", () => {
-    cy.request(h.urls.loginForm)
-      .its('body')
-      .then((body) => {
-        const $html = Cypress.$(body);
-        const token = $html.find('input[name="csrfmiddlewaretoken"]').val()
-        cy.loginByCsrf(token)
-          .then((resp) => {
-            expect(resp.status).to.eq(200);
-            expect(resp.body).to.include('Login successful');
-      })
-    })
-
-    // user authentication check returns 'true'
-    cy.visit(h.urls.userIsAuthenticated).contains('true')
   })
 
   it("loginByCsrf() - Returns 403 without CSRF token", () => {
