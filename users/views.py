@@ -7,7 +7,6 @@ from django.contrib.auth import authenticate, login as auth_login, \
 from django.http import HttpResponseRedirect, HttpResponse
 from django.middleware.csrf import get_token
 from django.shortcuts import render
-from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
