@@ -1,3 +1,5 @@
+/* eslint no-undef: 0 */
+
 import * as h from '../support/helpers.js';
 import * as keys from '../support/keys.js';
 

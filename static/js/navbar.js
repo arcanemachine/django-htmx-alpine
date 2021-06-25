@@ -1,3 +1,6 @@
+/* eslint no-unused-vars: 0 */
+/* eslint no-undef: 0 */
+
 function navbarMainContainerData(loginUrl, registerUrl) {
   return {
     // data
