@@ -42,17 +42,17 @@
 
   {% if captcha_audio_url %}
     <script>
-      let registerCaptchaAudio = document.querySelector('#register-captcha-audio');
-      let registerCaptchaAudioControl =
+      const registerCaptchaButtonAudio =
         document.querySelector('#register-captcha-button-audio');
+      const registerCaptchaAudio =
+        document.querySelector('#register-captcha-audio');
 
-      registerCaptchaAudioControl.onclick = function() {
-        // Update the Audio
-        registerCaptchaAudio['play']();
-
-          // Prevent Default Action
-          return false;
-      };
+      registerCaptchaButtonAudio.addEventListener('click', (e) => {
+        if (document.activeElement === registerCaptchaButtonAudio) {
+          registerCaptchaAudio['play']();
+          e.preventDefault();
+        }
+      });
     </script>
 
     <style>
