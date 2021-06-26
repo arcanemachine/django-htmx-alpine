@@ -1,6 +1,7 @@
 {% load static %}
 
 <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
+
 <script>
   let loginUrl = '{% url 'users:login' %}';
   let registerUrl = '{% url 'users:register' %}';
@@ -15,9 +16,10 @@
      x-ref="navbarMainContainer"
      @keydown.escape="navbarClearAll"
      @login-modal-enable.window="loginModalEnable"
-     @login-submit-button-enable.window="loginSubmitButtonIsLoading = false"
-     @register-submit-button-enable.window="
-       registerSubmitButtonIsLoading = false">
+     @login-modal-submit-button-enable.window="
+       loginModalSubmitButtonIsLoading = false"
+     @register-modal-submit-button-enable.window="
+       registerModalSubmitButtonIsLoading = false">
 
   <div class="navbar-brand">
     <a class="navbar-item brand-text is-size-4 has-text-dark" href="/">
@@ -53,8 +55,7 @@
   {% if not user.is_authenticated %}
     
     <template x-if="loginModalIsActive">
-      <div x-init="loginModalInit"
-           @keydown.escape.window="loginModalDisable"
+      <div @keydown.escape.window="loginModalDisable"
            @keydown.tab.window="loginModalHandleTabEvent"></div>
     </template>
 
@@ -79,7 +80,7 @@
                   <div class="control">
                     <input type="text"
                            name="username"
-                           id="login-modal-first-tabbable"
+                           x-ref="loginModalFirstTabbable"
                            class="input login-modal-tabbable"
                            autocorrect="off"
                            autocapitalize="none"
@@ -119,7 +120,8 @@
                           id="login-button-submit"
                           class="mt-4 button is-block is-info
                                  is-medium is-fullwidth login-modal-tabbable"
-                          :class="{ 'is-loading': loginSubmitButtonIsLoading }"
+                          :class="{
+                            'is-loading': loginModalSubmitButtonIsLoading }"
                           data-cy="login-button-confirm">
                     Login
                   </button>
@@ -138,7 +140,7 @@
                   Register new account
                 </button>
               </div>
-              <button id="login-modal-last-tabbable"
+              <button x-ref="loginModalLastTabbable"
                       class="delete box-close login-modal-tabbable"
                       aria-label="close"
                       @click="loginModalDisable"></button>
@@ -149,8 +151,7 @@
     </div>
 
     <template x-if="registerModalIsActive">
-      <div x-init="registerModalInit"
-           @keydown.escape.window="registerModalDisable"
+      <div @keydown.escape.window="registerModalDisable"
            @keydown.tab.window="registerModalHandleTabEvent"></div>
     </template>
 
@@ -174,7 +175,7 @@
                 <div class="control">
                   <input type="text"
                          name="username"
-                         id="register-modal-first-tabbable"
+                         x-ref="registerModalFirstTabbable"
                          class="input register-modal-tabbable"
                          autocorrect="off"
                          autocapitalize="none"
@@ -221,14 +222,15 @@
                          class="input register-modal-tabbable"
                          placeholder="Human test"
                          data-cy="register-input-captcha"
-                         required />
+                         required>
                 </div>
               </div>
               <input type="submit"
                      id="register-button-submit"
                      class="mt-4 button is-block is-info
                             is-medium is-fullwidth register-modal-tabbable"
-                     :class="{ 'is-loading': registerSubmitButtonIsLoading }"
+                     :class="{
+                       'is-loading': registerModalSubmitButtonIsLoading }"
                      data-cy="register-button-confirm"
                      value="Register">
 
@@ -246,7 +248,7 @@
               </button>
             </div>
 
-            <button id="register-modal-last-tabbable"
+            <button x-ref="registerModalLastTabbable"
                     class="delete box-close register-modal-tabbable"
                     aria-label="close"
                     @click="registerModalDisable"></button>
@@ -282,14 +284,13 @@
             </div>
 
             <div class="mt-4 is-flex is-justify-content-space-between">
-              <a id="logout-modal-first-tabbable"
+              <a x-ref="logoutModalFirstTabbable"
                  class="button is-block is-info is-medium is-fullwidth"
                  href="{% url 'users:logout' %}"
-                 x-init="$nextTick(() => { $el.focus(); })"
                  data-cy="logout-button-confirm">
                 Logout
               </a>
-              <button id="logout-modal-last-tabbable"
+              <button x-ref="logoutModalLastTabbable"
                       class="ml-4 button is-block is-light is-medium
                              is-fullwidth"
                       @click="logoutModalDisable">
@@ -306,10 +307,8 @@
 </nav>
 
 <style>
-
-.captcha-img {
-  height: 2.5em;
-  width: 6em;
-}
-
+  .captcha-img {
+    height: 2.5em;
+    width: 6em;
+  }
 </style>

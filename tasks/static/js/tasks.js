@@ -19,8 +19,7 @@ function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
         return false;
       } else {
         // get the value of the text input, then clear it
-        let descriptionInput = document
-          .querySelector("#task-create-input-description");
+        let descriptionInput = this.$refs.taskCreateInputDescription;
         let description = descriptionInput.value;
         descriptionInput.value = '';
 
@@ -31,8 +30,7 @@ function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
       }
     },
     taskUpdateDescription(id) {
-      let description = document
-        .querySelector(`#task-update-description-${id}`).value
+      let description = eval(`this.$refs.taskUpdateDescription${id}`).value;
       let url = urlTaskUpdateNoId + id + '/';
       htmx.ajax('PUT', url, {
         target: `#task-item-${id}`,
@@ -51,14 +49,17 @@ function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
     taskUpdateToggle(id) {
       if (this.taskUpdateId !== id) {
         this.taskUpdateId = id;
+        this.$nextTick(() => {
+          eval(`this.$refs.taskUpdateDescription${id}`).select()
+        });
       } else {
         this.taskUpdateId = undefined;
       }
     },
     taskDeleteModalHandleTabEvent(e) {
       hHandleTabEvent(e,
-        document.querySelector('#task-delete-modal-first-tabbable'),
-        document.querySelector('#task-delete-modal-last-tabbable')
+        this.$refs.taskDeleteModalFirstTabbable,
+        this.$refs.taskDeleteModalLastTabbable
       );
     },
     taskDelete() {
@@ -74,7 +75,7 @@ function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
       this.taskDeleteModalIsActive = true;
       this.taskDeleteId = id;
       this.$nextTick(() => {
-        document.querySelector('#task-delete-modal-first-tabbable').focus();
+        this.$refs.taskDeleteModalFirstTabbable.focus();
       });
     },
     taskDeleteModalDisable() {

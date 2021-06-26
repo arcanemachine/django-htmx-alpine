@@ -21,7 +21,7 @@
     <div class="field has-addons">
       <span class="control">
         <input type="text"
-               id="task-create-input-description"
+               x-ref="taskCreateInputDescription"
                class="input is-inline"
                placeholder="Enter new task..."
                data-cy="task-create-input-description">
@@ -61,13 +61,13 @@
         </div>
 
         <div class="mt-5 is-flex is-justify-content-space-between">
-          <button id="task-delete-modal-first-tabbable"
+          <button x-ref="taskDeleteModalFirstTabbable"
                   class="button is-block is-danger is-medium is-fullwidth"
                   @click="taskDelete"
                   data-cy="task-button-delete">
             Delete
           </button>
-          <button id="task-delete-modal-last-tabbable"
+          <button x-ref="taskDeleteModalLastTabbable"
                   class="ml-4 button is-block is-light is-medium is-fullwidth"
                   @click="taskDeleteModalDisable">
             Cancel

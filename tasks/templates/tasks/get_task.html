@@ -24,9 +24,9 @@
     <form @submit.prevent="taskUpdateDescription({{ task.id }})">
       <input type="text"
              id="task-update-description-{{ task.id }}"
+             x-ref="taskUpdateDescription{{ task.id }}"
              class="mr-0 input is-small is-inline button-group-left-side"
              value="{{ task.description }}"
-             x-init="$nextTick(() => { $el.select(); })"
              data-cy="task-update-description-{{ task.id }}">
       <input type="submit"
              class="ml-0 button is-info is-inline is-small
