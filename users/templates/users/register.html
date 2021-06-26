@@ -1,15 +1,6 @@
 {% if request.method == 'GET' %}
 
   {% if captcha_audio_url %}
-    <script>
-      const registerCaptchaAudio =
-        document.querySelector('#register-captcha-audio');
-
-      function registerCaptchaAudioPlay() {
-        registerCaptchaAudio['play']();
-      }
-    </script>
-
     <button type="button"
             id="register-captcha-button-audio"
             class="mr-2 has-background-grey-lighter button
@@ -26,6 +17,18 @@
            preload="none">
       <source src="{{ captcha_audio_url }}" type="audio/wav" />
     </audio>
+
+    <script>
+      const registerCaptchaAudio =
+        document.querySelector('#register-captcha-audio');
+
+      function registerCaptchaAudioPlay() {
+        registerCaptchaAudio['play']();
+        setTimeout(() => {
+          registerCaptchaAudio['play'](); // hacky ios workaround
+        }, 10)
+      }
+    </script>
 
     <style>
       .register-captcha-button {
