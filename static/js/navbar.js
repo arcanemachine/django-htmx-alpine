@@ -1,7 +1,7 @@
 /* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
 
-function navbarMainContainerData(loginUrl, registerUrl) {
+export default function navbarMain(loginUrl, registerUrl) {
   return {
     // data
     navbarIsActive: false,

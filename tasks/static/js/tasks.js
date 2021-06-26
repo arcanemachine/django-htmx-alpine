@@ -1,7 +1,8 @@
 /* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
 
-function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
+export default function todoList(
+    urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
   return {
     taskDeleteModalIsActive: false,
     taskDeleteId: undefined,

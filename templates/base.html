@@ -33,15 +33,14 @@
       {% block style %}{% endblock style %}
     </style>
 
-    {% block head_script %}{% endblock head_script %}
-
     {# javascript - head #}
-    <script type="text/javascript" src="{% static 'js/helpers.js' %}"></script>
+    {% block head_start_script %}{% endblock head_start_script %}
+    {% include 'js_helpers.html' %}
     <script type="text/javascript"
             src="https://unpkg.com/alpinejs@3.1.1/dist/cdn.min.js"
             defer></script>
-
     {{ USER_ANALYTICS_SCRIPT|safe }}
+    {% block head_end_script %}{% endblock head_end_script %}
 
   </head>
 
@@ -87,13 +86,13 @@
 
     </div>
 
-    {% block body_end_script %}{% endblock body_end_script %}
 
     {# javascript - body #}
     <script type="text/javascript"
             src="https://unpkg.com/htmx.org@1.4.1"
             integrity="sha384-1P2DfVFAJH2XsYTakfc6eNhTVtyio74YNA1tc6waJ0bO+IfaexSWXc2x62TgBcXe"
             crossorigin="anonymous"></script>
+    {% block body_end_script %}{% endblock body_end_script %}
 
     <script>
       // add CSRFToken to HTMX headers

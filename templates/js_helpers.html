@@ -1,0 +1,13 @@
+{% load static %}
+
+<script type="module">
+  import * as helpers from '{% static 'js/helpers.js' %}';
+  import navbarMain from '{% static 'js/navbar.js' %}';
+
+  window.defaultTransitionDuration = helpers.defaultTransitionDuration;
+  window.defaultMessageTimeout = helpers.defaultMessageTimeout;
+  window.hDispatch = helpers.hDispatch;
+  window.hHandleTabEvent = helpers.hHandleTabEvent;
+
+  window.navbarMain = navbarMain;
+</script>

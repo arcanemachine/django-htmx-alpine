@@ -1,6 +1,6 @@
 {% load static %}
 
-<script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
+<!-- navbar component imported in 'base.html' from 'js_helpers.html' -->
 
 <script>
   let loginUrl = '{% url 'users:login' %}';
@@ -11,7 +11,7 @@
      tabindex="-1"
      role="navigation"
      aria-label="main navigation menu"
-     x-data="navbarMainContainerData(loginUrl, registerUrl)"
+     x-data="navbarMain(loginUrl, registerUrl)"
      x-ref="navbarMainContainer"
      @keydown.escape="navbarClearAll"
      @login-modal-enable.window="loginModalEnable"

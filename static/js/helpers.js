@@ -1,13 +1,13 @@
 /* eslint no-unused-vars: 0 */
 
-const defaultTransitionDuration = 500;
-const defaultMessageTimeout = 4000;
+export const defaultTransitionDuration = 500;
+export const defaultMessageTimeout = 4000;
 
-const hDispatch = (eventName, params={}) => {
+export function hDispatch(eventName, params={}) {
   return window.dispatchEvent(new CustomEvent(eventName, { detail: params }));
 }
 
-function hHandleTabEvent(e, firstElement, lastElement, tabbableClass) {
+export function hHandleTabEvent(e, firstElement, lastElement, tabbableClass) {
   let activeElement = document.activeElement;
   let activeElementContainsTabbableClass =
     activeElement.classList.contains(tabbableClass);
@@ -50,5 +50,4 @@ function hHandleTabEvent(e, firstElement, lastElement, tabbableClass) {
       selectFirstElement();
     }
   }
-
 }
