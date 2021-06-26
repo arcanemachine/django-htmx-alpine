@@ -94,8 +94,12 @@
   <span id="register-form-response-text"
        class="has-text-danger"
        x-data="{ show: false }"
-       x-show.transition.opacity.duration.500ms="show"
-       x-init="() => {show = true }">
+       x-show="show"
+       x-transition.opacity.duration.500ms
+       x-init="$nextTick(() => {
+           show = true;
+           setTimeout(() => { show = false; }, defaultMessageTimeout);
+         })">
 
     {{ form_errors|safe }}
 
