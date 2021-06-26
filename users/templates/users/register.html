@@ -1,12 +1,21 @@
 {% if request.method == 'GET' %}
 
-  {% csrf_token %}
-
   {% if captcha_audio_url %}
-    <button id="register-captcha-button-audio"
+    <script>
+      const registerCaptchaAudio =
+        document.querySelector('#register-captcha-audio');
+
+      function registerCaptchaAudioPlay() {
+        registerCaptchaAudio['play']();
+      }
+    </script>
+
+    <button type="button"
+            id="register-captcha-button-audio"
             class="mr-2 has-background-grey-lighter button
                    is-flex is-justify-content-center is-align-items-center
-                   cursor-pointer register-modal-tabbable">
+                   cursor-pointer register-modal-tabbable"
+            onclick="registerCaptchaAudioPlay()">
       <svg xmlns="http://www.w3.org/2000/svg"
            width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
         <path d="M9 4a.5.5 0 0 0-.812-.39L5.825 5.5H3.5A.5.5 0 0 0 3 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 9 12V4zm3.025 4a4.486 4.486 0 0 1-1.318 3.182L10 10.475A3.489 3.489 0 0 0 11.025 8 3.49 3.49 0 0 0 10 5.525l.707-.707A4.486 4.486 0 0 1 12.025 8z"/>
@@ -17,41 +26,6 @@
            preload="none">
       <source src="{{ captcha_audio_url }}" type="audio/wav" />
     </audio>
-  {% endif %}
-
-
-  <img id="register-captcha-img"
-       class="captcha-img"
-       src="{{ captcha_img_url }}">
-  <input type="hidden"
-         name="captcha_0"
-         id="register-captcha-key"
-         value="{{ captcha_key }}">
-
-  <button id="register-captcha-button-reload"
-          class="ml-2 has-background-grey-lighter button
-                 is-flex is-justify-content-center is-align-items-center
-                 cursor-pointer register-modal-tabbable">
-    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
-      <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-      <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
-    </svg>
-  </button>
-
-  {% if captcha_audio_url %}
-    <script>
-      const registerCaptchaButtonAudio =
-        document.querySelector('#register-captcha-button-audio');
-      const registerCaptchaAudio =
-        document.querySelector('#register-captcha-audio');
-
-      registerCaptchaButtonAudio.addEventListener('click', (e) => {
-        if (document.activeElement === registerCaptchaButtonAudio) {
-          registerCaptchaAudio['play']();
-          e.preventDefault();
-        }
-      });
-    </script>
 
     <style>
       .register-captcha-button {
@@ -67,19 +41,30 @@
 
   {% endif %}
 
-    <script>
-      const registerCaptchaButtonReload =
-        document.querySelector('#register-captcha-button-reload');
 
-      registerCaptchaButtonReload.addEventListener('click', (e) => {
-        if (document.activeElement === registerCaptchaButtonReload) {
-          htmx.ajax('GET', '{% url 'users:register' %}', {
-            target: '#register-captcha-img-container'
-          })
-          e.preventDefault();
-        }
-      })
-    </script>
+  <img id="register-captcha-img"
+       class="captcha-img"
+       src="{{ captcha_img_url }}">
+  <input type="hidden"
+         name="captcha_0"
+         id="register-captcha-key"
+         value="{{ captcha_key }}">
+
+  <button type="button"
+          id="register-captcha-button-reload"
+          class="ml-2 has-background-grey-lighter button
+                 is-flex is-justify-content-center is-align-items-center
+                 cursor-pointer register-modal-tabbable"
+          hx-get="{% url 'users:register' %}"
+          hx-target="#register-captcha-img-container">
+    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+      <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+    </svg>
+  </button>
+
+  {% if captcha_audio_url %}
+  {% endif %}
 
     <style>
       #register-captcha-button-reload {
