@@ -22,19 +22,24 @@
 <template x-if="taskUpdateId === {{ task.id }}">
   <div @keydown.escape="taskUpdateToggle({{ task.id }})">
     <form @submit.prevent="taskUpdateDescription({{ task.id }})">
-      <input type="text"
-             name="description"
-             id="task-update-description-{{ task.id }}"
-             data-cy="task-update-description-{{ task.id }}"
-             x-ref="taskUpdateDescription{{ task.id }}"
-             class="mr-0 input is-small is-inline button-group-left-side"
-             value="{{ task.description }}">
-      <input type="submit"
-             class="ml-0 button is-info is-inline is-small
-                    button-group-right-side"
-             id="update-confirm-button-{{ task.id }}"
-             title="Confirm"
-             value="&check;"> <!-- confirm icon -->
+      <div class="field has-addons">
+        <span class="control">
+          <input type="text"
+                 name="description"
+                 id="task-update-description-{{ task.id }}"
+                 data-cy="task-update-description-{{ task.id }}"
+                 x-ref="taskUpdateDescription{{ task.id }}"
+                 class="input is-small is-inline border-radius-0.25rem"
+                 value="{{ task.description }}">
+        </span>
+        <span class="control">
+          <input type="submit"
+                 class="button is-info is-small border-radius-0.25rem"
+                 id="update-confirm-button-{{ task.id }}"
+                 title="Confirm"
+                 value="&check;"> <!-- confirm icon -->
+        </span>
+      </div>
     </form>
   </div>
 </template>

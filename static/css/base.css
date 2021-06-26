@@ -57,11 +57,19 @@ p {
   background-color: #d4d4d4; /* more contrast */
 }
 
+.button.is-small:not(.is-rounded) {
+  border-radius: 0.5rem;
+}
+
 .has-font-weight-bold {
   font-weight: bold;
 }
 
 .input {
+  border-radius: 0.5rem;
+}
+
+.input.is-small {
   border-radius: 0.5rem;
 }
 
@@ -103,10 +111,6 @@ p {
 
 
 /* UTILITY */
-.border-radius-0\.5rem {
-  border-radius: 0.5rem;
-}
-
 .button-unstyled {
 	background: none;
 	color: inherit;
@@ -183,6 +187,14 @@ p {
 
 .outline-none {
   outline: none;
+}
+
+.rounded {
+  border-radius: 0.25rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
 }
 
 .text-center {
