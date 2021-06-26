@@ -1,21 +1,21 @@
 <!-- task completion checkbox -->
 <div>
   <input type="checkbox" {{ task.is_complete|yesno:'checked,' }}
+         data-cy="task-checkbox-is-complete-{{ task.id }}"
          class="w-5rem p-2 checkbox is-medium"
          autocomplete="off"
          @click="taskUpdateIsComplete(
-           {{ task.id }}, {{ task.is_complete|lower }})"
-         data-cy="task-checkbox-is-complete-{{ task.id }}">
+           {{ task.id }}, {{ task.is_complete|lower }})">
 </div>
 
 <!-- task description -->
 <template x-if="taskUpdateId !== {{ task.id }}">
-  <div class="w-max-35rem has-text-centered
+  <div data-cy="task-description-{{ task.id }}"
+       class="w-max-35rem has-text-centered
               {% if task.is_complete %}
                 text-strikethrough has-text-grey-light
               {% endif %}"
-       title="Task ID#: {{ task.id }}"
-       data-cy="task-description-{{ task.id }}">{{ task.description }}</div>
+       title="Task ID#: {{ task.id }}">{{ task.description }}</div>
 </template>
 
 <!-- task update -->
@@ -23,11 +23,12 @@
   <div @keydown.escape="taskUpdateToggle({{ task.id }})">
     <form @submit.prevent="taskUpdateDescription({{ task.id }})">
       <input type="text"
+             name="description"
              id="task-update-description-{{ task.id }}"
+             data-cy="task-update-description-{{ task.id }}"
              x-ref="taskUpdateDescription{{ task.id }}"
              class="mr-0 input is-small is-inline button-group-left-side"
-             value="{{ task.description }}"
-             data-cy="task-update-description-{{ task.id }}">
+             value="{{ task.description }}">
       <input type="submit"
              class="ml-0 button is-info is-inline is-small
                     button-group-right-side"
@@ -40,17 +41,17 @@
 
 <!-- task edit/delete icons -->
 <div class="w-5rem is-size-4 is-flex is-justify-content-center">
-  <button class="p-2 pt-3 button-unstyled"
+  <button data-cy="task-icon-edit-{{ task.id }}"
+          class="p-2 pt-3 button-unstyled"
           title="Edit this task"
-          @click="taskUpdateToggle({{ task.id }})"
-          data-cy="task-icon-edit-{{ task.id }}">
+          @click="taskUpdateToggle({{ task.id }})">
     &#9998; <!-- edit icon -->
   </button>
-  <button class="ml-2 p-2 pt-3 button-unstyled"
+  <button data-cy="task-icon-delete-{{ task.id }}"
+          class="ml-2 p-2 pt-3 button-unstyled"
           tabindex="0"
           title="Delete this task"
-          @click="taskDeleteModalEnable({{ task.id }})"
-          data-cy="task-icon-delete-{{ task.id }}">
+          @click="taskDeleteModalEnable({{ task.id }})">
     &times; <!-- delete icon -->
   </button>
 </div>

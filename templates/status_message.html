@@ -3,6 +3,7 @@
 
 <div class="status-message-container">
   <button id="status-message"
+          data-cy="status-message"
           class="status-message"
           @click="handleStatusMessageClick('login-modal-enable')"
           @status-message-display.window="statusMessageDisplay($event.detail)"
@@ -10,8 +11,7 @@
           x-show="show"
           x-transition.opacity.duration.500ms
           x-text="statusMessageText"
-          x-cloak
-          data-cy="status-message">
+          x-cloak>
   </button>
 </div>
 

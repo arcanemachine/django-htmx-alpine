@@ -21,16 +21,16 @@
     <div class="field has-addons">
       <span class="control">
         <input type="text"
+               data-cy="task-create-input-description"
                x-ref="taskCreateInputDescription"
                class="input is-inline"
-               placeholder="Enter new task..."
-               data-cy="task-create-input-description">
+               placeholder="Enter new task...">
       </span>
       <span class="control">
         <input type="submit"
+               data-cy="task-create-button-confirm"
                class="button is-info"
-               value="Create"
-               data-cy="task-create-button-confirm">
+               value="Create">
       </span>
     </div>
   </form>
@@ -60,10 +60,10 @@
         </div>
 
         <div class="mt-5 is-flex is-justify-content-space-between">
-          <button x-ref="taskDeleteModalFirstTabbable"
+          <button data-cy="task-button-delete"
+                  x-ref="taskDeleteModalFirstTabbable"
                   class="button is-block is-danger is-medium is-fullwidth"
-                  @click="taskDelete"
-                  data-cy="task-button-delete">
+                  @click="taskDelete">
             Delete
           </button>
           <button x-ref="taskDeleteModalLastTabbable"

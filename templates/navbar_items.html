@@ -1,8 +1,8 @@
 <div class="navbar-end has-text-centered"
      @click.outside="navbarIsActive = false">
-  <a class="navbar-item"
-     href="{% url 'about' %}"
-     data-cy="navbar-item-about">
+  <a data-cy="navbar-item-about"
+     class="navbar-item"
+     href="{% url 'about' %}">
     About
   </a>
   <a class="navbar-item"
@@ -10,26 +10,26 @@
     Todo List
   </a>
   {% if not user.is_authenticated %}
-    <a class="navbar-item cursor-pointer"
+    <a data-cy="navbar-item-login"
+       class="navbar-item cursor-pointer"
        tabindex="0"
        @click="loginModalEnable"
-       @keydown.enter="loginModalEnable"
-       data-cy="navbar-item-login">
+       @keydown.enter="loginModalEnable">
       Sign In
     </a>
-    <a class="navbar-item"
+    <a data-cy="navbar-item-register"
+       class="navbar-item"
        tabindex="0"
        @click="registerModalEnable"
-       @keydown.enter="registerModalEnable"
-       data-cy="navbar-item-register">
+       @keydown.enter="registerModalEnable">
       Register
     </a>
   {% elif user.is_authenticated %}
-    <a class="navbar-item"
+    <a data-cy="navbar-item-logout"
+       class="navbar-item"
        tabindex="0"
        @click="logoutModalEnable"
-       @keydown.enter="logoutModalEnable"
-       data-cy="navbar-item-logout">
+       @keydown.enter="logoutModalEnable">
       Logout
     </a>
   {% endif %}

@@ -34,16 +34,16 @@
               border-radius-0.5rem"
        x-data="{ counter: 0 }">
     <div>
-      <button class="button is-success"
-              @click="counter++"
-              data-cy="demo-alpine-counter-button">
+      <button data-cy="demo-alpine-counter-button"
+              class="button is-success"
+              @click="counter++">
         Click Me
       </button>
     </div>
     <div class="ml-2 pt-4">
       Button click count: 
-      <span x-text="counter"
-            data-cy="demo-alpine-counter-text"></span>
+      <span data-cy="demo-alpine-counter-text"
+            x-text="counter"></span>
     </div>
   </div>
 
@@ -78,10 +78,10 @@
         </label>
         <div class="control">
           <input type="text"
+                 data-cy="demo-htmx-input-city"
                  class="w-max-20rem input has-text-centered"
                  name="city"
-                 value="Rome"
-                 data-cy="demo-htmx-input-city">
+                 value="Rome">
         </div>
       </div>
 
@@ -92,36 +92,36 @@
           <label for="units_metric">
             <input type="radio"
                    id="units_metric"
+                   data-cy="demo-htmx-input-units-metric"
                    class="radio"
                    name="units"
                    value="metric"
-                   checked
-                   data-cy="demo-htmx-input-units-metric">
+                   checked>
             Celsius
           </label>
           <label for="units_imperial">
             <input type="radio"
                    id="units_imperial"
+                   data-cy="demo-htmx-input-units-imperial"
                    class="radio ml-2"
                    name="units"
-                   value="imperial"
-                   data-cy="demo-htmx-input-units-imperial">
+                   value="imperial">
             Fahrenheit
           </label>
         </div>
       </div>
 
       <div id="demo-htmx-target"
-           class="my-4"
-           data-cy="demo-htmx-target">
+           data-cy="demo-htmx-target"
+           class="my-4">
         &nbsp;
       </div>
 
       <div class="control">
         <input type="submit"
+               data-cy="demo-htmx-input-submit"
                class="button is-success"
-               value="Submit"
-               data-cy="demo-htmx-input-submit">
+               value="Submit">
       </div>
 
     </form>
