@@ -7,8 +7,7 @@
   let registerUrl = '{% url 'users:register' %}';
 </script>
 
-<nav id="navbar-main"
-     class="navbar outline-none has-background-grey-lighter"
+<nav class="navbar outline-none has-background-grey-lighter"
      tabindex="-1"
      role="navigation"
      aria-label="main navigation menu"
@@ -59,7 +58,7 @@
            @keydown.tab.window="loginModalHandleTabEvent"></div>
     </template>
 
-    <div id="login-modal"
+    <div data-name="login-modal"
          class="modal is-active"
          x-show="loginModalIsActive"
          x-transition.opacity.duration.500ms
@@ -117,7 +116,6 @@
                 </div>
                 <div class="control">
                   <button type="submit"
-                          id="login-button-submit"
                           class="mt-4 button is-block is-info
                                  is-medium is-fullwidth login-modal-tabbable"
                           :class="{
@@ -226,7 +224,6 @@
                 </div>
               </div>
               <input type="submit"
-                     id="register-button-submit"
                      class="mt-4 button is-block is-info
                             is-medium is-fullwidth register-modal-tabbable"
                      :class="{
@@ -264,7 +261,7 @@
            @keydown.tab.window="logoutModalHandleTabEvent"></div>
     </template>
 
-    <div id="logout-modal"
+    <div data-name="logout-modal"
          class="modal is-active"
          x-show="logoutModalIsActive"
          x-transition.opacity.duration.500ms
