@@ -36,8 +36,10 @@
     {# javascript - head #}
     {% block head_start_script %}{% endblock head_start_script %}
     <script type="text/javascript" src="{% static 'js/helpers.js' %}"></script>
-    <script type="text/javascript"
-            src="https://unpkg.com/alpinejs@3.1.1/dist/cdn.min.js"
+
+    <script type="text/javascript"{% if settings.DEBUG %}
+            src="{% static 'js/alpine@3.1.1.min.js' %}"{% else %}
+            src="https://unpkg.com/alpinejs@3.1.1/dist/cdn.min.js"{% endif %}
             defer></script>
     {{ USER_ANALYTICS_SCRIPT|safe }}
     {% block head_end_script %}{% endblock head_end_script %}
@@ -86,10 +88,11 @@
 
 
     {# javascript - body #}
-    <script type="text/javascript"
+    <script type="text/javascript"{% if settings.DEBUG %}
+            src="{% static 'js/alpine@3.1.1.min.js' %}"{% else %}
             src="https://unpkg.com/htmx.org@1.4.1"
             integrity="sha384-1P2DfVFAJH2XsYTakfc6eNhTVtyio74YNA1tc6waJ0bO+IfaexSWXc2x62TgBcXe"
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous"{% endif %}></script>
     {% block body_end_script %}{% endblock body_end_script %}
 
     <script>
