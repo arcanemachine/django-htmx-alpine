@@ -11,11 +11,11 @@ describe('hHandleTabEvent', () => {
     instance = navbarMain();
   });
 
-  it('creates an instance of navbarMain()', () => {
+  test('creates an instance of navbarMain()', () => {
     expect(instance).toBeTruthy();
   });
 
-  it('all parameters are false when navbar is instantiated', () => {
+  test('all parameters are false when navbar is instantiated', () => {
     expect(instance.navbarIsActive).toBeFalsy();
     expect(instance.loginModalIsActive).toBeFalsy();
     expect(instance.loginModalSubmitButtonIsLoading).toBeFalsy();
