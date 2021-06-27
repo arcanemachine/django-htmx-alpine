@@ -1,4 +1,3 @@
-/* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
 
 const defaultTransitionDuration = 500;
@@ -39,11 +38,11 @@ function hHandleTabEvent(
     if (!activeElementContainsTabbableClass) {
       selectFirstOrLastElement();
     }
-    else if (activeElement === firstElement && !e.shiftKey) {
-      selectFirstElement();
-    }
-    else if (activeElement === lastElement && e.shiftKey) {
+    else if (activeElement === firstElement && e.shiftKey) {
       selectLastElement();
+    }
+    else if (activeElement === lastElement && !e.shiftKey) {
+      selectFirstElement();
     }
   } else {
     // if no tabbableClass given, toggle between the two given elements
