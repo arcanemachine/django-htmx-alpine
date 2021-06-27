@@ -6,7 +6,7 @@
 
 {% block head_start_script %}
   <script type="module">
-    import todoList from '{% static 'js/tasks.js' %}';
+    import todoList from '{% static 'js/tasks.mjs' %}';
     window.todoList = todoList;
   </script>
 {% endblock head_start_script %}

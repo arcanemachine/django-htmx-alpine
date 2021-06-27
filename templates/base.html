@@ -35,7 +35,7 @@
 
     {# javascript - head #}
     {% block head_start_script %}{% endblock head_start_script %}
-    {% include 'js_helpers.html' %}
+    {% include 'helpers.html' %}
     <script type="text/javascript"
             src="https://unpkg.com/alpinejs@3.1.1/dist/cdn.min.js"
             defer></script>
@@ -55,7 +55,7 @@
     </script>
 
     <div id="page-container">
-      {% include 'navbar.html' %}
+      {% include 'navbar_main.html' %}
       {% include 'ie11_notice.html' %}
       {% include 'status_message.html' %}
 
@@ -66,8 +66,8 @@
       </noscript>
 
       <main class="w-100 container is-flex-grow-1 has-background-light-grey">
-        <section class="mt-4 has-text-centered"
-                 aria-label="title">
+
+        <section class="mt-4 has-text-centered" aria-label="title">
           <h1 class="title">
             {% block body_title %}{% endblock body_title %}
           </h1>
@@ -76,15 +76,12 @@
           </h2>
         </section>
 
-        <div class="pt-4 section"
-             aria-label="content">
+        <div class="pt-4 section" aria-label="content">
           {% block content %}{% endblock content %}
         </div>
 
       </main>
-
       {% include 'footer.html' %}
-
     </div>
 
 
@@ -97,7 +94,7 @@
 
     <script>
       // add CSRFToken to HTMX headers
-     document.body.addEventListener('htmx:configRequest', (event) => {
+      document.body.addEventListener('htmx:configRequest', (event) => {
         event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
       })
     </script>

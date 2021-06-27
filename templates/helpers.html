@@ -1,8 +1,9 @@
 {% load static %}
 
 <script type="module">
-  import * as helpers from '{% static 'js/helpers.js' %}';
-  import navbarMain from '{% static 'js/navbar.js' %}';
+  import * as helpers from '{% static 'js/helpers.mjs' %}';
+  import navbarMain from '{% static 'js/navbar_main.mjs' %}';
+  import statusMessage from '{% static 'js/status_message.mjs' %}';
 
   window.defaultTransitionDuration = helpers.defaultTransitionDuration;
   window.defaultMessageTimeout = helpers.defaultMessageTimeout;
@@ -10,4 +11,5 @@
   window.hHandleTabEvent = helpers.hHandleTabEvent;
 
   window.navbarMain = navbarMain;
+  window.statusMessage = statusMessage;
 </script>

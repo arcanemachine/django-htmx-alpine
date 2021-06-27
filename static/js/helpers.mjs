@@ -7,8 +7,9 @@ export function hDispatch(eventName, params={}) {
   return window.dispatchEvent(new CustomEvent(eventName, { detail: params }));
 }
 
-export function hHandleTabEvent(e, firstElement, lastElement, tabbableClass) {
-  let activeElement = document.activeElement;
+export function hHandleTabEvent(
+    e, firstElement, lastElement, tabbableClass=undefined) {
+  let activeElement = e.target;
   let activeElementContainsTabbableClass =
     activeElement.classList.contains(tabbableClass);
 
@@ -37,13 +38,14 @@ export function hHandleTabEvent(e, firstElement, lastElement, tabbableClass) {
     if (!activeElementContainsTabbableClass) {
       selectFirstOrLastElement();
     }
-    else if (activeElement === firstElement && e.shiftKey) {
-      selectLastElement();
-    }
-    else if (activeElement === lastElement && !e.shiftKey) {
+    else if (activeElement === firstElement && !e.shiftKey) {
       selectFirstElement();
     }
+    else if (activeElement === lastElement && e.shiftKey) {
+      selectLastElement();
+    }
   } else {
+    // if no tabbableClass given, toggle between the two given elements
     if (activeElement === firstElement) {
       selectLastElement();
     } else {
