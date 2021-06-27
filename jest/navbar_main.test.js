@@ -5,13 +5,17 @@ const navbarMain = require('../static/js/navbar_main.js');
 
 describe('hHandleTabEvent', () => {
 
+  let instance;
+
+  beforeEach(() => {
+    instance = navbarMain();
+  });
+
   it('creates an instance of navbarMain()', () => {
-    const instance = navbarMain();
     expect(instance).toBeTruthy();
   });
 
   it('all parameters are false when navbar is instantiated', () => {
-    const instance = navbarMain();
     expect(instance.navbarIsActive).toBeFalsy();
     expect(instance.loginModalIsActive).toBeFalsy();
     expect(instance.loginModalSubmitButtonIsLoading).toBeFalsy();
