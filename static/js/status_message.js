@@ -110,7 +110,7 @@ function statusMessage() {
 }
 
 try {
-  module.exports = { statusMessage };
+  module.exports = statusMessage;
 } catch {
   ; // eslint-disable-line
 }

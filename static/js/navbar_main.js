@@ -99,7 +99,7 @@ function navbarMain(loginUrl, registerUrl) {
 }
 
 try {
-  module.exports = { navbarMain };
+  module.exports = navbarMain;
 } catch {
   ; // eslint-disable-line
 }

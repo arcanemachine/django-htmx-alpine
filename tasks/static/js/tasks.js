@@ -87,7 +87,7 @@ function todoList(
 }
 
 try {
-  module.exports = { todoList };
+  module.exports = todoList;
 } catch {
   ; // eslint-disable-line
 }
