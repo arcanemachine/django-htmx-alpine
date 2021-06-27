@@ -1,13 +1,14 @@
 /* eslint no-unused-vars: 0 */
+/* eslint no-undef: 0 */
 
-export const defaultTransitionDuration = 500;
-export const defaultMessageTimeout = 4000;
+const defaultTransitionDuration = 500;
+const defaultMessageTimeout = 4000;
 
-export function hDispatch(eventName, params={}) {
+function hDispatch(eventName, params={}) {
   return window.dispatchEvent(new CustomEvent(eventName, { detail: params }));
 }
 
-export function hHandleTabEvent(
+function hHandleTabEvent(
     e, firstElement, lastElement, tabbableClass=undefined) {
   let activeElement = e.target;
   let activeElementContainsTabbableClass =
@@ -52,4 +53,15 @@ export function hHandleTabEvent(
       selectFirstElement();
     }
   }
+}
+
+try {
+  module.exports = {
+    defaultTransitionDuration,
+    defaultMessageTimeout,
+    hDispatch,
+    hHandleTabEvent
+  };
+} catch {
+  ; // eslint-disable-line
 }

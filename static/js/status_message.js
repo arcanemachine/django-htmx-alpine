@@ -1,7 +1,7 @@
 /* eslint no-undef: 0 */
 /* eslint no-unused-vars: 0 */
 
-export default function statusMessage() {
+function statusMessage() {
   return {
     // data
     show: false,
@@ -107,4 +107,10 @@ export default function statusMessage() {
       }, defaultTransitionDuration)
     }
   }
+}
+
+try {
+  module.exports = { statusMessage };
+} catch {
+  ; // eslint-disable-line
 }

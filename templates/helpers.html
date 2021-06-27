@@ -1,14 +1,17 @@
 {% load static %}
 
+<script type="text/javascript" src="{% static 'js/helpers.mjs' %}"></script>
 <script type="module">
   import * as helpers from '{% static 'js/helpers.mjs' %}';
-  import navbarMain from '{% static 'js/navbar_main.mjs' %}';
-  import statusMessage from '{% static 'js/status_message.mjs' %}';
+  import navbarMain from '{% static 'js/navbar-main.mjs' %}';
+  import statusMessage from '{% static 'js/status-message.mjs' %}';
 
+  /*
   window.defaultTransitionDuration = helpers.defaultTransitionDuration;
   window.defaultMessageTimeout = helpers.defaultMessageTimeout;
   window.hDispatch = helpers.hDispatch;
   window.hHandleTabEvent = helpers.hHandleTabEvent;
+  */
 
   window.navbarMain = navbarMain;
   window.statusMessage = statusMessage;

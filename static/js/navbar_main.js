@@ -1,7 +1,7 @@
 /* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
 
-export default function navbarMain(loginUrl, registerUrl) {
+function navbarMain(loginUrl, registerUrl) {
   return {
     // data
     navbarIsActive: false,
@@ -96,4 +96,10 @@ export default function navbarMain(loginUrl, registerUrl) {
       );
     },
   }
+}
+
+try {
+  module.exports = { navbarMain };
+} catch {
+  ; // eslint-disable-line
 }

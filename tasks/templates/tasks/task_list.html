@@ -4,15 +4,9 @@
 {% block title %}Your Todo List{% endblock %}
 {% block body_title %}Your Todo List{% endblock %}
 
-{% block head_start_script %}
-  <script type="module">
-    import todoList from '{% static 'js/tasks.mjs' %}';
-    window.todoList = todoList;
-  </script>
-{% endblock head_start_script %}
-
 {% block content %}
 
+<script type="text/javascript" src="{% static 'js/tasks.js' %}"></script>
 <script>
   let taskCreateUrl = '{% url 'tasks:task_create' %}';
   let taskUpdateUrlNoId = '{% url 'tasks:task_update_no_id' %}';
