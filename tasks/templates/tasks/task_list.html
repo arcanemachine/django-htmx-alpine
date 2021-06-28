@@ -8,13 +8,10 @@
 
 <script type="text/javascript" src="{% static 'js/tasks.js' %}"></script>
 <script>
-  let taskCreateUrl = '{% url 'tasks:task_create' %}';
-  let taskUpdateUrlNoId = '{% url 'tasks:task_update_no_id' %}';
   let taskDeleteUrlNoId = '{% url 'tasks:task_delete_no_id' %}';
 </script>
 
-<section x-data="todoList(
-    taskCreateUrl, taskUpdateUrlNoId, taskDeleteUrlNoId)">
+<section x-data="todoList(taskDeleteUrlNoId)">
 
   <form class="mt-4 mx-auto is-flex is-justify-content-center"
         method="post"

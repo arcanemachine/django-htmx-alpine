@@ -2,16 +2,11 @@
 <script type="text/javascript"
         src="{% static 'js/navbar_main.js' %}"></script>
 
-<script>
-  let loginUrl = '{% url 'users:login' %}';
-  let registerUrl = '{% url 'users:register' %}';
-</script>
-
 <nav class="navbar outline-none has-background-grey-lighter"
      tabindex="-1"
      role="navigation"
      aria-label="main navigation menu"
-     x-data="navbarMain(loginUrl, registerUrl)"
+     x-data="navbarMain()"
      x-ref="navbarMainContainer"
      @keydown.escape="navbarClearAll"
      @login-modal-enable.window="loginModalEnable"
