@@ -39,8 +39,8 @@
     <script type="text/javascript" src="{% static 'js/helpers.js' %}"></script>
 
     <script type="text/javascript"{% if DEBUG_MODE %}
-            src="{% static 'js/alpine@3.1.1.js' %}"{% else %}
-            src="https://unpkg.com/alpinejs@3.1.1/dist/cdn.min.js"{% endif %}
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.2.1/dist/cdn.js"{% else %}
+            src="https://unpkg.com/alpinejs@3.2.1/dist/cdn.min.js"{% endif %}
             defer></script>
     {{ USER_ANALYTICS_SCRIPT|safe }}
     {% block head_end_script %}{% endblock head_end_script %}
@@ -129,7 +129,7 @@
 
     <!-- htmx -->
     <script type="text/javascript"{% if DEBUG_MODE %}
-            src="{% static 'js/htmx@1.4.1.js' %}"{% else %}
+            src="https://cdn.jsdelivr.net/npm/htmx.org@1.4.1/dist/htmx.js"{% else %}
             src="https://unpkg.com/htmx.org@1.4.1"
             integrity="sha384-1P2DfVFAJH2XsYTakfc6eNhTVtyio74YNA1tc6waJ0bO+IfaexSWXc2x62TgBcXe"
             crossorigin="anonymous"{% endif %}></script>
