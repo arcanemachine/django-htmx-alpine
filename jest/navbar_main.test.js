@@ -1,14 +1,20 @@
 /* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
 
-const htmx = require('./@/static/js/htmx.min.js');
+// const htmx = require('./@/static/js/htmx.min.js');
 const navbarMain = require('./@/static/js/navbar_main.js');
+
+jest.mock('./@/static/js/htmx.min.js');
+// const htmx = jest.fn();
 
 describe('navbarMain()', () => {
   let instance;
   
   beforeEach(() => {
     instance = navbarMain();
+
+    document.body.dispatchEvent = jest.fn();
+    CustomEvent = jest.fn(); // eslint-disable-line
   });
 
   test('creates an instance of navbarMain()', () => {
@@ -24,13 +30,21 @@ describe('navbarMain()', () => {
     expect(instance.registerModalSubmitButtonIsLoading).toBeFalsy();
   });
 
-  // loginFormSubmit
   describe('loginFormSubmit()', () => {
 
-    test('sets loginModalSubmitButtonIsLoading to true', () => {
+    beforeEach(() => {
       instance.loginFormSubmit();
+    });
+
+    test('sets loginModalSubmitButtonIsLoading to true', () => {
       expect(instance.loginModalSubmitButtonIsLoading).toEqual(true);
     });
 
+    test('dispatches expected event', () => {
+      expect(document.body.dispatchEvent).toHaveBeenCalled();
+      expect(CustomEvent).toHaveBeenCalledWith('login-form-submit');
+    });
+
   });
+
 });
