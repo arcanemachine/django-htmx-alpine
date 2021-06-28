@@ -7,7 +7,7 @@
         hDispatch('status-message-display', {
           message: "{{ message }}",
           messageType: {{ message.level }}
-        })
+        });
       }, 100 + {{ forloop.counter0 }} * defaultMessageTimeout);
     {% endfor %}
   {% endif %}

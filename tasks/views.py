@@ -17,7 +17,7 @@ def dummy_view(request):
 
 def response_content_unchanged(request, message='content unchanged'):
     response = HttpResponse(message)
-    response.status_code = 304  # HTMX does not change content if 304 returned
+    response.status_code = 204  # HTMX does not change content if 304 returned
     return response
 
 

@@ -56,6 +56,7 @@
       });
     </script>
 
+
     <div id="page-container">
       {% include 'navbar_main.html' %}
       {% include 'ie11_notice.html' %}
@@ -87,12 +88,34 @@
     </div>
 
 
-    {# javascript - body #}
+    <!-- htmx -->
     <script type="text/javascript"{% if DEBUG_MODE %}
             src="{% static 'js/htmx@1.4.1.js' %}"{% else %}
             src="https://unpkg.com/htmx.org@1.4.1"
             integrity="sha384-1P2DfVFAJH2XsYTakfc6eNhTVtyio74YNA1tc6waJ0bO+IfaexSWXc2x62TgBcXe"
             crossorigin="anonymous"{% endif %}></script>
+
+    <!-- if an htmx request returns 204 and contains a custom statusText,
+         then create a status message from the custom statusText -->
+    <script>
+      // add CSRFToken to HTMX headers
+      document.body.addEventListener('htmx:configRequest', (event) => {
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+      })
+
+      // if an htmx request returns 204 and contains a custom statusText,
+      // then create a status message from the custom statusText
+      htmx.afterLoad((e) => {
+        let response = e.detail.xhr;
+        if (response.status === 204 && response.statusText !== 'No Content') {
+          hDispatch('status-message-display', {
+            message: e.detail.xhr.statusText
+          });
+        }
+      });
+    </script>
+
+
     {% block body_end_script %}{% endblock body_end_script %}
 
     <script>
