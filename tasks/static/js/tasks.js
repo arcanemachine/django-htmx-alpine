@@ -53,9 +53,6 @@ function todoList(urlTaskDeleteNoId) {
     taskUpdatePanelToggle(id) {
       if (this.taskUpdateId !== id) {
         this.taskUpdateId = id;
-        this.$nextTick(() => {
-          eval(`this.$refs.taskUpdateDescription${id}`).select()
-        });
       } else {
         this.taskUpdatePanelDisable();
       }
@@ -74,9 +71,6 @@ function todoList(urlTaskDeleteNoId) {
       this.taskUpdatePanelToggle(undefined);
       this.taskDeleteModalIsActive = true;
       this.taskDeleteId = id;
-      this.$nextTick(() => {
-        this.$refs.taskDeleteModalFirstTabbable.focus();
-      });
     },
     taskDeleteModalDisable() {
       this.taskDeleteModalIsActive = false;

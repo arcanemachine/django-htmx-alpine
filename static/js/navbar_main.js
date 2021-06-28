@@ -33,9 +33,6 @@ function navbarMain() {
     logoutModalEnable() {
       this.navbarClearAll();
       this.logoutModalIsActive = true;
-      this.$nextTick(() => {
-        this.$refs.logoutModalFirstTabbable.focus();
-      });
     },
     logoutModalDisable() {
       this.navbarClearAll();

@@ -23,7 +23,9 @@
 
 <!-- task update panel -->
 <template x-if="taskUpdateId === {{ task.id|safe }}">
-  <div @keydown.escape="taskUpdatePanelDisable">
+  <div @keydown.escape="taskUpdatePanelDisable"
+       x-init="$nextTick(() => {
+         $refs.taskUpdateDescription{{ task.id|safe }}.select(); })">
     <form method="post"
           hx-put="{% url 'tasks:task_update' task_id=task.id %}"
           hx-trigger="task-update-description-form-submit"

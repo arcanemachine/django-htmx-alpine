@@ -40,7 +40,9 @@
   <!-- item delete modal -->
   <template x-if="taskDeleteModalIsActive">
     <div @keydown.escape.window="taskDeleteModalDisable"
-         @keydown.tab.window="taskDeleteModalHandleTabEvent"></div>
+         @keydown.tab.window="taskDeleteModalHandleTabEvent"
+         x-init="$nextTick(() => {
+           $refs.taskDeleteModalFirstTabbable.focus(); })"></div>
   </template>
 
   <div class="modal is-active"

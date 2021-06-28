@@ -267,7 +267,10 @@
   {% elif user.is_authenticated %}
     <template x-if="logoutModalIsActive">
       <div @keydown.escape.window="logoutModalDisable"
-           @keydown.tab.window="logoutModalHandleTabEvent"></div>
+           @keydown.tab.window="logoutModalHandleTabEvent"
+           x-init="
+             $nextTick(() => { $refs.logoutModalFirstTabbable.focus(); })">
+      </div>
     </template>
 
     <div data-name="logout-modal"
@@ -290,10 +293,11 @@
             </div>
 
             <div class="mt-4 is-flex is-justify-content-space-between">
-              <a data-cy="logout-button-confirm"
+              <a href="{% url 'users:logout' %}"
+                 data-cy="logout-button-confirm"
                  x-ref="logoutModalFirstTabbable"
                  class="button is-block is-info is-medium is-fullwidth"
-                 href="{% url 'users:logout' %}">
+                 autofocus>
                 Logout
               </a>
               <button x-ref="logoutModalLastTabbable"
