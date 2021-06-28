@@ -1,8 +1,7 @@
 /* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
 
-function todoList(
-    urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
+function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
   return {
     taskDeleteModalIsActive: false,
     taskDeleteId: undefined,
@@ -11,68 +10,68 @@ function todoList(
     taskCreate() {
       if (!this.$store.config.userIsAuthenticated) {
         // do not continue if user is not authenticated
-        hDispatch(
-          'status-message-display', {
+        hDispatch('status-message-display', {
             message: "You must login before you can add any tasks.",
             messageType: 'warning',
             eventName: 'login-modal-enable'
           });
         return false;
       } else {
-        // get the value of the text input, then clear it
+        // get the description
         let descriptionInput = this.$refs.taskCreateInputDescription;
         let description = descriptionInput.value;
-        descriptionInput.value = '';
-
-        htmx.ajax('POST', taskCreateUrl, {
-          target: '#tasks',
-          values: { description },
-        });
+        if (!description) {
+          hDispatch('status-message-display', {
+            message: "Task description cannot be empty.",
+            messageType: 'warning',
+          });
+          return false;
+        } else {
+          document.body
+            .dispatchEvent(new CustomEvent('task-create-form-submit'));
+          descriptionInput.value = ''; // clear the description
+        }
       }
     },
     taskUpdateDescription(id) {
       let description = eval(`this.$refs.taskUpdateDescription${id}`).value;
-      let url = urlTaskUpdateNoId + id + '/';
-      htmx.ajax('PUT', url, {
-        target: `#task-item-${id}`,
-        values: { description }
-      });
-
+      if (!description) {
+        hDispatch('status-message-display', {
+          message: "Task description cannot be empty.",
+          messageType: 'warning',
+          eventName: 'login-modal-enable'
+        });
+      } else {
+        document.body.dispatchEvent(
+          new CustomEvent('task-update-description-form-submit'));
+        this.taskUpdateDisable();
+      }
+    },
+    taskUpdatePanelDisable() {
       this.taskUpdateId = undefined;
     },
-    taskUpdateIsComplete(id, isComplete) {
-      let url = urlTaskUpdateNoId + id + '/';
-      htmx.ajax('PUT', url, {
-        target: `#task-item-${id}`,
-        values: { is_complete: !isComplete }
-      });
-    },
-    taskUpdateToggle(id) {
+    taskUpdatePanelToggle(id) {
       if (this.taskUpdateId !== id) {
         this.taskUpdateId = id;
         this.$nextTick(() => {
           eval(`this.$refs.taskUpdateDescription${id}`).select()
         });
       } else {
-        this.taskUpdateId = undefined;
+        this.taskUpdateDisable();
       }
     },
     taskDeleteModalHandleTabEvent(e) {
-      hHandleTabEvent(e,
-        this.$refs.taskDeleteModalFirstTabbable,
-        this.$refs.taskDeleteModalLastTabbable
-      );
+      let firstTabbable = this.$refs.taskDeleteModalFirstTabbable;
+      let lastTabbable = this.$refs.taskDeleteModalLastTabbable;
+      hHandleTabEvent(e, firstTabbable, lastTabbable);
     },
     taskDelete() {
-      // delete the task
-      let url = urlTaskDeleteNoId + this.taskDeleteId + '/';
-      htmx.ajax('DELETE', url, { target: '#tasks' });
-
-      // hide the modal
-      this.taskDeleteModalDisable();
+      let url = urlTaskDeleteNoId + this.taskDeleteId + '/'; // get url
+      htmx.ajax('DELETE', url, { target: '#tasks' }); // delete task
+      this.taskDeleteModalDisable(); // hide modal
     },
     taskDeleteModalEnable(id) {
-      this.taskUpdateToggle(undefined);
+      this.taskUpdatePanelToggle(undefined);
       this.taskDeleteModalIsActive = true;
       this.taskDeleteId = id;
       this.$nextTick(() => {

@@ -17,10 +17,15 @@
     taskCreateUrl, taskUpdateUrlNoId, taskDeleteUrlNoId)">
 
   <form class="mt-4 mx-auto is-flex is-justify-content-center"
+        method="post"
+        hx-post="{% url 'tasks:task_create' %}"
+        hx-target="#tasks"
+        hx-trigger="task-create-form-submit from:body"
         @submit.prevent="taskCreate()">
     <div class="field has-addons">
       <span class="control">
         <input type="text"
+               name="description"
                data-cy="task-create-input-description"
                x-ref="taskCreateInputDescription"
                class="input is-inline"

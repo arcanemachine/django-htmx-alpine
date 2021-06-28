@@ -11,13 +11,24 @@ from project_folder import helpers as h
 
 
 def dummy_view(request):
-    return None
-
-
-def authorization_required(request):
     response = HttpResponse()
+    return response
+
+
+def response_content_unchanged(request, message='content unchanged'):
+    response = HttpResponse(message)
     response.status_code = 304  # HTMX does not change content if 304 returned
     return response
+
+
+def response_not_authorized(request):
+    return response_content_unchanged(
+        request, "You are not authorized to perform this action.")
+
+
+def response_login_required(request):
+    return response_content_unchanged(
+        request, "You must login before you can perform this action.")
 
 
 def task_list(request):
@@ -33,7 +44,7 @@ def task_list(request):
 def task_create(request):
     context = {}
     if not request.user.is_authenticated:
-        return authorization_required(request)
+        return login_required(request)
     if request.POST.get('description'):
         Task.objects.create(
             user=request.user,
@@ -41,8 +52,7 @@ def task_create(request):
         context.update({'task_create_success': True})
         messages.success(request, _('Task created'))
     else:
-        context.update({'task_create_error_description_empty': True})
-        messages.error(request, 'Task description must not be empty')
+        return response_content_unchanged
 
     tasks = Task.objects.filter(user=request.user)
     context.update({'tasks': tasks})
@@ -53,7 +63,7 @@ def task_create(request):
 @require_http_methods(['PUT'])
 def task_update(request, task_id):
     if not request.user.is_authenticated:
-        return authorization_required(request)
+        return response_login_required(request)
 
     context = {}
     task = get_object_or_404(Task, id=task_id, user=request.user)

@@ -74,6 +74,10 @@
               <div class="my-3 is-size-4">Account Login</div>
               <form id="login-form"
                     class="w-min-20rem mt-3"
+                    method="post"
+                    hx-post="{% url 'users:login' %}"
+                    hx-target="#login-form-response"
+                    hx-trigger="login-form-submit from:body"
                     @submit.prevent="loginFormSubmit">
                 <div class="field">
                   <div class="control">
@@ -99,7 +103,10 @@
                   </div>
                 </div>
                 <div class="field">
-                  <div class="my-4 control">
+                  <div class="my-4 control"
+                       hx-get="{% url 'users:login' %}"
+                       hx-target="#login-captcha-img-container"
+                       hx-trigger="login-captcha-get once from:body">
                     <div id="login-captcha-img-container"
                          class="mb-2 is-flex is-justify-content-center">
                       <input type="hidden"
@@ -120,8 +127,7 @@
                           class="mt-4 button is-block is-info
                                  is-medium is-fullwidth login-modal-tabbable"
                           :class="{
-                            'is-loading': loginModalSubmitButtonIsLoading }"
-                          >
+                            'is-loading': loginModalSubmitButtonIsLoading }">
                     Login
                   </button>
                 </div>
@@ -169,6 +175,10 @@
             <div class="my-3 is-size-4">Register New Account</div>
             <form id="register-form"
                   class="w-min-20rem mt-3"
+                  method="post"
+                  hx-post="{% url 'users:register' %}"
+                  hx-target="#register-form-response"
+                  hx-trigger="register-form-submit from:body"
                   @submit.prevent="registerModalFormSubmit">
               <div class="field">
                 <div class="control">
@@ -209,7 +219,10 @@
                 </div>
               </div>
               <div class="field">
-                <div class="my-4 control">
+                <div class="my-4 control"
+                       hx-get="{% url 'users:register' %}"
+                       hx-target="#register-captcha-img-container"
+                       hx-trigger="register-captcha-get once from:body">
                   <div id="register-captcha-img-container"
                        class="mb-2 is-flex is-justify-content-center">
                     <input type="hidden"

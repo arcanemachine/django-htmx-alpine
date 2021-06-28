@@ -4,8 +4,11 @@
          data-cy="task-checkbox-is-complete-{{ task.id }}"
          class="w-5rem p-2 checkbox is-medium"
          autocomplete="off"
-         @click="taskUpdateIsComplete(
-           {{ task.id }}, {{ task.is_complete|lower }})">
+         hx-put="{% url 'tasks:task_update' task_id=task.id %}"
+         hx-target="#task-item-{{ task.id }}"
+         hx-vals='
+           { "is_complete": "{{ task.is_complete|yesno:"false,true" }}" }'
+         hx-trigger="click">
 </div>
 
 <!-- task description -->
@@ -18,10 +21,13 @@
        title="Task ID#: {{ task.id }}">{{ task.description }}</div>
 </template>
 
-<!-- task update -->
+<!-- task update panel -->
 <template x-if="taskUpdateId === {{ task.id }}">
-  <div @keydown.escape="taskUpdateToggle({{ task.id }})">
-    <form @submit.prevent="taskUpdateDescription({{ task.id }})">
+  <div @keydown.escape="taskUpdatePanelDisable">
+    <form method="post"
+          hx-put="{% url 'tasks:task_update' task_id=task.id %}"
+          hx-trigger="task-update-description-form-submit"
+          @submit.prevent="taskUpdateDescription({{ task.id }})">
       <div class="field has-addons">
         <span class="control">
           <input type="text"
@@ -29,15 +35,23 @@
                  id="task-update-description-{{ task.id }}"
                  data-cy="task-update-description-{{ task.id }}"
                  x-ref="taskUpdateDescription{{ task.id }}"
-                 class="input is-small is-inline border-radius-0.25rem"
+                 class="input is-small is-inline"
                  value="{{ task.description }}">
         </span>
         <span class="control">
           <input type="submit"
-                 class="button is-info is-small border-radius-0.25rem"
+                 class="button is-small is-info"
                  id="update-confirm-button-{{ task.id }}"
                  title="Confirm"
                  value="&check;"> <!-- confirm icon -->
+        </span>
+        <span class="control">
+          <button type="button"
+                  class="button is-small is-danger border-left"
+                  title="Cancel"
+                  @click="taskUpdatePanelDisable">
+            &times; <!-- cancel icon -->
+          </button>
         </span>
       </div>
     </form>
@@ -49,7 +63,7 @@
   <button data-cy="task-icon-edit-{{ task.id }}"
           class="p-2 pt-3 button-unstyled"
           title="Edit this task"
-          @click="taskUpdateToggle({{ task.id }})">
+          @click="taskUpdatePanelToggle({{ task.id }})">
     &#9998; <!-- edit icon -->
   </button>
   <button data-cy="task-icon-delete-{{ task.id }}"
