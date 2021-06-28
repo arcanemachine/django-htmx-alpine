@@ -44,7 +44,7 @@ function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
       } else {
         document.body.dispatchEvent(
           new CustomEvent('task-update-description-form-submit'));
-        this.taskUpdateDisable();
+        this.taskUpdatePanelDisable();
       }
     },
     taskUpdatePanelDisable() {
@@ -57,7 +57,7 @@ function todoList(urlTaskCreate, urlTaskUpdateNoId, urlTaskDeleteNoId) {
           eval(`this.$refs.taskUpdateDescription${id}`).select()
         });
       } else {
-        this.taskUpdateDisable();
+        this.taskUpdatePanelDisable();
       }
     },
     taskDeleteModalHandleTabEvent(e) {
