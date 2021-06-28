@@ -14,28 +14,21 @@ function navbarMain(loginUrl, registerUrl) {
     // methods
     loginFormSubmit() {
       this.loginModalSubmitButtonIsLoading = true;
-      htmx.ajax('POST', loginUrl, {
-        source: '#login-form',
-        target: '#login-form-response'
-      });
+      document.body.dispatchEvent(new CustomEvent('login-form-submit'));
     },
     loginModalEnable() {
       this.navbarClearAll();
       this.loginModalIsActive = true;
-      htmx.ajax('GET', loginUrl, {
-        target: '#login-captcha-img-container'
-      });
+      document.body.dispatchEvent(new CustomEvent('login-captcha-get'));
     },
     loginModalDisable() {
       this.navbarClearAll();
       this.loginModalIsActive = false;
     },
     loginModalHandleTabEvent(e) {
-      hHandleTabEvent(e,
-        this.$refs.loginModalFirstTabbable,
-        this.$refs.loginModalLastTabbable,
-        'login-modal-tabbable'
-      );
+      let firstTabbable = this.$refs.loginModalFirstTabbable;
+      let lastTabbable = this.$refs.loginModalLastTabbable;
+      hHandleTabEvent(e, firstTabbable, lastTabbable, 'login-modal-tabbable');
     },
     logoutModalEnable() {
       this.navbarClearAll();
@@ -49,10 +42,9 @@ function navbarMain(loginUrl, registerUrl) {
       this.logoutModalIsActive = false;
     },
     logoutModalHandleTabEvent(e) {
-      hHandleTabEvent(e,
-        this.$refs.logoutModalFirstTabbable,
-        this.$refs.logoutModalLastTabbable,
-      );
+      let firstTabbable = this.$refs.logoutModalFirstTabbable;
+      let lastTabbable = this.$refs.logoutModalLastTabbable;
+      hHandleTabEvent(e, firstTabbable, lastTabbable);
     },
     navbarClearAll() {
       this.navbarIsActive = false;
@@ -63,9 +55,7 @@ function navbarMain(loginUrl, registerUrl) {
     registerModalEnable() {
       this.navbarClearAll();
       this.registerModalIsActive = true;
-      htmx.ajax('GET', registerUrl, {
-        target: '#register-captcha-img-container'
-      });
+      document.body.dispatchEvent(new CustomEvent('register-captcha-get'));
     },
     registerModalDisable() {
       this.navbarClearAll();
@@ -83,17 +73,13 @@ function navbarMain(loginUrl, registerUrl) {
         return false;
       }
       this.registerModalSubmitButtonIsLoading = true;
-      htmx.ajax('POST', registerUrl, {
-        source: '#register-form',
-        target: '#register-form-response'
-      });
+      document.body.dispatchEvent(new CustomEvent('register-form-submit'));
     },
     registerModalHandleTabEvent(e) {
-      hHandleTabEvent(e,
-        this.$refs.registerModalFirstTabbable,
-        this.$refs.registerModalLastTabbable,
-        'register-modal-tabbable'
-      );
+      let firstTabbable = this.$refs.registerModalFirstTabbable;
+      let lastTabbable = this.$refs.registerModalLastTabbable;
+      hHandleTabEvent(
+        e, firstTabbable, lastTabbable, 'register-modal-tabbable');
     },
   }
 }
