@@ -47,4 +47,28 @@ describe('navbarMain()', () => {
 
   });
 
+  describe('loginModalEnable()', () => {
+
+    beforeEach(() => {
+      instance.loginModalEnable();
+    });
+
+    test('calls navbarClearAll()', () => {
+      instance.navbarClearAll = jest.fn();
+      instance.loginModalEnable();
+
+      expect(instance.navbarClearAll).toHaveBeenCalled();
+    });
+
+    test('sets loginModalIsActive to true', () => {
+      expect(instance.loginModalIsActive).toEqual(true);
+    });
+
+    test('dispatches expected event', () => {
+      expect(document.body.dispatchEvent).toHaveBeenCalled();
+      expect(CustomEvent).toHaveBeenCalledWith('login-captcha-get');
+    });
+
+  });
+
 });
