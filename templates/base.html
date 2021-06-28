@@ -141,7 +141,7 @@
 
       // if an htmx request returns 204 and contains a custom statusText,
       // then create a status message from the custom statusText
-      htmx.afterLoad((e) => {
+      htmx.on('htmx:afterOnLoad', (e) => {
         let response = e.detail.xhr;
         if (response.status === 204 && response.statusText !== 'No Content') {
           hDispatch('status-message-display', {
