@@ -96,7 +96,7 @@ def task_update(request, task_id):
 @require_http_methods(['DELETE'])
 def task_delete(request, task_id):
     if not request.user.is_authenticated:
-        return authorization_required(request)
+        return response_login_required(request)
 
     context = {}
     task = get_object_or_404(Task, id=task_id, user=request.user)
