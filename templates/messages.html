@@ -5,10 +5,10 @@
     {% for message in messages %}
       setTimeout(() => {
         hDispatch('status-message-display', {
-          message: "{{ message }}",
-          messageType: {{ message.level }}
+          message: "{{ message|safe }}",
+          messageType: {{ message.level|safe }}
         });
-      }, 100 + {{ forloop.counter0 }} * defaultMessageTimeout);
+      }, 100 + {{ forloop.counter0|safe }} * defaultMessageTimeout);
     {% endfor %}
   {% endif %}
 </script>

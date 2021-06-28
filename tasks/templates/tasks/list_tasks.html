@@ -3,9 +3,9 @@
     <ul class="mx-auto mt-4 box w-max-35rem"
         data-cy="task-list">
       {% for task in tasks %}
-        <li id="task-item-{{ task.id }}"
-            data-cy="task-item-{{ task.id }}"
-            data-task-id="{{ task.id }}"
+        <li id="task-item-{{ task.id|safe }}"
+            data-cy="task-item-{{ task.id|safe }}"
+            data-task-id="{{ task.id|safe }}"
             class="mx-auto is-flex is-justify-content-space-between
                    is-align-items-center task-item">
           {% include 'tasks/get_task.html' %}

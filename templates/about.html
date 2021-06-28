@@ -5,7 +5,7 @@
 
 {% block meta_description %}
   {% with meta_description_content="An introduction to the HTMX + Alpine.JS demo."%}
-    {{ block.super }}
+    {{ block.super|safe }}
   {% endwith %}
 {% endblock meta_description %}
 

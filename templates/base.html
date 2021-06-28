@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block meta_description %}
       <meta name="description"{% if meta_description_content %}
-            description="{{ meta_description_content }}"{% else %}
+            description="{{ meta_description_content|safe }}"{% else %}
             description="A demo that demonstrates how HTMX and Alpine.JS can work together"{% endif %}>
     {% endblock meta_description %}
 
@@ -53,7 +53,8 @@
     <script>
       document.addEventListener('alpine:init', () => {
         Alpine.store('config', {
-          userIsAuthenticated: {{ user.is_authenticated|yesno:'true,false' }} 
+          userIsAuthenticated:
+            {{ user.is_authenticated|safe|yesno:'true,false' }} 
         })
       });
     </script>
@@ -136,7 +137,7 @@
     <script>
       // add CSRFToken to HTMX headers
       document.body.addEventListener('htmx:configRequest', (event) => {
-        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token|safe }}';
       })
 
       // if an htmx request returns 204 and contains a custom statusText,
