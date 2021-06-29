@@ -21,11 +21,12 @@ describe('navbarMain()', () => {
     hHandleTabEvent = jest.fn();
   });
 
+  // sanity check
   it('Creates an instance of navbarMain()', () => {
     expect(instance).toBeTruthy();
   });
 
-  test('All parameters are false when navbar is instantiated', () => {
+  test('All variables are false when navbar is instantiated', () => {
     expect(instance.navbarIsActive).toEqual(false);
     expect(instance.loginModalIsActive).toEqual(false);
     expect(instance.loginModalSubmitButtonIsLoading)
