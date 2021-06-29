@@ -34,7 +34,7 @@ function statusMessage() {
       return { background, text };
     },
     handleStatusMessageClick() {
-      setTimeout(() => { hDispatch(this.eventName, this.eventParams); })
+      this.$nextTick(() => { hDispatch(this.eventName, this.eventParams); })
       this.statusMessageClear();
     },
     statusMessageDisplay(context) {
@@ -102,7 +102,7 @@ function statusMessage() {
     statusMessageClear() {
       clearTimeout(this.statusMessageTimeout);
       this.show = false;
-      setTimeout(() => {
+      this.$nextTick(() => {
         this.statusMessageText = '';
       }, defaultTransitionDuration)
     }
