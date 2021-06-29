@@ -46,8 +46,8 @@ function navbarMain() {
     navbarClearAll() {
       this.navbarIsActive = false;
       this.loginModalIsActive = false;
-      this.registerModalIsActive = false;
       this.logoutModalIsActive = false;
+      this.registerModalIsActive = false;
     },
     registerModalEnable() {
       this.navbarClearAll();
