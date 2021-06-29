@@ -44,7 +44,7 @@ def task_list(request):
 def task_create(request):
     context = {}
     if not request.user.is_authenticated:
-        return login_required(request)
+        return response_login_required(request)
     if request.POST.get('description'):
         Task.objects.create(
             user=request.user,
