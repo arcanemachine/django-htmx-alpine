@@ -3,7 +3,6 @@
 
 function navbarMain() {
   return {
-    // data
     navbarIsActive: false,
     loginModalIsActive: false,
     loginModalSubmitButtonIsLoading: false,
@@ -11,7 +10,6 @@ function navbarMain() {
     registerModalIsActive: false,
     registerModalSubmitButtonIsLoading: false,
 
-    // methods
     loginFormSubmit() {
       this.loginModalSubmitButtonIsLoading = true;
       document.body.dispatchEvent(new CustomEvent('login-form-submit'));
@@ -59,10 +57,10 @@ function navbarMain() {
       this.registerModalIsActive = false;
     },
     registerModalFormSubmit() {
-      // do not continue if passwords do not match
       let password1 = this.$refs.registerFormFieldPassword1.value;
       let password2 = this.$refs.registerFormFieldPassword2.value;
       if (password1 !== password2) {
+        // do not continue if passwords do not match
         hDispatch('status-message-display', {
           message: "The passwords do not match.",
           messageType: 'danger'
