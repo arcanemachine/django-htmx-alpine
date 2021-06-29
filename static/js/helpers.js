@@ -1,7 +1,7 @@
 /* eslint no-undef: 0 */
 
-const defaultTransitionDuration = 500;
-const defaultMessageTimeout = 4000;
+var defaultTransitionDuration = 500;
+var defaultMessageTimeout = 4000;
 
 function hDispatch(eventName, params={}) {
   return window.dispatchEvent(new CustomEvent(eventName, { detail: params }));

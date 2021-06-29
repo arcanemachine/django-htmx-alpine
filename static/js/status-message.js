@@ -1,7 +1,7 @@
 /* eslint no-undef: 0 */
 /* eslint no-unused-vars: 0 */
 
-function statusMessage() {
+function statusMessageComponent() {
   return {
     // data
     show: false,
@@ -50,7 +50,7 @@ function statusMessage() {
       let message;
       let timeout;
       let messageType;
-      let statusMessageEl = document.querySelector('#status-message');
+      let statusMessageEl = this.$refs.statusMessageEl;
 
       if (typeof(context) === 'object') {
         // extract properties from context
@@ -119,7 +119,7 @@ function statusMessage() {
 }
 
 try {
-  module.exports = statusMessage;
+  module.exports = statusMessageComponent;
 } catch {
   ; // eslint-disable-line
 }
