@@ -64,16 +64,16 @@
         </div>
 
         <div class="mt-5 is-flex is-justify-content-space-between">
-          <button data-cy="task-button-delete"
-                  x-ref="taskDeleteModalFirstTabbable"
-                  class="button is-block is-danger is-medium is-fullwidth"
-                  @click="taskDelete">
-            Delete
-          </button>
-          <button x-ref="taskDeleteModalLastTabbable"
-                  class="ml-4 button is-block is-light is-medium is-fullwidth"
+          <button x-ref="taskDeleteModalFirstTabbable"
+                  class="button is-light is-medium"
                   @click="taskDeleteModalDisable">
             Cancel
+          </button>
+          <button data-cy="task-button-delete"
+                  x-ref="taskDeleteModalLastTabbable"
+                  class="ml-4 button is-danger is-medium"
+                  @click="taskDelete">
+            Delete
           </button>
         </div>
 
