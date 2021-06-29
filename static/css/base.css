@@ -53,6 +53,10 @@ p {
   background-color: #ddd; /* more contrast */
 }
 
+.button.is-light:focus {
+  box-shadow: 0 0 0 0.125em #cecece !important;
+}
+
 .button.is-light:hover {
   background-color: #d4d4d4; /* more contrast */
 }
