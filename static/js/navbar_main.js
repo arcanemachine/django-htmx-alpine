@@ -68,9 +68,10 @@ function navbarMain() {
           messageType: 'danger'
         });
         return false;
+      } else {
+        this.registerModalSubmitButtonIsLoading = true;
+        document.body.dispatchEvent(new CustomEvent('register-form-submit'));
       }
-      this.registerModalSubmitButtonIsLoading = true;
-      document.body.dispatchEvent(new CustomEvent('register-form-submit'));
     },
     registerModalHandleTabEvent(e) {
       let firstTabbable = this.$refs.registerModalFirstTabbable;
