@@ -42,9 +42,26 @@ function statusMessageComponent() {
       }
       return { background, text };
     },
+    dispatchEvent() {
+      return window.dispatchEvent(
+        new CustomEvent(this.eventName, { detail: this.eventParams })
+      );
+    },
     handleStatusMessageClick() {
-      this.$nextTick(() => { hDispatch(this.eventName, this.eventParams); })
+      this.$nextTick(() => { this.dispatchEvent() })
       this.statusMessageClear();
+    },
+    statusMessageClear() {
+      clearTimeout(this.statusMessageTimeout);
+      this.show = false;
+      this.$nextTick(() => {
+        // clear the text
+        this.statusMessageText = '';
+
+        // clear any events
+        this.eventName = '';
+        this.eventParams = {};
+      }, defaultTransitionDuration)
     },
     statusMessageDisplay(context) {
       let message;
@@ -107,13 +124,6 @@ function statusMessageComponent() {
         // clear the message
         this.statusMessageClear();
       }, timeout + defaultTransitionDuration);
-    },
-    statusMessageClear() {
-      clearTimeout(this.statusMessageTimeout);
-      this.show = false;
-      this.$nextTick(() => {
-        this.statusMessageText = '';
-      }, defaultTransitionDuration)
     }
   }
 }
