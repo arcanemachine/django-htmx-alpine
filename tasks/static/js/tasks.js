@@ -41,9 +41,15 @@ function todoList(urlTaskDeleteNoId) {
           messageType: 'warning',
           eventName: 'login-modal-enable'
         });
+        return false;
       } else {
-        document.body.dispatchEvent(
-          new CustomEvent('task-update-description-form-submit'));
+        // document.body.dispatchEvent(
+        //  new CustomEvent(`task-update-description-form-submit-${id}`));
+        let url = `http://192.168.1.120:8000/tasks/update/${id}/`
+        htmx.ajax('PUT', url, {
+          target: `#task-item-${id}`,
+          values: { description }
+        });
         this.taskUpdatePanelDisable();
       }
     },

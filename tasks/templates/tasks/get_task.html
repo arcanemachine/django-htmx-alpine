@@ -7,7 +7,7 @@
          hx-put="{% url 'tasks:task_update' task_id=task.id %}"
          hx-target="#task-item-{{ task.id|safe }}"
          hx-vals='
-           { "is_complete": "{{ task.is_complete|safe|yesno:"false,true" }}" }'
+           { "is_complete": "{{ task.is_complete|yesno:"false,true" }}" }'
          hx-trigger="click">
 </div>
 
@@ -27,9 +27,10 @@
        x-init="$nextTick(() => {
          $refs.taskUpdateDescription{{ task.id|safe }}.select(); })">
     <form method="post"
-          hx-put="{% url 'tasks:task_update' task_id=task.id %}"
-          hx-trigger="task-update-description-form-submit"
           @submit.prevent="taskUpdateDescription({{ task.id|safe }})">
+          <!-- hx-put="{% url 'tasks:task_update' task_id=task.id %}"
+          hx-target="#task-item-{{ task.id|safe }}"
+          hx-trigger="task-update-description-form-submit-{{ task.id|safe }} from:body" -->
       <div class="field has-addons">
         <span class="control">
           <input type="text"
