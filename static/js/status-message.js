@@ -5,31 +5,40 @@ function statusMessage() {
   return {
     // data
     show: false,
-    statusMessageText: '',
-    statusMessageTimeout: undefined,
     colors: {},
     eventName: undefined,
     eventParams: {},
+    statusMessageText: '',
+    statusMessageTimeout: undefined,
+
+    infoBackground: '#3E8ED0',
+    successBackground: '#48C78E',
+    warningBackground: '#FFE08A',
+    dangerBackground: '#F14668',
 
     // methods
     getColors(messageType) {
-      let background = '';
-      let text = '';
+      let background;
+      let text;
+
+      let infoText = successText = dangerText = 'white';
+      let warningText = 'black';
+
       if (messageType === 20 || messageType == 'info') {
-        background = '#3E8ED0';
-        text = 'white';
+        background = this.infoBackground;
+        text = infoText;
       } else if (messageType === 25 || messageType == 'success') {
-        background = '#48C78E';
-        text = 'white';
+        background = this.successBackground;
+        text = successText;
       } else if (messageType === 30 || messageType == 'warning') {
-        background = '#FFE08A';
-        text = 'black';
+        background = this.warningBackground;
+        text = warningText;
       } else if (messageType === 40 || messageType == 'danger') {
-        background = '#F14668';
-        text = 'white';
+        background = this.dangerBackground;
+        text = dangerText;
       } else {
-        background = '#3E8ED0'; // defaults to 'info' status message
-        text = 'white';
+        background = this.infoBackground;
+        text = infoText;
       }
       return { background, text };
     },
