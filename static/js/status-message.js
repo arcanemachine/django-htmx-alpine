@@ -42,14 +42,41 @@ function statusMessageComponent() {
       }
       return { background, text };
     },
-    dispatchEvent() {
-      return window.dispatchEvent(
-        new CustomEvent(this.eventName, { detail: this.eventParams })
-      );
-    },
     handleStatusMessageClick() {
-      this.$nextTick(() => { this.dispatchEvent() })
+      if (this.eventName) {
+        this.$nextTick(() => { hDispatch(this.eventName, this.eventParams); })
+      }
       this.statusMessageClear();
+    },
+    processContext(context) {
+      let result = {};
+      if (typeof(context) === 'object') {
+        if (context.message === undefined) {
+          console.error("Context must contain non-empty 'message'.");
+          return false;
+        }
+
+        result.message = context.message;
+        result.messageType = context.messageType;
+        result.timeout = context.timeout;
+
+        if (context.eventName) {
+          this.eventName = context.eventName;
+          this.eventParams = context.eventParams;
+        } else {
+          this.eventName = undefined;
+          this.eventParams = {};
+        }
+      } else if (typeof(context) === 'string') {
+        result.message = context;
+      }
+
+      // timeout
+      if (!context.timeout) {
+        result.timeout = defaultMessageTimeout;
+      }
+
+      return result;
     },
     statusMessageClear() {
       clearTimeout(this.statusMessageTimeout);
@@ -64,45 +91,16 @@ function statusMessageComponent() {
       }, defaultTransitionDuration)
     },
     statusMessageDisplay(context) {
-      let message;
-      let timeout;
-      let messageType;
-      let statusMessageEl = this.$refs.statusMessageEl;
+      context = this.processContext(context);
+      let message = context.message;
+      let timeout = context.timeout;
+      let messageType = context.messageType;
 
-      if (typeof(context) === 'object') {
-        // extract properties from context
-        message = context.message;
-        timeout = context.timeout;
-        messageType = context.messageType;
-        if (context.eventName) {
-          this.eventName = context.eventName;
-          this.eventParams = context.eventParams;
-        } else {
-          this.eventName = undefined;
-          this.eventParams = {};
-        }
-      } else if (typeof(context) === 'string') {
-        message = context;
-      }
-
-      // abort with error if no message present
-      if (message === undefined) {
-        console.error("Context must contain non-empty 'message'. Aborting...");
-        return false;
-      }
-
-      // get timeout
-      if (!timeout) {
-        timeout = defaultMessageTimeout;
-      } else if (timeout === -1) {
-        timeout = 9999999;  // display the message forever or until clicked
-      }
-
-      // get colors
       this.colors = this.getColors(messageType);
 
-      // if a status message is already present, clear it and display a new one
+      let statusMessageEl = this.$refs.statusMessageEl;
       if (this.statusMessageText) {
+        // if existing status message present, clear it and display new one
         this.statusMessageClear();
         this.statusMessageTimeout = setTimeout(() => {
           this.statusMessageDisplay(context);
