@@ -39,7 +39,7 @@
     <script type="text/javascript" src="{% static 'js/helpers.js' %}"></script>
 
     <script type="text/javascript"{% if DEBUG_MODE %}
-            src="https://cdn.jsdelivr.net/npm/alpinejs@3.2.1/dist/cdn.js"{% else %}
+            src="{% static 'js/alpine@3.2.1.js' %}"{% else %}
             src="https://unpkg.com/alpinejs@3.2.1/dist/cdn.min.js"{% endif %}
             defer></script>
     {{ USER_ANALYTICS_SCRIPT|safe }}
@@ -54,7 +54,7 @@
       document.addEventListener('alpine:init', () => {
         Alpine.store('config', {
           userIsAuthenticated:
-            {{ user.is_authenticated|safe|yesno:'true,false' }} 
+            {{ user.is_authenticated|yesno:'true,false' }}
         })
       });
     </script>
@@ -108,7 +108,8 @@
       <footer class="py-2 has-background-grey-lighter has-text-centered">
         <ul class="my-2 list-unstyled text-small">
           <li>
-            <a href="https://github.com/arcanemachine/django-htmx-alpine/" target="_blank">
+            <a href="https://github.com/arcanemachine/django-htmx-alpine/"
+               target="_blank">
               <svg width="40"
                    height="40"
                    viewBox="0 0 1024 1024"
@@ -129,7 +130,7 @@
 
     <!-- htmx -->
     <script type="text/javascript"{% if DEBUG_MODE %}
-            src="https://cdn.jsdelivr.net/npm/htmx.org@1.4.1/dist/htmx.js"{% else %}
+            src="{% static 'js/htmx@1.4.1.js' %}"{% else %}
             src="https://unpkg.com/htmx.org@1.4.1"
             integrity="sha384-1P2DfVFAJH2XsYTakfc6eNhTVtyio74YNA1tc6waJ0bO+IfaexSWXc2x62TgBcXe"
             crossorigin="anonymous"{% endif %}></script>

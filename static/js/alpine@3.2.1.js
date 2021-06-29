@@ -593,17 +593,24 @@ Expression: "${expression}"
       directives(el, attrs).forEach((handle) => handle());
     });
     let outNestedComponents = (el) => !closestRoot(el.parentNode || closestRoot(el));
-    Array.from(document.querySelectorAll(rootSelectors())).filter(outNestedComponents).forEach((el) => {
+    Array.from(document.querySelectorAll(allSelectors())).filter(outNestedComponents).forEach((el) => {
       initTree(el);
     });
     dispatch(document, "alpine:initialized");
   }
   var rootSelectorCallbacks = [];
+  var initSelectorCallbacks = [];
   function rootSelectors() {
     return rootSelectorCallbacks.map((fn) => fn());
   }
+  function allSelectors() {
+    return rootSelectorCallbacks.concat(initSelectorCallbacks).map((fn) => fn());
+  }
   function addRootSelector(selectorCallback) {
     rootSelectorCallbacks.push(selectorCallback);
+  }
+  function addInitSelector(selectorCallback) {
+    initSelectorCallbacks.push(selectorCallback);
   }
   function closestRoot(el) {
     if (rootSelectors().some((selector) => el.matches(selector)))
@@ -694,8 +701,18 @@ Expression: "${expression}"
   function data(name, callback) {
     datas[name] = callback;
   }
-  function getNamedDataProvider(name) {
-    return datas[name];
+  function injectDataProviders(obj, context) {
+    Object.entries(datas).forEach(([name, callback]) => {
+      Object.defineProperty(obj, name, {
+        get() {
+          return (...args) => {
+            return callback.bind(context)(...args);
+          };
+        },
+        enumerable: false
+      });
+    });
+    return obj;
   }
 
   // packages/alpinejs/src/alpine.js
@@ -712,7 +729,7 @@ Expression: "${expression}"
     get raw() {
       return raw;
     },
-    version: "3.1.1",
+    version: "3.2.0",
     disableEffectScheduling,
     setReactivityEngine,
     addRootSelector,
@@ -724,6 +741,7 @@ Expression: "${expression}"
     mutateDom,
     directive,
     evaluate,
+    initTree,
     nextTick,
     prefix: setPrefix,
     plugin,
@@ -1428,9 +1446,14 @@ Expression: "${expression}"
     effect(() => evaluate2((value) => {
       let div = document.createElement("div");
       div.dataset.throwAway = value;
-      if (!firstTime)
-        callback(value, oldValue);
-      oldValue = value;
+      if (!firstTime) {
+        queueMicrotask(() => {
+          callback(value, oldValue);
+          oldValue = value;
+        });
+      } else {
+        oldValue = value;
+      }
       firstTime = false;
     }));
   });
@@ -1450,6 +1473,8 @@ Expression: "${expression}"
       return setClassesFromString(el, value.join(" "));
     } else if (typeof value === "object" && value !== null) {
       return setClassesFromObject(el, value);
+    } else if (typeof value === "function") {
+      return setClasses(el, value());
     }
     return setClassesFromString(el, value);
   }
@@ -2158,7 +2183,7 @@ Expression: "${expression}"
   directive("cloak", (el) => queueMicrotask(() => mutateDom(() => el.removeAttribute(prefix("cloak")))));
 
   // packages/alpinejs/src/directives/x-init.js
-  addRootSelector(() => `[${prefix("init")}]`);
+  addInitSelector(() => `[${prefix("init")}]`);
   directive("init", skipDuringClone((el, {expression}) => evaluate(el, expression, {}, false)));
 
   // packages/alpinejs/src/directives/x-text.js
@@ -2178,9 +2203,7 @@ Expression: "${expression}"
     let evaluate2 = evaluateLater2(expression);
     effect3(() => {
       evaluate2((value) => {
-        mutateDom(() => {
-          el.innerHTML = value;
-        });
+        el.innerHTML = value;
       });
     });
   });
@@ -2222,14 +2245,11 @@ Expression: "${expression}"
   addRootSelector(() => `[${prefix("data")}]`);
   directive("data", skipDuringClone((el, {expression}, {cleanup: cleanup2}) => {
     expression = expression === "" ? "{}" : expression;
-    let dataProvider = getNamedDataProvider(expression);
-    let data2 = {};
-    if (dataProvider) {
-      let magics2 = injectMagics({}, el);
-      data2 = dataProvider.bind(magics2)();
-    } else {
-      data2 = evaluate(el, expression);
-    }
+    let magicContext = {};
+    injectMagics(magicContext, el);
+    let dataProviderContext = {};
+    injectDataProviders(dataProviderContext, magicContext);
+    let data2 = evaluate(el, expression, {scope: dataProviderContext});
     injectMagics(data2, el);
     let reactiveData = reactive(data2);
     initInterceptors(reactiveData);
@@ -2374,6 +2394,9 @@ Expression: "${expression}"
           lastEl.after(clone2);
           initTree(clone2);
         });
+        if (typeof key === "object") {
+          warn("x-for key cannot be an object, it must be a string or an integer", templateEl);
+        }
         lookup[key] = clone2;
       }
       for (let i = 0; i < sames.length; i++) {
