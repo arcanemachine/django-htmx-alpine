@@ -1,8 +1,8 @@
-/* eslint no-unused-vars: 0 */
+//* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
 
 // const htmx = require('./@/static/js/htmx.min.js');
-const navbarMain = require('./@/static/js/navbar_main.js');
+const navbarMain = require('./@/static/js/navbar-main.js');
 
 jest.mock('./@/static/js/htmx.min.js');
 // const htmx = jest.fn();
@@ -13,7 +13,7 @@ describe('navbarMain()', () => {
   beforeEach(() => {
     instance = navbarMain();
 
-    // dom
+    // DOM
     document.body.dispatchEvent = jest.fn();
     CustomEvent = jest.fn(); // eslint-disable-line
 
@@ -21,7 +21,7 @@ describe('navbarMain()', () => {
     hHandleTabEvent = jest.fn();
   });
 
-  test('Creates an instance of navbarMain()', () => {
+  it('Creates an instance of navbarMain()', () => {
     expect(instance).toBeTruthy();
   });
 
