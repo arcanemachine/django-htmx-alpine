@@ -50,7 +50,10 @@ function statusMessageComponent() {
     },
     processContext(context) {
       let result = {};
-      if (typeof(context) === 'object') {
+      if (typeof(context) === 'string') {
+        result.message = context;
+      }
+      else if (typeof(context) === 'object') {
         if (context.message === undefined) {
           console.error("Context must contain non-empty 'message'.");
           return false;
@@ -67,8 +70,9 @@ function statusMessageComponent() {
           this.eventName = undefined;
           this.eventParams = {};
         }
-      } else if (typeof(context) === 'string') {
-        result.message = context;
+      } else  {
+        console.error("context must be object or string");
+        return false;
       }
 
       // timeout
@@ -91,6 +95,8 @@ function statusMessageComponent() {
       }, defaultTransitionDuration)
     },
     statusMessageDisplay(context) {
+      let statusMessageEl = this.$refs.statusMessageEl;
+
       context = this.processContext(context);
       let message = context.message;
       let timeout = context.timeout;
@@ -98,7 +104,6 @@ function statusMessageComponent() {
 
       this.colors = this.getColors(messageType);
 
-      let statusMessageEl = this.$refs.statusMessageEl;
       if (this.statusMessageText) {
         // if existing status message present, clear it and display new one
         this.statusMessageClear();
