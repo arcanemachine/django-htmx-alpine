@@ -13,6 +13,7 @@ def dummy_view(request):
     return response
 
 
+# weather
 @require_http_methods(['POST'])
 def get_weather(request):
     # get data from form
@@ -42,6 +43,16 @@ def get_weather(request):
                 f'We could not find the temperature for {city}.')
 
 
+# misc
+def get_csrf_token(request):
+    return HttpResponse(get_token(request))
+
+
+def user_is_authenticated(request):
+    return HttpResponse('true' if request.user.is_authenticated else 'false')
+
+
+# htmx
 def htmx_response_content_unchanged(request, message='Content unchanged'):
     response = HttpResponse()
     response.status_code = 204  # HTMX does not change content if 304 returned
@@ -58,10 +69,3 @@ def htmx_response_login_required(request):
     return htmx_response_content_unchanged(
         request, "You must login before you can perform this action.")
 
-
-def get_csrf_token(request):
-    return HttpResponse(get_token(request))
-
-
-def user_is_authenticated(request):
-    return HttpResponse('true' if request.user.is_authenticated else 'false')
