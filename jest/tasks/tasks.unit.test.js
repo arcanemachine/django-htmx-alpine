@@ -1,14 +1,6 @@
 /* eslint no-undef: 0 */
 
-// const htmx = require('./@/static/js/htmx@1.4.1.min.js');
 const todoListComponent = require('./@/tasks/static/js/tasks.js');
-
-/*
-jest.mock('./@/static/js/htmx.min.js');
-jest.mock('htmx', () => ({
-  'ajax': jest.fn()
-}), { virtual: true });
-*/
 
 describe('todoListComponent()', () => {
   beforeEach(() => {

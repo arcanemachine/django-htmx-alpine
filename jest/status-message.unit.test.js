@@ -1,4 +1,3 @@
-/* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
 
 const statusMessageComponent = require('./@/static/js/status-message.js');
@@ -7,12 +6,10 @@ const statusMessageComponent = require('./@/static/js/status-message.js');
 describe('statusMessageComponent()', () => {
   let instance;
   let expected;
-  let actual;
 
   beforeEach(() => {
     instance = statusMessageComponent();
     expected = undefined;
-    actual = undefined;
   });
 
   // sanity check
