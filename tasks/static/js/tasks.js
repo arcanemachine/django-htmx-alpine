@@ -21,12 +21,14 @@ function todoListComponent(urlTaskDeleteNoId) {
         let descriptionInput = this.$refs.taskCreateInputDescription;
         let description = descriptionInput.value;
         if (!description) {
+          // if description is empty, show error as status message
           hDispatch('status-message-display', {
             message: "Task description cannot be empty.",
             messageType: 'warning',
           });
           return false;
         } else {
+          // if description, dispatch task create event
           document.body
             .dispatchEvent(new CustomEvent('task-create-form-submit'));
           descriptionInput.value = ''; // clear the description
@@ -36,13 +38,17 @@ function todoListComponent(urlTaskDeleteNoId) {
     taskUpdateDescription(id) {
       let description = eval(`this.$refs.taskUpdateDescription${id}`).value;
       if (!description) {
+        // if description is empty, show error as status message
+        const errorMessage = "Task description cannot be empty.";
         hDispatch('status-message-display', {
-          message: "Task description cannot be empty.",
+          message: errorMessage,
           messageType: 'warning',
           eventName: 'login-modal-enable'
         });
+        console.error(errorMessage);
         return false;
       } else {
+        //// if description, update the task
         // document.body.dispatchEvent(
         //  new CustomEvent(`task-update-description-form-submit-${id}`));
         let url = `http://192.168.1.120:8000/tasks/update/${id}/`
