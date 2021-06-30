@@ -1,7 +1,7 @@
 /* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
 
-function todoList(urlTaskDeleteNoId) {
+function todoListComponent(urlTaskDeleteNoId) {
   return {
     taskDeleteModalIsActive: false,
     taskDeleteId: undefined,
@@ -86,7 +86,7 @@ function todoList(urlTaskDeleteNoId) {
 }
 
 try {
-  module.exports = todoList;
+  module.exports = todoListComponent;
 } catch {
   ; // eslint-disable-line
 }

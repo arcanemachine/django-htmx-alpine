@@ -1,17 +1,16 @@
-//* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
 
 // const htmx = require('./@/static/js/htmx.min.js');
-const navbarMain = require('./@/static/js/navbar-main.js');
+const navbarMainComponent = require('./@/static/js/navbar-main.js');
 
 jest.mock('./@/static/js/htmx.min.js');
 // const htmx = jest.fn();
 
-describe('navbarMain()', () => {
+describe('navbarMainComponent()', () => {
   let instance;
   
   beforeEach(() => {
-    instance = navbarMain();
+    instance = navbarMainComponent();
 
     // DOM
     document.body.dispatchEvent = jest.fn();
@@ -22,7 +21,7 @@ describe('navbarMain()', () => {
   });
 
   // sanity check
-  it('Creates an instance of navbarMain()', () => {
+  it('Creates an instance of navbarMainComponent()', () => {
     expect(instance).toBeTruthy();
   });
 

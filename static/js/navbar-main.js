@@ -1,7 +1,7 @@
 /* eslint no-undef: 0 */
 /* eslint no-unused-vars: 0 */
 
-function navbarMain() {
+function navbarMainComponent() {
   return {
     navbarIsActive: false,
     loginModalIsActive: false,
@@ -81,7 +81,7 @@ function navbarMain() {
 }
 
 try {
-  module.exports = navbarMain;
+  module.exports = navbarMainComponent;
 } catch {
   ; // eslint-disable-line
 }

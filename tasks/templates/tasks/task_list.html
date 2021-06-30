@@ -11,7 +11,7 @@
   let taskDeleteUrlNoId = '{% url 'tasks:task_delete_no_id' %}';
 </script>
 
-<section x-data="todoList(taskDeleteUrlNoId)">
+<section x-data="todoListComponent(taskDeleteUrlNoId)">
 
   <form class="mt-4 mx-auto is-flex is-justify-content-center"
         method="post"
