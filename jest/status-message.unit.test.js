@@ -119,6 +119,10 @@ describe('statusMessageComponent()', () => {
       console.error = jest.fn();
     }); 
 
+    afterEach(() => {
+      console.error.mockClear();
+    });
+
     it('Returns false if context is not object or string', () => {
       context = 5;
       expect(instance.processContext(context)).toEqual(false);
@@ -195,11 +199,32 @@ describe('statusMessageComponent()', () => {
 
   });
 
+  describe('statusMessageDisplay()', () => {
+    // TODO
+    // it('Shows a message', () => {});
+    // it('Hides a message after the default timeout if no timeout given', () => {});
+    // it('Hides a message after the given timeout if timeout given', () => {});
+    // it('Clears the existing message before showing a new message', () => {});
+    // it('Applies the proper color and background', () => {});
+    // it('Removes the color and background after the timeout', () => {});
+  });
+
   describe('handleStatusMessageClick()', () => {
-    it('Does not dispatch an event when eventName is falsy', () => {
+    let hDispatch;
+
+    beforeEach(() => {
+      hDispatch = jest.fn();
       instance.$nextTick = jest.fn();
       instance.statusMessageClear = jest.fn();
+    });
 
+    afterEach(() => {
+      hDispatch.mockClear();
+      instance.$nextTick.mockClear();
+      instance.statusMessageClear.mockClear();
+    });
+
+    it('Does not dispatch an event when eventName is falsy', () => {
       instance.handleStatusMessageClick();
 
       expect(instance.$nextTick).toHaveBeenCalledTimes(0);
@@ -210,11 +235,9 @@ describe('statusMessageComponent()', () => {
       instance.eventName = 'test-event';
 
       // mock functions
-      const hDispatch = jest.fn();
       instance.$nextTick = jest.fn(
         () => hDispatch(instance.eventName, instance.eventParams)
       );
-      instance.statusMessageClear = jest.fn();
 
       instance.handleStatusMessageClick();
 
