@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path
 
-from . import views
+from . import views, utility_views as uv
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -9,11 +9,9 @@ urlpatterns = [
     # views
     path('', views.AboutTemplateView.as_view(), name='about'),
     path('get_weather/', views.get_weather, name='get_weather'),
-    path('utility/get-csrf-token/',
-         views.get_csrf_token,
-         name='get_csrf_token'),
+    path('utility/get-csrf-token/', uv.get_csrf_token, name='get_csrf_token'),
     path('utility/user-is-authenticated/',
-         views.user_is_authenticated,
+         uv.user_is_authenticated,
          name="user_is_authenticated"),
 
     # apps

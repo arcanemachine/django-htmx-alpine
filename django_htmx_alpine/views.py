@@ -2,7 +2,6 @@ import json
 import requests
 from django.conf import settings
 from django.http import HttpResponse
-from django.middleware.csrf import get_token
 from django.views.decorators.http import require_http_methods
 from django.views.generic import TemplateView
 
@@ -40,11 +39,3 @@ def get_weather(request):
         else:
             return HttpResponse(
                 f'We could not find the temperature for {city}.')
-
-
-def get_csrf_token(request):
-    return HttpResponse(get_token(request))
-
-
-def user_is_authenticated(request):
-    return HttpResponse('true' if request.user.is_authenticated else 'false')

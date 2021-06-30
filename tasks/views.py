@@ -1,34 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext_lazy as _
 from urllib.parse import unquote as urllib_parse_unquote
 
 from .models import Task
-from project_folder import helpers as h
-
-
-def dummy_view(request):
-    response = HttpResponse()
-    return response
-
-
-def response_content_unchanged(request, message='content unchanged'):
-    response = HttpResponse(message)
-    response.status_code = 204  # HTMX does not change content if 304 returned
-    return response
-
-
-def response_not_authorized(request):
-    return response_content_unchanged(
-        request, "You are not authorized to perform this action.")
-
-
-def response_login_required(request):
-    return response_content_unchanged(
-        request, "You must login before you can perform this action.")
+from project_folder import helpers as h, utility_views as uv
 
 
 def task_list(request):
@@ -40,11 +18,10 @@ def task_list(request):
     return response
 
 
+@login_required
 @require_http_methods(['POST'])
 def task_create(request):
     context = {}
-    if not request.user.is_authenticated:
-        return response_login_required(request)
     if request.POST.get('description'):
         Task.objects.create(
             user=request.user,
@@ -52,7 +29,8 @@ def task_create(request):
         context.update({'task_create_success': True})
         messages.success(request, _('Task created'))
     else:
-        return response_content_unchanged
+        return uv.htmx_response_content_unchanged(
+            "Task description cannot be empty.")
 
     tasks = Task.objects.filter(user=request.user)
     context.update({'tasks': tasks})
@@ -60,11 +38,9 @@ def task_create(request):
     return h.render_with_messages(request, 'tasks/list_tasks.html', context)
 
 
+@login_required
 @require_http_methods(['PUT'])
 def task_update(request, task_id):
-    if not request.user.is_authenticated:
-        return response_login_required(request)
-
     context = {}
     task = get_object_or_404(Task, id=task_id, user=request.user)
 
@@ -95,9 +71,6 @@ def task_update(request, task_id):
 @login_required
 @require_http_methods(['DELETE'])
 def task_delete(request, task_id):
-    if not request.user.is_authenticated:
-        return response_login_required(request)
-
     context = {}
     task = get_object_or_404(Task, id=task_id, user=request.user)
     task.delete()
