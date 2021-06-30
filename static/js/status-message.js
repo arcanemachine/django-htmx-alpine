@@ -85,7 +85,7 @@ function statusMessageComponent() {
     statusMessageClear() {
       clearTimeout(this.statusMessageTimeout);
       this.show = false;
-      this.$nextTick(() => {
+      setTimeout(() => {
         // clear the text
         this.statusMessageText = '';
 
