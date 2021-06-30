@@ -32,31 +32,31 @@ function todoListComponent(urlTaskDeleteNoId) {
           document.body
             .dispatchEvent(new CustomEvent('task-create-form-submit'));
           descriptionInput.value = ''; // clear the description
+          return true;
         }
       }
     },
     taskUpdateDescription(id) {
       let description = eval(`this.$refs.taskUpdateDescription${id}`).value;
       if (!description) {
-        // if description is empty, show error as status message
-        const errorMessage = "Task description cannot be empty.";
+        // if description is empty, notify the user and return false
         hDispatch('status-message-display', {
-          message: errorMessage,
+          message: "Task description cannot be empty.",
           messageType: 'warning',
-          eventName: 'login-modal-enable'
         });
-        console.error(errorMessage);
         return false;
       } else {
-        //// if description, update the task
         // document.body.dispatchEvent(
         //  new CustomEvent(`task-update-description-form-submit-${id}`));
+
+        // if description is not empty, update the task
         let url = `http://192.168.1.120:8000/tasks/update/${id}/`
         htmx.ajax('PUT', url, {
           target: `#task-item-${id}`,
           values: { description }
         });
         this.taskUpdatePanelDisable();
+        return true;
       }
     },
     taskUpdatePanelDisable() {
@@ -70,7 +70,7 @@ function todoListComponent(urlTaskDeleteNoId) {
       }
     },
     taskDelete() {
-      let url = urlTaskDeleteNoId + this.taskDeleteId + '/'; // get url
+      let url = `${urlTaskDeleteNoId}${this.taskDeleteId}/`; // build url
       htmx.ajax('DELETE', url, { target: '#tasks' }); // delete task
       this.taskDeleteModalDisable(); // hide modal
     },
@@ -80,7 +80,7 @@ function todoListComponent(urlTaskDeleteNoId) {
       hHandleTabEvent(e, firstTabbable, lastTabbable);
     },
     taskDeleteModalEnable(id) {
-      this.taskUpdatePanelToggle(undefined);
+      this.taskUpdatePanelDisable();
       this.taskDeleteModalIsActive = true;
       this.taskDeleteId = id;
     },
