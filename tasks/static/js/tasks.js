@@ -63,15 +63,15 @@ function todoListComponent(urlTaskDeleteNoId) {
         this.taskUpdatePanelDisable();
       }
     },
-    taskDeleteModalHandleTabEvent(e) {
-      let firstTabbable = this.$refs.taskDeleteModalFirstTabbable;
-      let lastTabbable = this.$refs.taskDeleteModalLastTabbable;
-      hHandleTabEvent(e, firstTabbable, lastTabbable);
-    },
     taskDelete() {
       let url = urlTaskDeleteNoId + this.taskDeleteId + '/'; // get url
       htmx.ajax('DELETE', url, { target: '#tasks' }); // delete task
       this.taskDeleteModalDisable(); // hide modal
+    },
+    taskDeleteModalHandleTabEvent(e) {
+      let firstTabbable = this.$refs.taskDeleteModalFirstTabbable;
+      let lastTabbable = this.$refs.taskDeleteModalLastTabbable;
+      hHandleTabEvent(e, firstTabbable, lastTabbable);
     },
     taskDeleteModalEnable(id) {
       this.taskUpdatePanelToggle(undefined);
