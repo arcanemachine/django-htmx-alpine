@@ -2,15 +2,17 @@
 /* eslint no-undef: 0 */
 
 const statusMessageComponent = require('./@/static/js/status-message.js');
-const helpers = require('./@/static/js/helpers.js');
+// const helpers = require('./@/static/js/helpers.js');
 
 describe('statusMessageComponent()', () => {
   let instance;
-  let result;
+  let expected;
+  let actual;
 
   beforeEach(() => {
     instance = statusMessageComponent();
-    result = undefined;
+    expected = undefined;
+    actual = undefined;
   });
 
   // sanity check
@@ -34,104 +36,202 @@ describe('statusMessageComponent()', () => {
 
   describe('getColors()', () => {
     test('messageType 20 returns info message', () => {
-      result = instance.getColors(20);
+      expected = instance.getColors(20);
 
-      expect(result.background).toEqual(instance.infoBackground);
-      expect(result.text).toEqual('white');
+      expect(expected.background).toEqual(instance.infoBackground);
+      expect(expected.text).toEqual('white');
     });
 
     test('messageType "info" returns info message', () => {
-      result = instance.getColors('info');
+      expected = instance.getColors('info');
 
-      expect(result.background).toEqual(instance.infoBackground);
-      expect(result.text).toEqual('white');
+      expect(expected.background).toEqual(instance.infoBackground);
+      expect(expected.text).toEqual('white');
     });
 
     test('messageType 25 returns success message', () => {
-      result = instance.getColors(25);
+      expected = instance.getColors(25);
 
-      expect(result.background).toEqual(instance.successBackground);
-      expect(result.text).toEqual('white');
+      expect(expected.background).toEqual(instance.successBackground);
+      expect(expected.text).toEqual('white');
     });
 
     test('messageType "success" returns success message', () => {
-      result = instance.getColors('success');
+      expected = instance.getColors('success');
 
-      expect(result.background).toEqual(instance.successBackground);
-      expect(result.text).toEqual('white');
+      expect(expected.background).toEqual(instance.successBackground);
+      expect(expected.text).toEqual('white');
     });
 
     test('messageType 30 returns warning message', () => {
-      result = instance.getColors(30);
+      expected = instance.getColors(30);
 
-      expect(result.background).toEqual(instance.warningBackground);
-      expect(result.text).toEqual('black');
+      expect(expected.background).toEqual(instance.warningBackground);
+      expect(expected.text).toEqual('black');
     });
 
     test('messageType "warning" returns warning message', () => {
-      result = instance.getColors('warning');
+      expected = instance.getColors('warning');
 
-      expect(result.background).toEqual(instance.warningBackground);
-      expect(result.text).toEqual('black');
+      expect(expected.background).toEqual(instance.warningBackground);
+      expect(expected.text).toEqual('black');
     });
 
     test('messageType 30 returns danger message', () => {
-      result = instance.getColors(40);
+      expected = instance.getColors(40);
 
-      expect(result.background).toEqual(instance.dangerBackground);
-      expect(result.text).toEqual('white');
+      expect(expected.background).toEqual(instance.dangerBackground);
+      expect(expected.text).toEqual('white');
     });
 
     test('messageType "danger" returns danger message', () => {
-      result = instance.getColors('danger');
+      expected = instance.getColors('danger');
 
-      expect(result.background).toEqual(instance.dangerBackground);
-      expect(result.text).toEqual('white');
+      expect(expected.background).toEqual(instance.dangerBackground);
+      expect(expected.text).toEqual('white');
     });
 
     test('any other messageType returns info message', () => {
-      result = instance.getColors(undefined); // undefined
+      expected = instance.getColors(undefined); // undefined
 
-      expect(result.background).toEqual(instance.infoBackground);
-      expect(result.text).toEqual('white');
+      expect(expected.background).toEqual(instance.infoBackground);
+      expect(expected.text).toEqual('white');
 
-      result = instance.getColors(1); // other number
+      expected = instance.getColors(1); // other number
 
-      expect(result.background).toEqual(instance.infoBackground);
-      expect(result.text).toEqual('white');
+      expect(expected.background).toEqual(instance.infoBackground);
+      expect(expected.text).toEqual('white');
 
-      result = instance.getColors('test'); // other string
+      expected = instance.getColors('test'); // other string
 
-      expect(result.background).toEqual(instance.infoBackground);
-      expect(result.text).toEqual('white');
+      expect(expected.background).toEqual(instance.infoBackground);
+      expect(expected.text).toEqual('white');
     });
   });
 
+  describe('processContext()', () => {
+    let context;
+
+    beforeEach(() => {
+      context = undefined;
+      defaultMessageTimeout = 500;
+
+      console.error = jest.fn();
+    }); 
+
+    it('Returns false if context is not object or string', () => {
+      context = 5;
+      expect(instance.processContext(context)).toEqual(false);
+    });
+
+    it('Returns false if context is object with no message property', () => {
+      context = { test: 'test' };
+      expect(instance.processContext(context)).toEqual(false);
+    });
+
+    it('Returns expected context for valid parameters', () => {
+      context = {
+        message: 'message',
+        messageType: 'message type',
+        timeout: 100,
+      };
+      
+      expected = {
+        message: context.message,
+        messageType: context.messageType,
+        timeout: context.timeout,
+      }
+
+      expect(instance.processContext(context)).toEqual(expected);
+    });
+
+    it('Returns default timeout if no timeout value given', () => {
+      context = {
+        message: 'message',
+      };
+      
+      expected = {
+        message: context.message,
+        messageType: undefined,
+        timeout: defaultMessageTimeout
+      }
+
+      expect(instance.processContext(context)).toEqual(expected);
+    });
+
+    it('assigns proper event data if context contains eventName', () => {
+      context = {
+        message: 'message',
+        eventName: 'event',
+        eventParams: { property: 'value' }
+      };
+      
+      expected = {
+        eventName: context.eventName,
+        eventParams: context.eventParams,
+      }
+
+      instance.processContext(context);
+
+      expect(instance.eventName).toEqual(expected.eventName);
+      expect(instance.eventParams).toEqual(expected.eventParams);
+    });
+
+    it('assigns proper event data if context contains no eventName', () => {
+      context = {
+        message: 'message',
+      };
+      
+      expected = {
+        eventName: undefined,
+        eventParams: {},
+      }
+
+      instance.processContext(context);
+
+      expect(instance.eventName).toEqual(expected.eventName);
+      expect(instance.eventParams).toEqual(expected.eventParams);
+    });
+
+  });
+
   describe('handleStatusMessageClick()', () => {
+    it('Does not dispatch an event when eventName is falsy', () => {
+      instance.$nextTick = jest.fn();
+      instance.statusMessageClear = jest.fn();
+
+      instance.handleStatusMessageClick();
+
+      expect(instance.$nextTick).toHaveBeenCalledTimes(0);
+    });
+
     it('Dispatches the expected event when eventName is truthy', () => {
       // mock data
       instance.eventName = 'test-event';
 
       // mock functions
-      hDispatch = jest.fn();
-      instance.$nextTick = jest.fn(() => { hDispatch(instance.eventName, instance.eventParams); });
+      const hDispatch = jest.fn();
+      instance.$nextTick = jest.fn(
+        () => hDispatch(instance.eventName, instance.eventParams)
+      );
       instance.statusMessageClear = jest.fn();
 
       instance.handleStatusMessageClick();
 
       expect(instance.$nextTick).toHaveBeenCalled();
-      expect(instance.$nextTick).toHaveBeenCalledWith(
-        () => { hDispatch(instance.eventName, instance.eventParams); }
-      );
-
       expect(hDispatch).toHaveBeenCalled();
-      expect(hDispatch).toHaveBeenCalledTimes(1);
+      expect(hDispatch)
+        .toHaveBeenCalledWith(instance.eventName, instance.eventParams);
  
     });
-   
 
-    // expect(instance.$nextTick).toHaveBeenCalled();
-    // expect(hDispatch).toHaveBeenCalled();
+    it('Calls statusMessageClear()', () => {
+      instance.statusMessageClear = jest.fn();
+
+      instance.handleStatusMessageClick();
+
+      expect(instance.statusMessageClear).toHaveBeenCalled();
+    });
+
   });
-
 });
