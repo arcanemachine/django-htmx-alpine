@@ -1,10 +1,6 @@
 /* eslint no-undef: 0 */
 
-// const htmx = require('./@/static/js/htmx.min.js');
 const navbarMainComponent = require('./@/static/js/navbar-main.js');
-
-jest.mock('./@/static/js/htmx.min.js');
-// const htmx = jest.fn();
 
 describe('navbarMainComponent()', () => {
   let instance;
@@ -12,11 +8,11 @@ describe('navbarMainComponent()', () => {
   beforeEach(() => {
     instance = navbarMainComponent();
 
-    // DOM
     document.body.dispatchEvent = jest.fn();
     CustomEvent = jest.fn(); // eslint-disable-line
+    htmx = {};
+    htmx.ajax = jest.fn();
 
-    // helper functions
     hHandleTabEvent = jest.fn();
   });
 

@@ -179,8 +179,11 @@ describe('todoListComponent()', () => {
   });
 
   describe('taskDelete()', () => {
+    it('Calls the expected HTMX function', () => {
+      instance.taskDelete();
 
-    // TODO: it('Calls the expected HTMX function', () => {});
+      expect(htmx.ajax).toHaveBeenCalled();
+    });
 
     it('Calls taskDeleteModalDisable()', () => {
       instance.taskDeleteModalDisable = jest.fn();
