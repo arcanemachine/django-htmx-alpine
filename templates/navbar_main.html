@@ -47,108 +47,6 @@
 
   {% if not user.is_authenticated %}
     
-    <template x-if="loginModalIsActive">
-      <div @keydown.escape.window="loginModalDisable"
-           @keydown.tab.window="loginModalHandleTabEvent"></div>
-    </template>
-
-    <div data-name="login-modal"
-         class="modal is-active"
-         x-show="loginModalIsActive"
-         x-transition.opacity.duration.500ms
-         x-cloak>
-      <div class="modal-background"></div>
-      <div class="w-max-25rem modal-content">
-        <div class="p-0 section">
-          <div @click.away="loginModalDisable"
-               class="pt-2 px-5 pb-5 box is-flex is-flex-direction-column
-                      is-justify-content-center is-align-items-center
-                      has-text-centered">
-            <div class="mx-auto">
-              <div class="my-3 is-size-4">Account Login</div>
-              <form id="login-form"
-                    class="w-min-20rem mt-3"
-                    method="post"
-                    hx-post="{% url 'users:login' %}"
-                    hx-target="#login-form-response"
-                    hx-trigger="login-form-submit from:body"
-                    @submit.prevent="loginModalFormSubmit">
-                <div class="field">
-                  <div class="control">
-                    <input type="text"
-                           name="username"
-                           data-cy="login-input-username"
-                           x-ref="loginModalFirstTabbable"
-                           class="input login-modal-tabbable"
-                           autocorrect="off"
-                           autocapitalize="none"
-                           placeholder="Username"
-                           required>
-                  </div>
-                </div>
-                <div class="field">
-                  <div class="mt-4 control">
-                    <input type="password"
-                           name="password"
-                           data-cy="login-input-password"
-                           class="input login-modal-tabbable"
-                           placeholder="Password"
-                           required>
-                  </div>
-                </div>
-                <div class="field">
-                  <div class="my-4 control"
-                       hx-get="{% url 'users:login' %}"
-                       hx-target="#login-captcha-img-container"
-                       hx-trigger="login-captcha-get once from:body">
-                    <div id="login-captcha-img-container"
-                         class="mb-2 is-flex is-justify-content-center">
-                      <input type="hidden"
-                             name="captcha_0"
-                             value="">
-                    </div>
-                    <input type="text"
-                           name="captcha_1"
-                           data-cy="login-input-captcha"
-                           class="input login-modal-tabbable"
-                           placeholder="Human test"
-                           required />
-                  </div>
-                </div>
-                <div class="control">
-                  <button type="submit"
-                          data-cy="login-button-confirm"
-                          class="mt-4 button is-block is-info
-                                 is-medium is-fullwidth login-modal-tabbable"
-                          :class="{
-                            'is-loading': loginModalSubmitButtonIsLoading }">
-                    Login
-                  </button>
-                </div>
-
-              </form>
-              <div class="pt-4 pb-3 is-size-6 has-text-weight-bold">
-                &nbsp;<span id="login-form-response"
-                            data-cy="login-form-response"
-                            class="w-max-20rem is-inline-block"></span>
-              </div>
-              <div>
-                <button class="is-size-5 button-unstyled has-text-link
-                               login-modal-tabbable"
-                        @click="registerModalEnable">
-                  Register new account
-                </button>
-              </div>
-              <button x-ref="loginModalLastTabbable"
-                      class="delete box-close login-modal-tabbable"
-                      aria-label="close"
-                      @click="loginModalDisable"></button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <template x-if="registerModalIsActive">
       <div @keydown.escape.window="registerModalDisable"
            @keydown.tab.window="registerModalHandleTabEvent"></div>
@@ -259,6 +157,108 @@
                     aria-label="close"
                     @click="registerModalDisable"></button>
 
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <template x-if="loginModalIsActive">
+      <div @keydown.escape.window="loginModalDisable"
+           @keydown.tab.window="loginModalHandleTabEvent"></div>
+    </template>
+
+    <div data-name="login-modal"
+         class="modal is-active"
+         x-show="loginModalIsActive"
+         x-transition.opacity.duration.500ms
+         x-cloak>
+      <div class="modal-background"></div>
+      <div class="w-max-25rem modal-content">
+        <div class="p-0 section">
+          <div @click.away="loginModalDisable"
+               class="pt-2 px-5 pb-5 box is-flex is-flex-direction-column
+                      is-justify-content-center is-align-items-center
+                      has-text-centered">
+            <div class="mx-auto">
+              <div class="my-3 is-size-4">Account Login</div>
+              <form id="login-form"
+                    class="w-min-20rem mt-3"
+                    method="post"
+                    hx-post="{% url 'users:login' %}"
+                    hx-target="#login-form-response"
+                    hx-trigger="login-form-submit from:body"
+                    @submit.prevent="loginModalFormSubmit">
+                <div class="field">
+                  <div class="control">
+                    <input type="text"
+                           name="username"
+                           data-cy="login-input-username"
+                           x-ref="loginModalFirstTabbable"
+                           class="input login-modal-tabbable"
+                           autocorrect="off"
+                           autocapitalize="none"
+                           placeholder="Username"
+                           required>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="mt-4 control">
+                    <input type="password"
+                           name="password"
+                           data-cy="login-input-password"
+                           class="input login-modal-tabbable"
+                           placeholder="Password"
+                           required>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="my-4 control"
+                       hx-get="{% url 'users:login' %}"
+                       hx-target="#login-captcha-img-container"
+                       hx-trigger="login-captcha-get once from:body">
+                    <div id="login-captcha-img-container"
+                         class="mb-2 is-flex is-justify-content-center">
+                      <input type="hidden"
+                             name="captcha_0"
+                             value="">
+                    </div>
+                    <input type="text"
+                           name="captcha_1"
+                           data-cy="login-input-captcha"
+                           class="input login-modal-tabbable"
+                           placeholder="Human test"
+                           required />
+                  </div>
+                </div>
+                <div class="control">
+                  <button type="submit"
+                          data-cy="login-button-confirm"
+                          class="mt-4 button is-block is-info
+                                 is-medium is-fullwidth login-modal-tabbable"
+                          :class="{
+                            'is-loading': loginModalSubmitButtonIsLoading }">
+                    Login
+                  </button>
+                </div>
+
+              </form>
+              <div class="pt-4 pb-3 is-size-6 has-text-weight-bold">
+                &nbsp;<span id="login-form-response"
+                            data-cy="login-form-response"
+                            class="w-max-20rem is-inline-block"></span>
+              </div>
+              <div>
+                <button class="is-size-5 button-unstyled has-text-link
+                               login-modal-tabbable"
+                        @click="registerModalEnable">
+                  Register new account
+                </button>
+              </div>
+              <button x-ref="loginModalLastTabbable"
+                      class="delete box-close login-modal-tabbable"
+                      aria-label="close"
+                      @click="loginModalDisable"></button>
+            </div>
           </div>
         </div>
       </div>
