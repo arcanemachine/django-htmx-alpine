@@ -7,8 +7,8 @@ function todoListComponent(baseUrl) {
     taskDeleteId: undefined,
     taskUpdateId: undefined,
 
-    taskUrlBuild(operation, id='') {
-      return `${baseUrl}${operation}/${id}${id ? '/' : ''}`;
+    taskUrlBuild(operationType, id='') {
+      return `${baseUrl}${operationType}/${id}${id ? '/' : ''}`;
     },
     taskCreate() {
       if (!this.$store.config.userIsAuthenticated) {

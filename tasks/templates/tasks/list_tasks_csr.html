@@ -3,8 +3,10 @@
 <script>
 
   function tasksComponent() {
-  const tasksJson = JSON.parse(JSON.parse(document.querySelector('#tasks-json').textContent));
-    return { tasks: tasksJson };
+    return {
+      tasks: JSON.parse(
+        JSON.parse(document.querySelector('#tasks-json').textContent))
+    };
   }
 </script>
 

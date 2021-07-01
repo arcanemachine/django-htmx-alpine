@@ -69,25 +69,25 @@
   {% if captcha_audio_url %}
   {% endif %}
 
-    <style>
-      #register-captcha-button-reload {
-        padding-left: 0.45rem;
-        padding-right: 0.45rem;
-        border-radius: 0.5rem;
-      }
-    </style>
+  <style>
+    #register-captcha-button-reload {
+      padding-left: 0.45rem;
+      padding-right: 0.45rem;
+      border-radius: 0.5rem;
+    }
+  </style>
 
 {% elif register_fail %}
 
   <span id="register-form-response-text"
-       class="has-text-danger"
-       x-data="{ show: false }"
-       x-show="show"
-       x-transition.opacity.duration.500ms
-       x-init="$nextTick(() => {
-           show = true;
-           setTimeout(() => { show = false; }, defaultMessageTimeout);
-         })">
+        class="has-text-danger"
+        x-data="{ show: false }"
+        x-show="show"
+        x-transition.opacity.duration.500ms
+        x-init="$nextTick(() => {
+          show = true;
+          setTimeout(() => { show = false; }, defaultMessageTimeout);
+        })">
 
     {{ form_errors|safe }}
 
@@ -106,14 +106,11 @@
 {% elif register_success %}
 
   <span id="register-form-response-text"
-       class="has-text-success"
-       x-data="{ show: false }"
-       x-show="show"
-       x-transition.opacity.duration.500ms
-       x-init="$nextTick(() => {
-           show = true;
-           setTimeout(() => { show = false; }, defaultMessageTimeout);
-         })">
+        class="has-text-success"
+        x-data="{ show: false }"
+        x-show="show"
+        x-transition.opacity.duration.500ms
+        x-init="$nextTick(() => { show = true; })">
     Success!
 
     <script>

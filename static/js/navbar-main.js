@@ -10,10 +10,6 @@ function navbarMainComponent() {
     registerModalIsActive: false,
     registerModalSubmitButtonIsLoading: false,
 
-    loginFormSubmit() {
-      this.loginModalSubmitButtonIsLoading = true;
-      document.body.dispatchEvent(new CustomEvent('login-form-submit'));
-    },
     loginModalEnable() {
       this.navbarClearAll();
       this.loginModalIsActive = true;
@@ -22,6 +18,10 @@ function navbarMainComponent() {
     loginModalDisable() {
       this.navbarClearAll();
       this.loginModalIsActive = false;
+    },
+    loginModalFormSubmit() {
+      this.loginModalSubmitButtonIsLoading = true;
+      document.body.dispatchEvent(new CustomEvent('login-form-submit'));
     },
     loginModalHandleTabEvent(e) {
       let firstTabbable = this.$refs.loginModalFirstTabbable;

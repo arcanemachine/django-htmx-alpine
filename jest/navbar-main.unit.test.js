@@ -30,26 +30,6 @@ describe('navbarMainComponent()', () => {
     expect(instance.registerModalSubmitButtonIsLoading).toEqual(false);
   });
 
-  describe('loginFormSubmit()', () => {
-    it('Sets loginModalSubmitButtonIsLoading to true', () => {
-      expect(instance.loginModalSubmitButtonIsLoading).toEqual(false);
-
-      instance.loginFormSubmit();
-
-      expect(instance.loginModalSubmitButtonIsLoading).toEqual(true);
-    });
-
-    it('Dispatches expected event', () => {
-      expect(document.body.dispatchEvent).toHaveBeenCalledTimes(0);
-
-      instance.loginFormSubmit();
-
-      expect(document.body.dispatchEvent).toHaveBeenCalled();
-      expect(document.body.dispatchEvent).toHaveBeenCalledTimes(1);
-      expect(CustomEvent).toHaveBeenCalledWith('login-form-submit');
-    });
-  });
-
   describe('loginModalEnable()', () => {
     it('Calls navbarClearAll()', () => {
       instance.navbarClearAll = jest.fn();
@@ -92,6 +72,26 @@ describe('navbarMainComponent()', () => {
       instance.loginModalDisable();
 
       expect(instance.loginModalIsActive).toEqual(false);
+    });
+  });
+
+  describe('loginModalFormSubmit()', () => {
+    it('Sets loginModalSubmitButtonIsLoading to true', () => {
+      expect(instance.loginModalSubmitButtonIsLoading).toEqual(false);
+
+      instance.loginModalFormSubmit();
+
+      expect(instance.loginModalSubmitButtonIsLoading).toEqual(true);
+    });
+
+    it('Dispatches expected event', () => {
+      expect(document.body.dispatchEvent).toHaveBeenCalledTimes(0);
+
+      instance.loginModalFormSubmit();
+
+      expect(document.body.dispatchEvent).toHaveBeenCalled();
+      expect(document.body.dispatchEvent).toHaveBeenCalledTimes(1);
+      expect(CustomEvent).toHaveBeenCalledWith('login-form-submit');
     });
   });
 
