@@ -61,7 +61,6 @@ class UserRegisterView(CreateView):
         if form.cleaned_data.get('name', None):
             return render(self.request, self.template_name, context)
 
-        return render(self.request, self.template_name, context)
         self.object = form.save()
         self.object.save()
 
