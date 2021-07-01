@@ -6,7 +6,9 @@ from project_folder import utility_views as uv
 app_name = 'tasks'
 
 urlpatterns = [
+    path('', views.task_list, name='tasks_root'),
     path('', views.task_list, name='task_list'),
+    path('public/', views.task_list_public, name='task_list_public'),
     path('create/', views.task_create, name='task_create'),
     path('update/', uv.dummy_view, name='task_update_no_id'),
     path('update/<int:task_id>/', views.task_update, name='task_update'),

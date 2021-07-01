@@ -1,12 +1,15 @@
 /* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
 
-function todoListComponent(urlTaskDeleteNoId) {
+function todoListComponent(baseUrl) {
   return {
     taskDeleteModalIsActive: false,
     taskDeleteId: undefined,
     taskUpdateId: undefined,
 
+    taskUrlBuild(operation, id='') {
+      return `${baseUrl}${operation}/${id}${id ? '/' : ''}`;
+    },
     taskCreate() {
       if (!this.$store.config.userIsAuthenticated) {
         // do not continue if user is not authenticated
@@ -37,6 +40,8 @@ function todoListComponent(urlTaskDeleteNoId) {
       }
     },
     taskUpdateDescription(id) {
+      // let description =
+      //   document.querySelector(`#task-update-description-${id}`).value;
       let description = eval(`this.$refs.taskUpdateDescription${id}`).value;
       if (!description) {
         // if description is empty, notify the user and return false
@@ -50,7 +55,7 @@ function todoListComponent(urlTaskDeleteNoId) {
         //  new CustomEvent(`task-update-description-form-submit-${id}`));
 
         // if description is not empty, update the task
-        let url = `http://192.168.1.120:8000/tasks/update/${id}/`
+        let url = this.taskUrlBuild('update', id);
         htmx.ajax('PUT', url, {
           target: `#task-item-${id}`,
           values: { description }
@@ -70,7 +75,7 @@ function todoListComponent(urlTaskDeleteNoId) {
       }
     },
     taskDelete() {
-      let url = `${urlTaskDeleteNoId}${this.taskDeleteId}/`; // build url
+      let url = this.taskUrlBuild('delete', this.taskDeleteId);
       htmx.ajax('DELETE', url, { target: '#tasks' }); // delete task
       this.taskDeleteModalDisable(); // hide modal
     },

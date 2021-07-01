@@ -1,4 +1,6 @@
+import json
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, render
@@ -8,19 +10,37 @@ from urllib.parse import unquote as urllib_parse_unquote
 from .models import Task
 from project_folder import helpers as h, utility_views as uv
 
+UserModel = get_user_model()
+
 
 def task_list(request):
     if not request.user.is_authenticated:
         tasks = Task.objects.none()
     else:
-        tasks = Task.objects.filter(user=request.user)
+        if request.GET.get('csr') == '1':
+            task_lists = (Task.objects
+                              .filter(user=request.user)
+                              .select_related('user')
+                              .prefetch_related('tasks')
+                              .values('id', 'description', 'is_complete'))
+            tasks = json.dumps(list(task_lists))
+        else:
+            tasks = Task.objects.filter(user=request.user)
+
     response = render(request, 'tasks/task_list.html', {'tasks': tasks})
     return response
 
 
-@login_required
+def task_list_public(request):
+    request.user = UserModel.objects.get(username='public')
+    return task_list(request)
+
+
 @require_http_methods(['POST'])
 def task_create(request):
+    if not request.user.is_authenticated:
+        return uv.htmx_response_login_required(request)
+
     context = {}
     if request.POST.get('description'):
         Task.objects.create(
@@ -38,7 +58,6 @@ def task_create(request):
     return h.render_with_messages(request, 'tasks/list_tasks.html', context)
 
 
-@login_required
 @require_http_methods(['PUT'])
 def task_update(request, task_id):
     context = {}

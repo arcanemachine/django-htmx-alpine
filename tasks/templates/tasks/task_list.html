@@ -7,15 +7,16 @@
 {% block content %}
 
 <script type="text/javascript" src="{% static 'js/tasks.js' %}"></script>
+
 <script>
-  let taskDeleteUrlNoId = '{% url 'tasks:task_delete_no_id' %}';
+  let baseUrl = '{% url 'tasks:tasks_root' %}';
 </script>
 
-<section x-data="todoListComponent(taskDeleteUrlNoId)">
+<section x-data="todoListComponent(baseUrl)">
 
   <form class="mt-4 mx-auto is-flex is-justify-content-center"
         method="post"
-        hx-post="{% url 'tasks:task_create' %}"
+        :hx-post="taskUrlBuild('create')"
         hx-target="#tasks"
         hx-trigger="task-create-form-submit from:body"
         @submit.prevent="taskCreate()">
@@ -81,7 +82,11 @@
     </div>
   </div>
 
-  {% include 'tasks/list_tasks.html' %}
+  {% if request.GET.csr %}
+    {% include 'tasks/list_tasks_csr.html' %}
+  {% else %}
+    {% include 'tasks/list_tasks.html' %}
+  {% endif %}
 
 </section>
 

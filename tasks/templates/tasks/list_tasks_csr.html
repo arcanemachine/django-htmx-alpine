@@ -1,0 +1,125 @@
+{{ tasks|json_script:'tasks-json' }}
+
+<script>
+
+  function tasksComponent() {
+  const tasksJson = JSON.parse(JSON.parse(document.querySelector('#tasks-json').textContent));
+    return { tasks: tasksJson };
+  }
+</script>
+
+
+<div id="tasks"
+     x-data="tasksComponent()">
+  <template x-if="tasks.length">
+    <ul class="mx-auto mt-4 box w-max-35rem"
+        data-cy="task-list">
+      <template x-for="task in tasks" :key="task.id">
+        <li :id="`task-item-${task.id}`"
+            :data-cy="`task-item-${task.id}`"
+            :data-task-id="task.id"
+            class="mx-auto is-flex is-justify-content-space-between
+                   is-align-items-center task-item">
+
+          <!-- task completion checkbox -->
+          <div>
+            <input type="checkbox"
+                   :data-cy="`task-checkbox-is-complete-${task.id}`"
+                   class="w-5rem p-2 checkbox is-medium"
+                   autocomplete="off"
+                   :hx-put="taskUrlBuild('update', task.id)"
+                   :hx-target="`#task-item-${task.id}`"
+                   :hx-vals='`{ "is_complete": ${!task.is_complete} }`'
+                   hx-trigger="click"
+                   :checked="task.is_complete">
+          </div>
+
+          <!-- task description -->
+          <template x-if="taskUpdateId !== task.id">
+            <div data-cy="task-description-${task.id}"
+                 class="w-max-35rem has-text-centered"
+                 :class="{ 'text-strikethrough': task.is_complete,
+                           'has-text-grey-light' : task.is_complete }"
+                 :title="`Task ID#: ${task.id}`"
+                 x-text="task.description"></div>
+          </template>
+
+          <!-- task update panel -->
+          <template x-if="taskUpdateId === task.id">
+            <div @keydown.escape="taskUpdatePanelDisable">
+              <form method="post"
+                    @submit.prevent="taskUpdateDescription(task.id)">
+                    <!-- :hx-put="taskUrlBuild('update', task.id)"
+                    :hx-target="#task-item-${id}"
+                    :hx-trigger="task-update-description-form-submit-${id} from:body" -->
+                <div class="field has-addons">
+                  <span class="control">
+                    <input type="text"
+                           name="description"
+                           :id="`task-update-description-${task.id}`"
+                           :data-cy="`task-update-description-${task.id}`"
+                           :x-ref="`taskUpdateDescription${task.id}`"
+                           x-init="$nextTick(() => { $el.select(); })"
+                           class="input is-small is-inline"
+                           :value="task.description">
+                  </span>
+                  <span class="control">
+                    <input type="submit"
+                           class="button is-small is-info"
+                           id="update-confirm-button-${task.id}"
+                           title="Confirm"
+                           value="&check;"> <!-- confirm icon -->
+                  </span>
+                  <span class="control">
+                    <button type="button"
+                            class="button is-small is-danger border-left"
+                            title="Cancel"
+                            @click="taskUpdatePanelDisable">
+                      &times; <!-- cancel icon -->
+                    </button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </template>
+
+          <!-- task edit/delete icons -->
+          <div class="w-5rem is-size-4 is-flex is-justify-content-center">
+            <button data-cy="`task-icon-edit-${task.id}`"
+                    class="p-2 pt-3 button-unstyled"
+                    title="Edit this task"
+                    @click="taskUpdatePanelToggle(task.id)">
+              &#9998; <!-- edit icon -->
+            </button>
+            <button data-cy="`task-icon-delete-${task.id}`"
+                    class="ml-2 p-2 pt-3 button-unstyled"
+                    tabindex="0"
+                    title="Delete this task"
+                    @click="taskDeleteModalEnable(task.id)">
+              &times; <!-- delete icon -->
+            </button>
+          </div>
+        </li>
+      </template>
+    </ul>
+  </template>
+
+  <!--
+    <template x-if="tasks.length">
+      <div class="mt-5 is-italic has-text-centered"
+           data-cy="tasks-message">
+        <template x-if="$store.config.userIsAuthenticated">
+          <div>No tasks created</div>
+        </template>
+        <template x-if="!$store.config.userIsAuthenticated">
+          <div>
+            You must login before you can create any tasks.</div>
+          <div class="mt-5">
+            No email is required to register.
+            You will be instantly logged in after registering.
+          </div>
+        </template>
+      </div>
+    </template>
+  -->
+</div>
