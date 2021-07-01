@@ -2,7 +2,7 @@
 <div>
   <input type="checkbox" {{ task.is_complete|yesno:'checked,' }}
          data-cy="task-checkbox-is-complete-{{ task.id|safe }}"
-         class="w-5rem p-2 checkbox is-medium"
+         class="mx-3 checkbox is-medium"
          autocomplete="off"
          hx-put="{% url 'tasks:task_update' task_id=task.id %}"
          hx-target="#task-item-{{ task.id|safe }}"
@@ -40,7 +40,7 @@
                id="task-update-description-{{ task.id|safe }}"
                data-cy="task-update-description-{{ task.id|safe }}"
                x-ref="taskUpdateDescription{{ task.id|safe }}"
-               class="input is-small is-inline"
+               class="input is-small"
                value="{{ task.description }}">
       </span>
       <span class="control">
@@ -63,7 +63,7 @@
 </div>
 
 <!-- task edit/delete icons -->
-<div class="w-5rem is-size-4 is-flex is-justify-content-center">
+<div class="mr-2 is-size-4 is-flex is-justify-content-center">
   <button data-cy="task-icon-edit-{{ task.id|safe }}"
           class="p-2 pt-3 button-unstyled"
           title="Edit this task"
