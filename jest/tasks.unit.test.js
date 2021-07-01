@@ -23,6 +23,25 @@ describe('todoListComponent()', () => {
     expect(instance.taskUpdateId).toEqual(undefined);
   });
 
+  describe('taskUrlBuild()', () => {
+    it('creates expected URL when not given an ID', () => {
+      let operationType = 'operation';
+
+      expected = '/operation/';
+
+      expect(instance.taskUrlBuild(operationType)).toEqual(expected);
+    });
+
+    it('creates expected URL when given an ID', () => {
+      let operationType = 'operation';
+      let id = 2;
+
+      expected = '/operation/2/';
+
+      expect(instance.taskUrlBuild(operationType, id)).toEqual(expected);
+    });
+  });
+
   describe('taskCreate()', () => {
     beforeEach(() => {
       hDispatch = jest.fn();
