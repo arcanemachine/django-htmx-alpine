@@ -25,20 +25,24 @@ describe('todoListComponent()', () => {
 
   describe('taskUrlBuild()', () => {
     it('creates expected URL when not given an ID', () => {
+      let baseUrl = '/tasks/';
       let operationType = 'operation';
+      expected = '/tasks/operation/';
+      
+      result = instance.taskUrlBuild(baseUrl, operationType);
 
-      expected = '/operation/';
-
-      expect(instance.taskUrlBuild(operationType)).toEqual(expected);
+      expect(result).toEqual(expected);
     });
 
     it('creates expected URL when given an ID', () => {
+      let baseUrl = '/tasks/';
       let operationType = 'operation';
       let id = 2;
+      expected = '/tasks/operation/2/';
 
-      expected = '/operation/2/';
+      result = instance.taskUrlBuild(baseUrl, operationType, id);
 
-      expect(instance.taskUrlBuild(operationType, id)).toEqual(expected);
+      expect(result).toEqual(expected);
     });
   });
 
@@ -198,10 +202,23 @@ describe('todoListComponent()', () => {
   });
 
   describe('taskDelete()', () => {
+    /*
     it('Calls the expected HTMX function', () => {
       instance.taskDelete();
 
       expect(htmx.ajax).toHaveBeenCalled();
+    });
+    */
+
+    it('Dispatches the expected event', () => {
+      document.body.dispatchEvent = jest.fn();
+
+      instance.taskDelete();
+
+      expect(document.body.dispatchEvent).toHaveBeenCalled();
+      expect(document.body.dispatchEvent).toHaveBeenCalledWith(
+        new CustomEvent('task-delete')
+      );
     });
 
     it('Calls taskDeleteModalDisable()', () => {

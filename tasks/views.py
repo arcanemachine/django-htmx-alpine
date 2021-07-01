@@ -59,11 +59,16 @@ def task_create(request):
 
 
 @require_http_methods(['PUT'])
-def task_update(request, task_id):
+def task_update(request, task_id=None):
     context = {}
-    task = get_object_or_404(Task, id=task_id, user=request.user)
 
     parsed_params = h.get_parsed_params(request)
+
+    if not task_id:
+        parsed_params = h.get_parsed_params(request)
+        task_id = int(parsed_params['id'])
+
+    task = get_object_or_404(Task, id=task_id, user=request.user)
 
     updated_task_description = \
         urllib_parse_unquote(parsed_params.get('description', ''))
@@ -89,9 +94,15 @@ def task_update(request, task_id):
 
 @login_required
 @require_http_methods(['DELETE'])
-def task_delete(request, task_id):
+def task_delete(request, task_id=None):
     context = {}
+
+    if not task_id:
+        parsed_params = h.get_parsed_params(request)
+        task_id = int(parsed_params['id'])
+
     task = get_object_or_404(Task, id=task_id, user=request.user)
+
     task.delete()
     messages.success(request, 'Task deleted')
 

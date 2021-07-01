@@ -9,14 +9,14 @@
 <script type="text/javascript" src="{% static 'js/tasks.js' %}"></script>
 
 <script>
-  let baseUrl = '{% url 'tasks:tasks_root' %}';
+  var baseUrl = '{% url 'tasks:tasks_root' %}';
 </script>
 
 <section x-data="todoListComponent(baseUrl)">
 
   <form class="mt-4 mx-auto is-flex is-justify-content-center"
         method="post"
-        :hx-post="taskUrlBuild('create')"
+        :hx-post="taskUrlBuild(baseUrl, 'create')"
         hx-target="#tasks"
         hx-trigger="task-create-form-submit from:body"
         @submit.prevent="taskCreate()">
@@ -75,10 +75,9 @@
                   class="ml-4 button is-danger is-medium"
                   hx-delete="{% url 'tasks:task_delete_no_id' %}"
                   hx-trigger="task-delete from:body"
-                  :data-current-task="taskDeleteId"
-                  hx-vals='javascript:{ id: elt.dataset.currentTask }'
+                  :hx-vals='`{ "id": ${taskDeleteId} }`'
                   hx-target="#tasks"
-                  @click="taskDelete">
+                  @click.prevent="taskDelete">
             Delete
           </button>
         </div>

@@ -7,8 +7,8 @@ function todoListComponent(baseUrl) {
     taskDeleteId: undefined,
     taskUpdateId: undefined,
 
-    taskUrlBuild(operationType, id='') {
-      return `${baseUrl}${operationType}/${id}${id ? '/' : ''}`;
+    taskUrlBuild(baseUrl, operationType, id='') {
+      return `${baseUrl}${operationType}/${id ? `${id}/` : ''}`;
     },
     taskCreate() {
       if (!this.$store.config.userIsAuthenticated) {
@@ -75,9 +75,8 @@ function todoListComponent(baseUrl) {
       }
     },
     taskDelete() {
-      let url = this.taskUrlBuild('delete', this.taskDeleteId);
-      htmx.ajax('DELETE', url, { target: '#tasks' }); // delete task
-      this.taskDeleteModalDisable(); // hide modal
+      document.body.dispatchEvent(new CustomEvent('task-delete'));
+      this.taskDeleteModalDisable(); // hide the task delete modal
     },
     taskDeleteModalHandleTabEvent(e) {
       let firstTabbable = this.$refs.taskDeleteModalFirstTabbable;
