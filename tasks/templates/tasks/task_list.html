@@ -73,6 +73,11 @@
           <button data-cy="task-button-delete"
                   x-ref="taskDeleteModalLastTabbable"
                   class="ml-4 button is-danger is-medium"
+                  hx-delete="{% url 'tasks:task_delete_no_id' %}"
+                  hx-trigger="task-delete from:body"
+                  :data-current-task="taskDeleteId"
+                  hx-vals='javascript:{ id: elt.dataset.currentTask }'
+                  hx-target="#tasks"
                   @click="taskDelete">
             Delete
           </button>
