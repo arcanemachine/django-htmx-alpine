@@ -40,9 +40,9 @@ function todoListComponent(baseUrl) {
       }
     },
     taskUpdateDescription(id) {
-      // let description =
-      //   document.querySelector(`#task-update-description-${id}`).value;
-      let description = eval(`this.$refs.taskUpdateDescription${id}`).value;
+      let description =
+        document.querySelector(`#task-update-description-${id}`).value;
+
       if (!description) {
         // if description is empty, notify the user and return false
         hDispatch('status-message-display', {
@@ -51,15 +51,8 @@ function todoListComponent(baseUrl) {
         });
         return false;
       } else {
-        // document.body.dispatchEvent(
-        //  new CustomEvent(`task-update-description-form-submit-${id}`));
-
-        // if description is not empty, update the task
-        let url = this.taskUrlBuild('update', id);
-        htmx.ajax('PUT', url, {
-          target: `#task-item-${id}`,
-          values: { description }
-        });
+        document.body.dispatchEvent(
+          new CustomEvent(`task-update-description-form-submit-${id}`));
         this.taskUpdatePanelDisable();
         return true;
       }
@@ -70,6 +63,11 @@ function todoListComponent(baseUrl) {
     taskUpdatePanelToggle(id) {
       if (this.taskUpdateId !== id) {
         this.taskUpdateId = id;
+        this.$nextTick(() => {
+          let descriptionInput =
+            document.querySelector(`#task-update-description-${id}`);
+          descriptionInput.select();
+        });
       } else {
         this.taskUpdatePanelDisable();
       }

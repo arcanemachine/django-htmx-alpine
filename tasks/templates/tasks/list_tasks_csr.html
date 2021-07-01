@@ -37,53 +37,52 @@
           </div>
 
           <!-- task description -->
-          <template x-if="taskUpdateId !== task.id">
-            <div data-cy="task-description-${task.id}"
+            <div x-show="taskUpdateId !== task.id"
+                 :data-cy="`task-description-${task.id}`"
                  class="w-max-35rem has-text-centered"
                  :class="{ 'text-strikethrough': task.is_complete,
                            'has-text-grey-light' : task.is_complete }"
                  :title="`Task ID#: ${task.id}`"
-                 x-text="task.description"></div>
-          </template>
+                 x-text="task.description">
+            </div>
 
           <!-- task update panel -->
-          <template x-if="taskUpdateId === task.id">
-            <div @keydown.escape="taskUpdatePanelDisable">
-              <form method="post"
-                    @submit.prevent="taskUpdateDescription(task.id)">
-                    <!-- :hx-put="taskUrlBuild('update', task.id)"
-                    :hx-target="#task-item-${id}"
-                    :hx-trigger="task-update-description-form-submit-${id} from:body" -->
-                <div class="field has-addons">
-                  <span class="control">
-                    <input type="text"
-                           name="description"
-                           :id="`task-update-description-${task.id}`"
-                           :data-cy="`task-update-description-${task.id}`"
-                           :x-ref="`taskUpdateDescription${task.id}`"
-                           x-init="$nextTick(() => { $el.select(); })"
-                           class="input is-small is-inline"
-                           :value="task.description">
-                  </span>
-                  <span class="control">
-                    <input type="submit"
-                           class="button is-small is-info"
-                           id="update-confirm-button-${task.id}"
-                           title="Confirm"
-                           value="&check;"> <!-- confirm icon -->
-                  </span>
-                  <span class="control">
-                    <button type="button"
-                            class="button is-small is-light border-left"
-                            title="Cancel"
-                            @click="taskUpdatePanelDisable">
-                      &times; <!-- cancel icon -->
-                    </button>
-                  </span>
-                </div>
-              </form>
-            </div>
-          </template>
+          <div x-show="taskUpdateId === task.id"
+               @keydown.escape="taskUpdatePanelDisable">
+            <form method="post"
+                  @submit.prevent="taskUpdateDescription(task.id)"
+                  :hx-put="taskUrlBuild(baseUrl, 'update', task.id)"
+                  :hx-target="`#task-item-${task.id}`"
+                  :hx-trigger="`task-update-description-form-submit-${task.id} from:body`">
+              <div class="field has-addons">
+                <span class="control">
+                  <input type="text"
+                         name="description"
+                         :id="`task-update-description-${task.id}`"
+                         :data-cy="`task-update-description-${task.id}`"
+                         :x-ref="`taskUpdateDescription${task.id}`"
+                         x-init="$nextTick(() => { $el.select(); })"
+                         class="input is-small is-inline"
+                         :value="task.description">
+                </span>
+                <span class="control">
+                  <input type="submit"
+                         class="button is-small is-info"
+                         :id="`update-confirm-button-${task.id}`"
+                         title="Confirm"
+                         value="&check;"> <!-- confirm icon -->
+                </span>
+                <span class="control">
+                  <button type="button"
+                          class="button is-small is-light border-left"
+                          title="Cancel"
+                          @click="taskUpdatePanelDisable">
+                    &times; <!-- cancel icon -->
+                  </button>
+                </span>
+              </div>
+            </form>
+          </div>
 
           <!-- task edit/delete icons -->
           <div class="w-5rem is-size-4 is-flex is-justify-content-center">

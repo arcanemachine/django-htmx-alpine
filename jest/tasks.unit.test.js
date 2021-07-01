@@ -64,7 +64,6 @@ describe('todoListComponent()', () => {
     });
 
     it('Dispatches expected event when user creates a task', () => {
-
       instance.$store.config.userIsAuthenticated = true;
       instance.$refs.taskCreateInputDescription.value = 'description';
       document.body.dispatchEvent = jest.fn();
@@ -134,6 +133,8 @@ describe('todoListComponent()', () => {
 
     beforeEach(() => {
       instance.$refs.taskUpdateDescription2 = {};
+      document.querySelector = jest.fn();
+      document.querySelector.mockReturnValue({ value: 'value' });
     });
 
     it('Updates the description if the description is not empty', () => {
@@ -152,7 +153,7 @@ describe('todoListComponent()', () => {
     });
 
     it('Returns false if description is empty', () => {
-      instance.$refs.taskUpdateDescription2.value = '';
+      document.querySelector.mockReturnValue({ value: '' });
 
       expect(instance.taskUpdateDescription(id)).toEqual(false);
     });
@@ -184,6 +185,10 @@ describe('todoListComponent()', () => {
   describe('taskUpdatePanelToggle()', () => {
     const id = 2;
 
+    beforeEach(() => {
+      instance.$nextTick = jest.fn();
+    });
+
     it('Sets taskUpdateId to id if taskUpdateId === undefined', () => {
       expect(instance.taskUpdateId).toEqual(undefined);
 
@@ -191,6 +196,11 @@ describe('todoListComponent()', () => {
 
       expect(instance.taskUpdateId).toEqual(id);
     });
+
+    it('Selects the description when enabling the update panel', () => {
+      // TODO
+    });
+
 
     it('Sets taskUpdateId to undefined if taskUpdateId === id', () => {
       instance.taskUpdateId = id;

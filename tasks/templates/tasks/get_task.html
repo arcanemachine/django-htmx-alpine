@@ -12,54 +12,55 @@
 </div>
 
 <!-- task description -->
-<template x-if="taskUpdateId !== {{ task.id|safe }}">
-  <div data-cy="task-description-{{ task.id|safe }}"
-       class="w-max-35rem has-text-centered
-              {% if task.is_complete %}
-                text-strikethrough has-text-grey-light
-              {% endif %}"
-       title="Task ID#: {{ task.id|safe }}">{{ task.description }}</div>
-</template>
+<div x-show="taskUpdateId !== {{ task.id|safe }}"
+     data-cy="task-description-{{ task.id|safe }}"
+     class="w-max-35rem has-text-centered
+            {% if task.is_complete %}
+              text-strikethrough has-text-grey-light
+            {% endif %}"
+     title="Task ID#: {{ task.id|safe }}">
+  {{ task.description }}
+</div>
 
 <!-- task update panel -->
-<template x-if="taskUpdateId === {{ task.id|safe }}">
-  <div @keydown.escape="taskUpdatePanelDisable"
-       x-init="$nextTick(() => {
-         $refs.taskUpdateDescription{{ task.id|safe }}.select(); })">
-    <form method="post"
-          @submit.prevent="taskUpdateDescription({{ task.id|safe }})">
-          <!-- hx-put="{% url 'tasks:task_update' task_id=task.id %}"
-          hx-target="#task-item-{{ task.id|safe }}"
-          hx-trigger="task-update-description-form-submit-{{ task.id|safe }} from:body" -->
-      <div class="field has-addons">
-        <span class="control">
-          <input type="text"
-                 name="description"
-                 id="task-update-description-{{ task.id|safe }}"
-                 data-cy="task-update-description-{{ task.id|safe }}"
-                 x-ref="taskUpdateDescription{{ task.id|safe }}"
-                 class="input is-small is-inline"
-                 value="{{ task.description }}">
-        </span>
-        <span class="control">
-          <input type="submit"
-                 class="button is-small is-info"
-                 id="update-confirm-button-{{ task.id|safe }}"
-                 title="Confirm"
-                 value="&check;"> <!-- confirm icon -->
-        </span>
-        <span class="control">
-          <button type="button"
-                  class="button is-small is-light border-left"
-                  title="Cancel"
-                  @click="taskUpdatePanelDisable">
-            &times; <!-- cancel icon -->
-          </button>
-        </span>
-      </div>
-    </form>
-  </div>
-</template>
+<div x-show="taskUpdateId === {{ task.id|safe }}"
+     @keydown.escape="taskUpdatePanelDisable"
+     x-init="$nextTick(() => {
+       $refs.taskUpdateDescription{{ task.id|safe }}.select(); })"
+     x-cloak>
+  <form method="post"
+        @submit.prevent="taskUpdateDescription({{ task.id|safe }})"
+        hx-put="{% url 'tasks:task_update' task_id=task.id %}"
+        hx-target="#task-item-{{ task.id|safe }}"
+        hx-trigger="task-update-description-form-submit-{{ task.id }} from:body">
+    <div class="field has-addons">
+      <span class="control">
+        <input type="text"
+               name="description"
+               id="task-update-description-{{ task.id|safe }}"
+               data-cy="task-update-description-{{ task.id|safe }}"
+               x-ref="taskUpdateDescription{{ task.id|safe }}"
+               class="input is-small is-inline"
+               value="{{ task.description }}">
+      </span>
+      <span class="control">
+        <input type="submit"
+               class="button is-small is-info"
+               id="update-confirm-button-{{ task.id|safe }}"
+               title="Confirm"
+               value="&check;"> <!-- confirm icon -->
+      </span>
+      <span class="control">
+        <button type="button"
+                class="button is-small is-light border-left"
+                title="Cancel"
+                @click="taskUpdatePanelDisable">
+          &times; <!-- cancel icon -->
+        </button>
+      </span>
+    </div>
+  </form>
+</div>
 
 <!-- task edit/delete icons -->
 <div class="w-5rem is-size-4 is-flex is-justify-content-center">
