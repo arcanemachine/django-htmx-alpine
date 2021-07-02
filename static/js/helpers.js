@@ -1,3 +1,4 @@
+/* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
 
 var defaultTransitionDuration = 500;
@@ -5,6 +6,13 @@ var defaultMessageTimeout = 4000;
 
 function hDispatch(eventName, params={}) {
   return window.dispatchEvent(new CustomEvent(eventName, { detail: params }));
+}
+
+function hStatusMessageDisplay(message, messageType='info') {
+  return window.dispatchEvent(
+    new CustomEvent('status-message-display', {
+      detail: { message, messageType }
+    }));
 }
 
 function hHandleTabEvent(
