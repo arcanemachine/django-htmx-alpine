@@ -13,6 +13,22 @@
           is_complete: false
         });
       },
+      taskUpdateCsr(e) {
+        // get the index of the updated task
+        let index = this.tasks.map((x) => x.id).indexOf(e.detail.id)
+        let updatedTask = this.tasks[index];
+
+        // update the task
+        if (e.detail.is_complete) {
+          updatedTask.is_complete =
+            e.detail.is_complete === 'false' ? false : true;
+        } else if (e.detail.description) {
+          updatedTask.description = e.detail.description;
+        }
+
+        // insert the updated task back into the tasks array
+        tasks[index] = updatedTask;
+      }
     };
   }
 </script>
@@ -20,7 +36,8 @@
 <div id="tasks"
      x-data="tasksCsrComponent()"
      x-init="isCsr = true"
-     @task-create-csr.window="taskCreateCsr">
+     @task-create-csr.window="taskCreateCsr"
+     @task-update-csr.window="taskUpdateCsr">
   <template x-if="tasks.length">
     <ul id="task-list"
         class="mx-auto mt-4 box w-max-35rem"
@@ -38,9 +55,13 @@
                    :data-cy="`task-checkbox-is-complete-${task.id}`"
                    class="mx-3 checkbox is-medium"
                    autocomplete="off"
-                   :hx-put="taskUrlBuild('update', task.id)"
-                   :hx-target="`#task-item-${task.id}`"
-                   :hx-vals='`{ "is_complete": ${!task.is_complete} }`'
+                   :hx-put="taskUrlBuild(baseUrl, 'update', task.id)"
+                   hx-target="body"
+                   hx-swap="beforeend"
+                   :hx-vals='`{
+                     "is_complete": ${!task.is_complete},
+                     "is_csr": true
+                   }`'
                    hx-trigger="click"
                    :checked="task.is_complete">
           </div>
@@ -61,8 +82,11 @@
             <form method="post"
                   @submit.prevent="taskUpdateDescription(task.id)"
                   :hx-put="taskUrlBuild(baseUrl, 'update', task.id)"
-                  :hx-target="`#task-item-${task.id}`"
-                  :hx-trigger="`task-update-description-form-submit-${task.id} from:body`">
+                  hx-target="body"
+                  hx-swap="beforeend"
+                  hx-vals='{ "is_csr": true }'
+                  :hx-trigger="`task-update-description-form-submit-${task.id}
+                                from:body`">
               <div class="field has-addons">
                 <span class="control">
                   <input type="text"

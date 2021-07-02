@@ -6,10 +6,9 @@ function todoListComponent(baseUrl) {
     taskDeleteModalIsActive: false,
     taskDeleteId: undefined,
     taskUpdateId: undefined,
-    isCsr: false, // is client-side rendered
 
     taskUrlBuild(baseUrl, operationType, id='') {
-      return `${baseUrl}${operationType}/${id ? `${id}/` : ''}`;
+      return `${baseUrl}${operationType}${id ? '/' + id + '/' : '/'}`;
     },
     taskCreate() {
       if (!this.$store.config.userIsAuthenticated) {

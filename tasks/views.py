@@ -47,8 +47,6 @@ def task_create(request):
         new_task = Task.objects.create(
             user=request.user,
             description=request.POST['description'])
-        context.update({'task_create_success': True})
-        messages.success(request, _('Task created'))
     else:
         return uv.htmx_response_content_unchanged(
             "Task description cannot be empty.")
@@ -56,20 +54,19 @@ def task_create(request):
     if request.POST.get('is_csr'):
         return HttpResponse(f"""
           <script>
-            window.dispatchEvent(new CustomEvent('task-create-csr', {{
-              detail: {{
-                id: {new_task.id},
-                description: "{request.POST['description']}"
-              }}
-            }}));
+            hDispatch('task-create-csr', {{
+              id: {new_task.id},
+              description: "{request.POST['description']}"
+            }});
+            hStatusMessageDisplay("Task created", 'success');
           </script>
         """)
     else:
         tasks = Task.objects.filter(user=request.user)
         context.update({'tasks': tasks})
+        messages.success(request, _('Task created'))
         return h.render_with_messages(
             request, 'tasks/list_tasks.html', context)
-
 
 
 @require_http_methods(['PUT'])
@@ -88,22 +85,35 @@ def task_update(request, task_id=None):
         urllib_parse_unquote(parsed_params.get('description', ''))
     updated_task_is_complete = \
         urllib_parse_unquote(parsed_params.get('is_complete', ''))
+    is_csr = \
+        urllib_parse_unquote(parsed_params.get('is_csr', ''))
 
     if updated_task_description \
             and updated_task_description != task.description:
         task.description = updated_task_description
         task.save()
-        messages.success(request, 'Task updated')
     elif updated_task_is_complete:
         if updated_task_is_complete == 'true':
             task.is_complete = True
         elif updated_task_is_complete == 'false':
             task.is_complete = False
         task.save()
-        messages.success(request, 'Task updated')
 
-    context.update({'task': task})
-    return h.render_with_messages(request, 'tasks/get_task.html', context)
+    if is_csr:
+        return HttpResponse(f"""
+          <script>
+            hDispatch('task-update-csr', {{
+              id: {task_id},
+              description: "{updated_task_description}",
+              is_complete: '{updated_task_is_complete}'
+            }});
+            hStatusMessageDisplay("Task updated", 'success');
+          </script>
+        """)
+    else:
+        messages.success(request, 'Task updated')
+        context.update({'task': task})
+        return h.render_with_messages(request, 'tasks/get_task.html', context)
 
 
 @login_required

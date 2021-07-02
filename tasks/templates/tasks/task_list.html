@@ -20,7 +20,7 @@
     {% if request.GET.csr %}
         hx-vals='{ "is_csr": "1" }'
         hx-target="body"
-        hx-swap="beforeend" data-deleteme=" <-- Can I use 'none' instead?"
+        hx-swap="beforeend"
     {% else %}
         hx-target="#tasks"
     {% endif %}
