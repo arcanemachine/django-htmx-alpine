@@ -68,6 +68,7 @@
 
           <!-- task description -->
           <div x-show="taskUpdateId !== task.id"
+               :id="`task-description-${task.id}`"
                :data-cy="`task-description-${task.id}`"
                class="w-max-35rem has-text-centered"
                :class="{ 'text-strikethrough': task.is_complete,

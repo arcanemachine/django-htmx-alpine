@@ -13,6 +13,7 @@
 
 <!-- task description -->
 <div x-show="taskUpdateId !== {{ task.id|safe }}"
+     id="task-description-{{ task.id|safe }}"
      data-cy="task-description-{{ task.id|safe }}"
      class="w-max-35rem has-text-centered
             {% if task.is_complete %}

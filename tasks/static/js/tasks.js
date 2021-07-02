@@ -63,9 +63,13 @@ function todoListComponent(baseUrl) {
     taskUpdatePanelToggle(id) {
       if (this.taskUpdateId !== id) {
         this.taskUpdateId = id;
+        let descriptionText =
+          document.querySelector(`#task-description-${id}`).textContent;
+
         this.$nextTick(() => {
           let descriptionInput =
             document.querySelector(`#task-update-description-${id}`);
+          descriptionInput.value = descriptionText;
           descriptionInput.select();
         });
       } else {
