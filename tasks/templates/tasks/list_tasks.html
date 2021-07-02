@@ -1,31 +1,17 @@
 <div id="tasks">
   {% if tasks %}
-    <ul class="mx-auto mt-4 box w-max-35rem"
+    <ul class="mx-auto mt-4 w-max-35rem box"
         data-cy="task-list">
       {% for task in tasks %}
         <li id="task-item-{{ task.id|safe }}"
             data-cy="task-item-{{ task.id|safe }}"
             data-task-id="{{ task.id|safe }}"
             class="mx-auto is-flex is-justify-content-space-between
-                   is-align-items-center task-item">
+                   is-align-items-center task-item"
+            x-init="todoListHasTasks = true">
           {% include 'tasks/get_task.html' %}
         </li>
       {% endfor %}
     </ul>
-
-  {% else %}
-    <div class="mt-5 is-italic has-text-centered"
-         data-cy="tasks-message">
-      {% if user.is_authenticated %}
-        <div>No tasks created</div>
-      {% else %}
-        <div>
-          You must login before you can create any tasks.</div>
-        <div class="mt-5">
-          No email is required to register.
-          You will be instantly logged in after registering.
-        </div>
-      {% endif %}
-    </div>
   {% endif %}
 </div>

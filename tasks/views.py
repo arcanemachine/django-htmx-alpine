@@ -2,6 +2,7 @@ import json
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext_lazy as _
@@ -43,7 +44,7 @@ def task_create(request):
 
     context = {}
     if request.POST.get('description'):
-        Task.objects.create(
+        new_task = Task.objects.create(
             user=request.user,
             description=request.POST['description'])
         context.update({'task_create_success': True})
@@ -52,10 +53,23 @@ def task_create(request):
         return uv.htmx_response_content_unchanged(
             "Task description cannot be empty.")
 
-    tasks = Task.objects.filter(user=request.user)
-    context.update({'tasks': tasks})
+    if request.POST.get('is_csr'):
+        return HttpResponse(f"""
+          <script>
+            window.dispatchEvent(new CustomEvent('task-create-csr', {{
+              detail: {{
+                id: {new_task.id},
+                description: "{request.POST['description']}"
+              }}
+            }}));
+          </script>
+        """)
+    else:
+        tasks = Task.objects.filter(user=request.user)
+        context.update({'tasks': tasks})
+        return h.render_with_messages(
+            request, 'tasks/list_tasks.html', context)
 
-    return h.render_with_messages(request, 'tasks/list_tasks.html', context)
 
 
 @require_http_methods(['PUT'])

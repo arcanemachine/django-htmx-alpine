@@ -1,20 +1,29 @@
 {{ tasks|json_script:'tasks-json' }}
 
 <script>
-
-  function tasksComponent() {
+  function tasksCsrComponent() {
     return {
       tasks: JSON.parse(
-        JSON.parse(document.querySelector('#tasks-json').textContent))
+        JSON.parse(document.querySelector('#tasks-json').textContent)),
+
+      taskCreateCsr(e) {
+        this.tasks.unshift({
+          id: e.detail.id,
+          description: e.detail.description,
+          is_complete: false
+        });
+      },
     };
   }
 </script>
 
-
 <div id="tasks"
-     x-data="tasksComponent()">
+     x-data="tasksCsrComponent()"
+     x-init="isCsr = true"
+     @task-create-csr.window="taskCreateCsr">
   <template x-if="tasks.length">
-    <ul class="mx-auto mt-4 box w-max-35rem"
+    <ul id="task-list"
+        class="mx-auto mt-4 box w-max-35rem"
         data-cy="task-list">
       <template x-for="task in tasks" :key="task.id">
         <li :id="`task-item-${task.id}`"
@@ -37,14 +46,14 @@
           </div>
 
           <!-- task description -->
-            <div x-show="taskUpdateId !== task.id"
-                 :data-cy="`task-description-${task.id}`"
-                 class="w-max-35rem has-text-centered"
-                 :class="{ 'text-strikethrough': task.is_complete,
-                           'has-text-grey-light' : task.is_complete }"
-                 :title="`Task ID#: ${task.id}`"
-                 x-text="task.description">
-            </div>
+          <div x-show="taskUpdateId !== task.id"
+               :data-cy="`task-description-${task.id}`"
+               class="w-max-35rem has-text-centered"
+               :class="{ 'text-strikethrough': task.is_complete,
+                         'has-text-grey-light' : task.is_complete }"
+               :title="`Task ID#: ${task.id}`"
+               x-text="task.description">
+          </div>
 
           <!-- task update panel -->
           <div x-show="taskUpdateId === task.id"
@@ -105,22 +114,4 @@
     </ul>
   </template>
 
-  <!--
-    <template x-if="tasks.length">
-      <div class="mt-5 is-italic has-text-centered"
-           data-cy="tasks-message">
-        <template x-if="$store.config.userIsAuthenticated">
-          <div>No tasks created</div>
-        </template>
-        <template x-if="!$store.config.userIsAuthenticated">
-          <div>
-            You must login before you can create any tasks.</div>
-          <div class="mt-5">
-            No email is required to register.
-            You will be instantly logged in after registering.
-          </div>
-        </template>
-      </div>
-    </template>
-  -->
 </div>

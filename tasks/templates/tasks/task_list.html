@@ -17,9 +17,16 @@
   <form class="mt-4 mx-auto is-flex is-justify-content-center"
         method="post"
         :hx-post="taskUrlBuild(baseUrl, 'create')"
+    {% if request.GET.csr %}
+        hx-vals='{ "is_csr": "1" }'
+        hx-target="body"
+        hx-swap="beforeend" data-deleteme=" <-- Can I use 'none' instead?"
+    {% else %}
         hx-target="#tasks"
+    {% endif %}
+        @submit.prevent="taskCreate()"
         hx-trigger="task-create-form-submit from:body"
-        @submit.prevent="taskCreate()">
+        @task-create-csr="(e) => taskCreateCsr(e)">
     <div class="field has-addons">
       <span class="control">
         <input type="text"
