@@ -1,7 +1,6 @@
 from django.urls import path
 
 from . import views
-from project_folder import utility_views as uv
 
 app_name = 'tasks'
 

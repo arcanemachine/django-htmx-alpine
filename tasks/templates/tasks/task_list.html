@@ -82,8 +82,10 @@
                   class="ml-4 button is-danger is-medium"
                   hx-delete="{% url 'tasks:task_delete_no_id' %}"
                   hx-trigger="task-delete from:body"
-                  :hx-vals='`{ "id": ${taskDeleteId} }`'
-                  hx-target="#tasks"
+                  :hx-vals='`{ "id": ${taskDeleteId},
+                               "is_csr": ${isCsr} }`'
+                  :hx-target="`${ isCsr ? 'body' : '#tasks'}`"
+                  :hx-swap="`${ isCsr ? 'beforeend' : 'innerHTML'}`"
                   @click.prevent="taskDelete">
             Delete
           </button>

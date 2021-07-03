@@ -3,6 +3,7 @@
 
 function todoListComponent(baseUrl) {
   return {
+    isCsr: false,
     taskDeleteModalIsActive: false,
     taskDeleteId: undefined,
     taskUpdateId: undefined,

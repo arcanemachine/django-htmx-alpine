@@ -73,11 +73,11 @@ def task_create(request):
 def task_update(request, task_id=None):
     context = {}
 
-    parsed_params = h.get_parsed_params(request)
-
     if not task_id:
         parsed_params = h.get_parsed_params(request)
         task_id = int(parsed_params['id'])
+    else:
+        parsed_params = h.get_parsed_params(request)
 
     task = get_object_or_404(Task, id=task_id, user=request.user)
 
@@ -121,17 +121,26 @@ def task_update(request, task_id=None):
 def task_delete(request, task_id=None):
     context = {}
 
+    parsed_params = h.get_parsed_params(request)
+
     if not task_id:
-        parsed_params = h.get_parsed_params(request)
-        task_id = int(parsed_params['id'])
+        task_id = int(parsed_params.get('id'))
 
     task = get_object_or_404(Task, id=task_id, user=request.user)
 
     task.delete()
-    messages.success(request, 'Task deleted')
 
-    tasks = Task.objects.filter(user=request.user)
-    context.update({'tasks': tasks,
-                    'task': task})
-
-    return h.render_with_messages(request, 'tasks/list_tasks.html', context)
+    if parsed_params.get('is_csr') == 'true':
+        return HttpResponse(f"""
+          <script>
+            hDispatch('task-delete-csr', {{ id: {task_id}, }});
+            hStatusMessageDisplay("Task deleted", 'success');
+          </script>
+        """)
+    else:
+        messages.success(request, 'Task deleted')
+        tasks = Task.objects.filter(user=request.user)
+        context.update({'tasks': tasks,
+                        'task': task})
+        return h.render_with_messages(
+            request, 'tasks/list_tasks.html', context)

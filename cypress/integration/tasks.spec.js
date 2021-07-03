@@ -9,9 +9,6 @@ describe("view: tasks:task_list", () => {
   it("Unauthenticated user cannot create a new task", () => {
     cy.visit(testUrl)
 
-    cy.get('[data-cy="tasks-message"]')
-      .contains('You must login') // contains message telling user to login
-
     cy.get('[data-cy="task-create-input-description"]')
       .type(newTaskDescription) // enter task description
       .get('[data-cy="task-create-button-confirm"]')

@@ -25,10 +25,12 @@
         } else if (e.detail.description) {
           updatedTask.description = e.detail.description;
         }
+      },
+      taskDeleteCsr(e) {
+        let index = this.tasks.map((x) => x.id).indexOf(e.detail.id)
+        this.tasks.splice(index, 1);
+      },
 
-        // insert the updated task back into the tasks array
-        tasks[index] = updatedTask;
-      }
     };
   }
 </script>
@@ -37,12 +39,13 @@
      x-data="tasksCsrComponent()"
      x-init="isCsr = true"
      @task-create-csr.window="taskCreateCsr"
-     @task-update-csr.window="taskUpdateCsr">
+     @task-update-csr.window="taskUpdateCsr"
+     @task-delete-csr.window="taskDeleteCsr">
   <template x-if="tasks.length">
     <ul id="task-list"
         class="mx-auto mt-4 box w-max-35rem"
         data-cy="task-list">
-      <template x-for="task in tasks" :key="task.id">
+      <template x-for="(task, index) in tasks" :key="task.id">
         <li :id="`task-item-${task.id}`"
             :data-cy="`task-item-${task.id}`"
             :data-task-id="task.id"
