@@ -1,25 +1,27 @@
 /* eslint no-undef: 0 */
 
-import * as h from '../support/helpers.js';
+import * as helpers from '../support/helpers.js';
 import * as keys from '../support/keys.js';
 
 describe('auth (registration, login, logout)', () => {
+  const urlTaskList = Cypress.env('url_task_list');
+  const urlUserIsAuthenticated = Cypress.env('url_user_is_authenticated');
 
   it("(utility) Ensures a test user exists in the database", () => {
     cy.registerNewUser();
   })
 
   it("userIsAuthenticated view reflects authentication state", () => {
-    cy.visit(h.urls.userIsAuthenticated).contains('false')
+    cy.visit(urlUserIsAuthenticated).contains('false')
       .login()
-      .visit(h.urls.userIsAuthenticated).contains('true')
+      .visit(urlUserIsAuthenticated).contains('true')
   })
 
   it("Registers a new user using the Register modal", () => {
-    const username = h.randomString()
-    const password = h.randomString()
+    const username = helpers.randomString()
+    const password = helpers.randomString()
 
-    cy.visit(h.urls.taskList)
+    cy.visit(urlTaskList);
     
     // click the Register navbar item
     cy.get('[data-cy="navbar-burger"]').click()
@@ -39,14 +41,14 @@ describe('auth (registration, login, logout)', () => {
     cy.contains('[data-cy="status-message"]', 'Registration successful')
 
     // user authentication check view returns 'true'
-    cy.visit(h.urls.userIsAuthenticated).contains('true')
+    cy.visit(urlUserIsAuthenticated).contains('true')
   })
 
   it("Logs in the user using the Login modal", () => {
     const username = keys.TEST_USER_USERNAME;
     const password = keys.TEST_USER_PASSWORD;
 
-    cy.visit(h.urls.taskList)
+    cy.visit(urlTaskList);
     
     // click the Login navbar item
     cy.get('[data-cy="navbar-burger"]').click()
@@ -65,11 +67,11 @@ describe('auth (registration, login, logout)', () => {
     cy.contains('[data-cy="status-message"]', 'Login successful')
 
     // user authentication check view returns 'true'
-    cy.visit(h.urls.userIsAuthenticated).contains('true')
+    cy.visit(urlUserIsAuthenticated).contains('true')
   })
 
   it("Logs out the user using the Logout modal", () => {
-    cy.login().visit(h.urls.taskList)
+    cy.login().visit(urlTaskList)
 
     // click the Logout navbar item
     cy.get('[data-cy="navbar-burger"]').click()
@@ -82,16 +84,15 @@ describe('auth (registration, login, logout)', () => {
     cy.contains('[data-cy="status-message"]', 'Logout successful')
 
     // user authentication check view returns 'true'
-    cy.visit(h.urls.userIsAuthenticated).contains('false')
+    cy.visit(urlUserIsAuthenticated).contains('false')
   })
 
   it("login() - Gets valid CSRF token and logs in the user", () => {
     cy.login()
 
     // user authentication check returns 'true'
-    cy.visit(h.urls.userIsAuthenticated).contains('true')
+    cy.visit(urlUserIsAuthenticated).contains('true')
   })
-
 })
 
 

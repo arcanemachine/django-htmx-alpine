@@ -1,3 +1,13 @@
 {
-  "video": false
+  "baseUrl": "http://localhost:8000",
+  "screenshotOnRunFailure": false,
+  "video": false,
+  "env": {
+    "url_about": "/",
+    "url_get_csrf_token": "/utility/get-csrf-token/",
+    "url_login": "/users/login/",
+    "url_register": "/users/register/",
+    "url_task_list": "/tasks/",
+    "url_user_is_authenticated": "/utility/user-is-authenticated/"
+  }
 }

@@ -1,9 +1,8 @@
 /* eslint no-undef: 0 */
 
-import * as h from '../support/helpers.js';
-
 describe("view: tasks:task_list", () => {
-  const testUrl = h.urls.taskList;
+  const testUrl = Cypress.env('url_task_list');
+
   const newTaskDescription = new Date().toString();
 
   it("Unauthenticated user cannot create a new task", () => {

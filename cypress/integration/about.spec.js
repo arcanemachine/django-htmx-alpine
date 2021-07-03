@@ -1,9 +1,7 @@
 /* eslint no-undef: 0 */
 
-import * as h from '../support/helpers.js';
-
 describe("views: 'About'", () => {
-  const testUrl = h.urls.about;
+  const testUrl = Cypress.env('url_about');
 
   it("Alpine.JS demo adds 1 to counter when pressing the button", () => {
     cy.visit(testUrl)
@@ -30,7 +28,6 @@ describe("views: 'About'", () => {
         // counter text should be '2' after clicking the button again
         cy.get($counterButton).click()
           .get($counterText).should('have.text', '2')
-
       })
     })
   })
@@ -82,5 +79,3 @@ describe("views: 'About'", () => {
       .should('contain.text', `404`)
   })
 })
-
-

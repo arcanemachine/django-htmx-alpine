@@ -1,3 +1,5 @@
+/* eslint no-undef: 0 */
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -25,19 +27,20 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 import * as keys from './keys.js';
-import * as h from './helpers.js';
 
-let username = keys.TEST_USER_USERNAME;
-let password = keys.TEST_USER_PASSWORD;
+const username = keys.TEST_USER_USERNAME;
+const password = keys.TEST_USER_PASSWORD;
 
-let loginFormUrl = h.urls.loginForm;
+const urlGetCsrfToken = Cypress.env('url_get_csrf_token');
+const urlLogin = Cypress.env('url_login');
+const urlRegister = Cypress.env('url_register');
 
 Cypress.Commands.add('login', () => {
-  cy.request(h.urls.getCsrfToken).then((resp) => {
+  cy.request(urlGetCsrfToken).then((resp) => {
     const csrfToken = resp.body;
     cy.request({
       method: 'POST',
-      url: h.urls.login,
+      url: urlLogin,
       failOnStatusCode: false, // don't fail so we can make assertions
       form: true, // we are submitting a regular form body
       body: {
@@ -51,13 +54,13 @@ Cypress.Commands.add('login', () => {
   });
 })
 
-Cypress.Commands.add('registerNewUser', (csrfToken) => {
-  cy.request(h.urls.getCsrfToken)
+Cypress.Commands.add('registerNewUser', () => {
+  cy.request(urlGetCsrfToken)
     .its('body')
     .then((csrfToken) => {
       cy.request({
         method: 'POST',
-        url: h.urls.register,
+        url: urlRegister,
         failOnStatusCode: false, // don't fail so we can make assertions
         form: true, // we are submitting a regular form body
         body: {
@@ -71,5 +74,3 @@ Cypress.Commands.add('registerNewUser', (csrfToken) => {
       })
   })
 })
-
-
