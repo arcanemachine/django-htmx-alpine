@@ -53,8 +53,7 @@
     <script>
       document.addEventListener('alpine:init', () => {
         Alpine.store('config', {
-          userIsAuthenticated:
-            {{ user.is_authenticated|yesno:'true,false' }}
+          userIsAuthenticated: {{ user.is_authenticated|yesno:'true,false' }}
         })
       });
     </script>
@@ -146,9 +145,7 @@
       htmx.on('htmx:afterOnLoad', (e) => {
         let response = e.detail.xhr;
         if (response.status === 204 && response.statusText !== 'No Content') {
-          hDispatch('status-message-display', {
-            message: e.detail.xhr.statusText
-          });
+          hStatusMessageDisplay(e.detail.xhr.statusText);
         }
       });
     </script>

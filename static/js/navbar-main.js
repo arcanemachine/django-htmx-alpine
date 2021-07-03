@@ -61,10 +61,7 @@ function navbarMainComponent() {
       let password2 = this.$refs.registerFormFieldPassword2.value;
       if (password1 !== password2) {
         // do not continue if passwords do not match
-        hDispatch('status-message-display', {
-          message: "The passwords do not match.",
-          messageType: 'danger'
-        });
+        hStatusMessageDisplay("The passwords do not match.", 'danger');
         return false;
       } else {
         this.registerModalSubmitButtonIsLoading = true;

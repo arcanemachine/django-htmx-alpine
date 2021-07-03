@@ -14,22 +14,17 @@ function todoListComponent(baseUrl) {
     taskCreate() {
       if (!this.$store.config.userIsAuthenticated) {
         // do not continue if user is not authenticated
-        hDispatch('status-message-display', {
-            message: "You must login before you can add any tasks.",
-            messageType: 'warning',
-            eventName: 'login-modal-enable'
-          });
+        hStatusMessageDisplay("You must login before you can add any tasks.",
+                              'warning', undefined, 'login-modal-enable');
         return false;
       } else {
         // get the description
         let descriptionInput = this.$refs.taskCreateInputDescription;
         let description = descriptionInput.value;
         if (!description) {
-          // if description is empty, show error as status message
-          hDispatch('status-message-display', {
-            message: "Task description cannot be empty.",
-            messageType: 'warning',
-          });
+          // if description is empty, show warning message
+          hStatusMessageDisplay(
+            "Task description cannot be empty.", 'warning');
           return false;
         } else {
           // if description, dispatch task create event
@@ -46,10 +41,7 @@ function todoListComponent(baseUrl) {
 
       if (!description) {
         // if description is empty, notify the user and return false
-        hDispatch('status-message-display', {
-          message: "Task description cannot be empty.",
-          messageType: 'warning',
-        });
+        hStatusMessageDisplay("Task description cannot be empty.", 'warning');
         return false;
       } else {
         document.body.dispatchEvent(

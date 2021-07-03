@@ -8,10 +8,13 @@ function hDispatch(eventName, params={}) {
   return window.dispatchEvent(new CustomEvent(eventName, { detail: params }));
 }
 
-function hStatusMessageDisplay(message, messageType='info') {
+function hStatusMessageDisplay(message,
+                               messageType='info',
+                               timeout=undefined,
+                               eventName=undefined) {
   return window.dispatchEvent(
     new CustomEvent('status-message-display', {
-      detail: { message, messageType }
+      detail: { message, messageType, timeout, eventName }
     }));
 }
 

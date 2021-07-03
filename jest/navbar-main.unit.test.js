@@ -252,7 +252,7 @@ describe('navbarMainComponent()', () => {
 
   describe('registerModalFormSubmit()', () => {
     beforeEach(() => {
-      hDispatch = jest.fn();
+      hStatusMessageDisplay = jest.fn();
     });
 
     const runFailWithPasswordsDoNotMatch = () => {
@@ -286,15 +286,14 @@ describe('navbarMainComponent()', () => {
     });
 
     it('Displays error message if passwords do not match', () => {
-      const eventName = 'status-message-display';
       const message = "The passwords do not match.";
       const messageType = 'danger';
 
       runFailWithPasswordsDoNotMatch()
 
-      expect(hDispatch).toHaveBeenCalled();
-      expect(hDispatch).toHaveBeenCalledWith(
-        eventName, { message, messageType }
+      expect(hStatusMessageDisplay).toHaveBeenCalled();
+      expect(hStatusMessageDisplay).toHaveBeenCalledWith(
+        message, messageType
       );
     });
 

@@ -22,10 +22,7 @@
   {% if messages %}
     {% for message in messages %}
       setTimeout(() => {
-        hDispatch('status-message-display', {
-          message: "{{ message|safe }}",
-          messageType: {{ message.level|safe }}
-        });
+        hStatusMessageDisplay("{{ message|safe }}", {{ message.level|safe }});
       }, 100 + {{ forloop.counter0|safe }} * defaultMessageTimeout);
     {% endfor %}
   {% endif %}

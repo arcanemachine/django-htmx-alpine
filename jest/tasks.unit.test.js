@@ -48,7 +48,7 @@ describe('todoListComponent()', () => {
 
   describe('taskCreate()', () => {
     beforeEach(() => {
-      hDispatch = jest.fn();
+      hStatusMessageDisplay = jest.fn();
       instance.$refs.taskCreateInputDescription = {};
       instance.$store = {};
       instance.$store.config = {};
@@ -97,12 +97,12 @@ describe('todoListComponent()', () => {
 
       instance.taskCreate();
 
-      expect(hDispatch).toHaveBeenCalled();
-      expect(hDispatch).toHaveBeenCalledWith('status-message-display', {
-        message: "You must login before you can add any tasks.",
-        messageType: 'warning',
-        eventName: 'login-modal-enable'
-      });
+      expect(hStatusMessageDisplay).toHaveBeenCalled();
+      expect(hStatusMessageDisplay).toHaveBeenCalledWith(
+        "You must login before you can add any tasks.",
+        'warning',
+        undefined,
+        'login-modal-enable');
     });
 
     it('Cannot create a task if the description is empty', () => {
@@ -120,11 +120,9 @@ describe('todoListComponent()', () => {
 
       instance.taskCreate();
 
-      expect(hDispatch).toHaveBeenCalled();
-      expect(hDispatch).toHaveBeenCalledWith('status-message-display', {
-        message: "Task description cannot be empty.",
-        messageType: 'warning',
-      });
+      expect(hStatusMessageDisplay).toHaveBeenCalled();
+      expect(hStatusMessageDisplay)
+        .toHaveBeenCalledWith("Task description cannot be empty.", 'warning');
     });
   });
 
@@ -163,11 +161,9 @@ describe('todoListComponent()', () => {
 
       instance.taskUpdateDescription(id);
 
-      expect(hDispatch).toHaveBeenCalled();
-      expect(hDispatch).toHaveBeenCalledWith('status-message-display', {
-        message: "Task description cannot be empty.",
-        messageType: 'warning',
-      });
+      expect(hStatusMessageDisplay).toHaveBeenCalled();
+      expect(hStatusMessageDisplay)
+        .toHaveBeenCalledWith("Task description cannot be empty.", 'warning');
     });
 
   });
