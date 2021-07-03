@@ -20,7 +20,7 @@ jobs:
     - name: Run migrations
       run: python manage.py migrate
     - name: Start Django server
-      run: python manage.py runserver
+      run: python manage.py runserver &
 
     # Install NPM dependencies, cache them correctly
     # and run all Cypress tests
