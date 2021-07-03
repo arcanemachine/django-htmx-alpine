@@ -1,31 +1,34 @@
-asgiref @ file:///home/serv/.cache/pypoetry/artifacts/fe/db/83/0ae447caa7129971ac3189887098d047d0257c23b979d0f76c93496c95/asgiref-3.3.4-py3-none-any.whl
-backcall @ file:///home/serv/.cache/pypoetry/artifacts/43/8e/e8/4e598704edf6fb4a53d552ea511c04e9958dcf850897760e5387878b99/backcall-0.2.0-py2.py3-none-any.whl
-beautifulsoup4 @ file:///home/serv/.cache/pypoetry/artifacts/eb/47/47/287c1b8a386f9437d562f9221ae959756bc5bbfcd541c38c17968dfe8a/beautifulsoup4-4.9.3-py3-none-any.whl
-certifi @ file:///home/serv/.cache/pypoetry/artifacts/d8/df/24/ed696681f34f8916b0aef99138db9a94e37d54684b9829af34a7fd4e39/certifi-2020.12.5-py2.py3-none-any.whl
-chardet @ file:///home/serv/.cache/pypoetry/artifacts/11/63/f9/797eda27963177a6b75a340f62aa194d462ea69e6b0dbb77a651fa2b62/chardet-4.0.0-py2.py3-none-any.whl
-decorator @ file:///home/serv/.cache/pypoetry/artifacts/d2/e7/4d/573ad9513e54a395f6304ac253c42c322cac42bf470d45667ac590ffbe/decorator-5.0.7-py3-none-any.whl
-Django @ file:///home/serv/.cache/pypoetry/artifacts/3a/35/87/d49a5f4fb12f98e5b8a25580a7dfc827c4d92cea09be704ab057aaa42b/Django-3.2.2-py3-none-any.whl
+asgiref==3.3.4
+backcall==0.2.0
+beautifulsoup4==4.9.3
+certifi==2020.12.5
+chardet==4.0.0
+decorator==5.0.7
+Django==3.2.2
 django-htmx-alpine==0.1.0
-django-ranged-response @ file:///home/serv/.cache/pypoetry/artifacts/27/fe/d8/c6c133cfd7f43122dcd378f261aa8fdcf184afb5f9c5a2d38529fb472c/django-ranged-response-0.2.0.tar.gz
-django-simple-captcha @ file:///home/serv/.cache/pypoetry/artifacts/31/88/52/1f241eb8d3c3ee962f05cb6b84f64767e28b3c9ff16d95da02a8974a86/django-simple-captcha-0.5.14.zip
-gunicorn @ file:///home/serv/.cache/pypoetry/artifacts/d4/22/ea/fb991f1fdb4e8ae8fd30e0bce3c23ece991aa75df3f5a4c4f4d5aba6ae/gunicorn-20.1.0-py3-none-any.whl
-idna @ file:///home/serv/.cache/pypoetry/artifacts/ef/7f/a9/19cc0b8760bdf6f696290c06532496f8bb29fbdaad044f852fed00ec82/idna-2.10-py2.py3-none-any.whl
-ipython @ file:///home/serv/.cache/pypoetry/artifacts/d9/58/78/185a3569620e51d4a429eea4ef93f79f48754d06377a266f752b014ffb/ipython-7.23.1-py3-none-any.whl
-ipython-genutils @ file:///home/serv/.cache/pypoetry/artifacts/b4/31/01/6f96480580d1674cab0b5e26dc9fca7bbdf7a2fd5811a7807a92436268/ipython_genutils-0.2.0-py2.py3-none-any.whl
-jedi @ file:///home/serv/.cache/pypoetry/artifacts/2a/5b/d6/62e1f4e7b392c3e7f8258bbe3159dff695814a46e65547cd547ca0fedb/jedi-0.18.0-py2.py3-none-any.whl
-matplotlib-inline @ file:///home/serv/.cache/pypoetry/artifacts/d8/4c/e1/8b0adf0d076721db928e74aaaf5cf1d73cec52ea2a27ebabe3e9be8957/matplotlib_inline-0.1.2-py3-none-any.whl
-parso @ file:///home/serv/.cache/pypoetry/artifacts/36/cd/ab/a8c3a5df337bc6f34a10f3f385417b62cdfebe2873ac2fec38206af0db/parso-0.8.2-py2.py3-none-any.whl
-pexpect @ file:///home/serv/.cache/pypoetry/artifacts/5c/c2/43/b54fe59cab7e831df35401c8e6840162bf4a2ae5862604e7bc22db3000/pexpect-4.8.0-py2.py3-none-any.whl
-pickleshare @ file:///home/serv/.cache/pypoetry/artifacts/b5/48/a1/d2b823337003d531d87cf0d503ef28bb579703a74d14ad24a88863d616/pickleshare-0.7.5-py2.py3-none-any.whl
-Pillow @ file:///home/serv/.cache/pypoetry/artifacts/af/01/9e/9e59a2244e85a37841afdb59a3dc7feb5f6d414d71e255a4d8b25c063d/Pillow-8.2.0-cp39-cp39-manylinux1_x86_64.whl
-prompt-toolkit @ file:///home/serv/.cache/pypoetry/artifacts/c6/94/f6/50383688495b2b2e58070767b4598041dacedf95cdf297db12a84a94e1/prompt_toolkit-3.0.18-py3-none-any.whl
-ptyprocess @ file:///home/serv/.cache/pypoetry/artifacts/2a/29/5d/0cdc5ec916431d60f03d2f725c54edbfa9fe53700b75fdfee209a3291e/ptyprocess-0.7.0-py2.py3-none-any.whl
-Pygments @ file:///home/serv/.cache/pypoetry/artifacts/d1/62/9b/10957d050758a3da079375961ec00a6c83b71a90eefd0199361d9d54de/Pygments-2.9.0-py3-none-any.whl
-pytz @ file:///home/serv/.cache/pypoetry/artifacts/b0/a7/8d/54de3ab4d1ff29abbbca1e9ccbaefdc2a1b290138311b84f73bee16de1/pytz-2021.1-py2.py3-none-any.whl
-requests @ file:///home/serv/.cache/pypoetry/artifacts/22/0a/9d/0df883fbffbb406d0cddbb35e881e4ac6bfb8f0dee8733056b6a054bf7/requests-2.25.1-py2.py3-none-any.whl
-six @ file:///home/serv/.cache/pypoetry/artifacts/08/9f/47/c16ae03035fc69eaf100ea39657a49baaeef714e25a52575710c34cd48/six-1.16.0-py2.py3-none-any.whl
-soupsieve @ file:///home/serv/.cache/pypoetry/artifacts/20/16/55/4a9893b172bb2a7815f46f6a947ff3506dd241ea679377ffdc0b2c811e/soupsieve-2.2.1-py3-none-any.whl
-sqlparse @ file:///home/serv/.cache/pypoetry/artifacts/bc/af/02/8aa71b17fd39b26b858293918c5c6412f83768a0bfd0a4626f660aa5f8/sqlparse-0.4.1-py3-none-any.whl
-traitlets @ file:///home/serv/.cache/pypoetry/artifacts/f3/6b/36/998ab52c38eb1c4820cdef1e66043ddebb64e04535f88dbfd04486ce03/traitlets-5.0.5-py3-none-any.whl
-urllib3 @ file:///home/serv/.cache/pypoetry/artifacts/51/08/ff/7c6aaf6cf9ca83a0bf63c5121f187a40571849e9b17bd8e031898d76c2/urllib3-1.26.5-py2.py3-none-any.whl
-wcwidth @ file:///home/serv/.cache/pypoetry/artifacts/7d/f4/60/0737157bb9711fec72c70dff523aa54491eef317e0d586cf5388ff0908/wcwidth-0.2.5-py2.py3-none-any.whl
+django-ranged-response==0.2.0
+django-simple-captcha==0.5.14
+gunicorn==20.1.0
+idna==2.10
+ipython==7.23.1
+ipython-genutils==0.2.0
+jedi==0.18.0
+matplotlib-inline==0.1.2
+parso==0.8.2
+pexpect==4.8.0
+pickleshare==0.7.5
+Pillow==8.2.0
+pip==21.1.2
+prompt-toolkit==3.0.18
+ptyprocess==0.7.0
+Pygments==2.9.0
+pytz==2021.1
+requests==2.25.1
+setuptools==57.0.0
+six==1.16.0
+soupsieve==2.2.1
+sqlparse==0.4.1
+traitlets==5.0.5
+urllib3==1.26.5
+wcwidth==0.2.5
+wheel==0.36.2
