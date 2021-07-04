@@ -1,6 +1,9 @@
 name: End-to-end tests
 
-on: [push]
+on:
+  push:
+    branches:
+      'testing'
 
 jobs:
   build:
