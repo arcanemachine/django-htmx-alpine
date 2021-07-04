@@ -1,0 +1,8 @@
+#!/bin/bash
+# This hook is sourced after this virtualenv is activated.
+
+# DJANGO_BASE_DIR=/your/django/project/dir
+
+# DJANGO_DEBUG=True
+# DJANGO_SECRET_KEY="your_secret_key"
+# DJANGO_WEATHER_API_KEY="your_weather_api_key"  # OpenWeatherMap API key

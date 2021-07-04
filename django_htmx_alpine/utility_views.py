@@ -13,6 +13,12 @@ def dummy_view(request):
     return response
 
 
+def debugger(request):
+    if request.user.is_authenticated and request.user.username == 'admin':
+        breakpoint()
+    return HttpResponse()
+
+
 # weather
 @require_http_methods(['POST'])
 def get_weather(request):

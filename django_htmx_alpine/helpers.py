@@ -1,5 +1,5 @@
+import os
 from pathlib import Path
-from os.path import join as os_path_join
 from django.shortcuts import render
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,6 +32,45 @@ def round_half_up(n, decimals=0):
 
 
 # settings
+def get_setting(val, default=None, cast=str, show_warning=False):
+    """
+    Get setting from environment variable, local_config, or default.
+    Settings are prioritized in the order given above.
+    """
+    env_result = None
+    lc_result = None
+    if os.environ.get(f'DJANGO_{val}'):
+        # check environment variables
+        env_result = os.environ[f'DJANGO_{val}']
+    try:
+        # check local_config.py
+        from project_folder import local_config  # noqa: 401
+        lc_result = eval(f"local_config.{val}")
+        if env_result:
+            # if setting exists in environment variable and local_config.py,
+            # then use the environment variable value
+            print(f"\n{val} has been set in both environment variable and "
+                  "local_config.py.\n"
+                  f"Using environment variable value ({val} = {env_result})\n")
+            return cast(env_result)
+        else:
+            return lc_result
+    except (ImportError, AttributeError):
+        if show_warning and not env_result:
+            # show warning in the console
+            if val == 'SECRET_KEY':
+                print("\nWarning: You are using the default SECRET_KEY. "
+                      "For security purposes, this is not recommended.\n")
+            elif val == 'WEATHER_API_KEY':
+                print("\nWarning: settings.WEATHER_API_KEY has not been set. "
+                      "The HTMX weather demo will not work properly.\n")
+            elif val == 'DEBUG':
+                print(f"\nNote: You have not set a value for settings.{val}, "
+                      f"so it has been set to a default value of {default}.\n")
+        # return default value if env_result not found
+        return cast(env_result) if env_result else default
+
+
 def get_debug():
     try:
         from project_folder import local_config
@@ -83,7 +122,7 @@ def get_staticfiles_dirs():
         from project_folder import local_config
         return local_config.STATICFILES_DIRS
     except (ImportError, AttributeError):
-        return [os_path_join(BASE_DIR, 'static')]
+        return [os.path.join(BASE_DIR, 'static')]
 
 
 def get_user_analytics_script():

@@ -3,11 +3,9 @@ from os.path import join as os_path_join
 from project_folder.helpers import BASE_DIR
 
 """
-To generate a new SECRET_KEY, run these commands from django shell:
-
-from django.core.management import utils
-print(utils.get_random_secret_key())
-
+This file is for assigning local settings without using environment variables,
+or for settings that require Python-specific functionality and thus cannot use
+environment variables.
 """
 
 # important stuff

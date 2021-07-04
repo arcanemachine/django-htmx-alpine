@@ -4,20 +4,33 @@ BASE_DIR = h.BASE_DIR
 
 
 # *********************** BEGIN local config *********************** #
+"""
+This section contains some values that may differ between servers,
+or sensitive content that you don't want committed to source control.
 
-# This section contains some values that may differ between servers.
-#
-# The default values are set to allow for easy deployment. They may be
-# overridden in project_folder/local_config.py (an example template is
-# available in local_settings.default.py). You may also override the
-# settings directly below. However, setting them in local_config.py will
-# prevent any sensitive/server-specific information from getting into the
-# repo, with no additional effort required on your part.
+The default values are set to allow for easy deployment.
+
+They may be overridden, and will be checked in the following order:
+    - By using an environment variable that starts with 'DJANGO_'.
+        - e.g. 'DJANGO_SECRET_KEY'
+    - In project_folder/local_config.py
+        - An example template may be copied over from local_settings.default.py
+    - If setting exists in both environment variable and local_config.py,
+      then the environment variable will be used.
+    - You may also override the settings directly below.
+        - However, setting them in local_config.py will prevent any
+          sensitive/server-specific information from getting into the repo,
+          with no additional effort required on your part.
+"""
+
+
+SHOW_WARNING = True  # set False to disable default config warnings on console
 
 # important stuff
 DEBUG = h.get_debug()  # default: True
 SECRET_KEY = h.get_secret_key()  # default: 'your_secret_key'
-WEATHER_API_KEY = h.get_weather_api_key()  # default: 'your_weather_api_key'
+WEATHER_API_KEY = h.get_setting(  # required for htmx weather demo
+    'WEATHER_API_KEY', 'your_weather_key', str, SHOW_WARNING)
 
 # static files
 STATIC_ROOT = h.get_static_root()  # default: None

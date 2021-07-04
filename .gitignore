@@ -1,5 +1,7 @@
 # config
 local_config.py
+postactivate
+/*.sh
 
 # misc
 deleteme/
@@ -9,7 +11,6 @@ mediafiles/
 *~
 *.sw*
 geckodriver.log
-todo*
 
 # npm #
 node_modules/
