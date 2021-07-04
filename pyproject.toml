@@ -14,6 +14,7 @@ gunicorn = "^20.1.0"
 
 [tool.poetry.dev-dependencies]
 beautifulsoup4 = "^4.9.3"
+ipython = "^7.25.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
