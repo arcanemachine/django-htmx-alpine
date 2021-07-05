@@ -24,6 +24,8 @@ jobs:
       run: python manage.py migrate
     - name: Start Django server
       run: python manage.py runserver &
+      env:
+        DJANGO_WEATHER_API_KEY: ${{ secrets.DJANGO_WEATHER_API_KEY }}
 
     # Install NPM dependencies, cache them correctly
     # and run all Cypress tests
