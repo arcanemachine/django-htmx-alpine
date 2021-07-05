@@ -91,16 +91,6 @@ def get_secret_key():
         return 'your_secret_key'
 
 
-def get_weather_api_key():
-    try:
-        from project_folder import local_config
-        return local_config.WEATHER_API_KEY
-    except (ImportError, AttributeError):
-        print("\nWarning: settings.WEATHER_API_KEY has not been set. "
-              "The HTMX weather demo will not work properly.\n")
-        return 'your_weather_api_key'
-
-
 def get_static_root():
     try:
         from project_folder import local_config

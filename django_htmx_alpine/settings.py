@@ -14,7 +14,7 @@ They may be overridden, and will be checked in the following order:
     - By using an environment variable that starts with 'DJANGO_'.
         - e.g. 'DJANGO_SECRET_KEY'
     - In project_folder/local_config.py
-        - An example template may be copied over from local_settings.default.py
+        - An example template may be copied over from local_config.default.py
     - If setting exists in both environment variable and local_config.py,
       then the environment variable will be used.
     - You may also override the settings directly below.
