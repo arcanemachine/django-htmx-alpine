@@ -127,7 +127,7 @@
   <p>The above example is made using a basic HTML form, with one notable difference:</p>
 
   <pre class="w-max-30rem mx-auto notification has-background-grey-lighter">&lt;form hx-post=&quot;{% url 'get_weather' %}&quot;
-    hx-target=&quot;#demo-htmx-target&quot;&gt;</pre>
+      hx-target=&quot;#demo-htmx-target&quot;&gt;</pre>
 
   <p>Simply adding a couple attributes to the HTML completely changes the dynamic of the form. Now, instead of completely refreshing the page, the client can replace fragments of the page. The server will send back the proper fragment, and it will be put in the desired location. This gives a more integrated, app-like feel, instead of refreshing the whole page and breaking the user experience.</p>
 
