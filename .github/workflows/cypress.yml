@@ -13,6 +13,10 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    - name: Install Jest
+      run: npm install jest
+    - name: Run unit tests (Jest)
+      run: npm run jest
     - name: Set up Python 3.8
       uses: actions/setup-python@v1
       with:
@@ -30,5 +34,5 @@ jobs:
 
     # Install NPM dependencies, cache them correctly
     # and run all Cypress tests
-    - name: Cypress run
+    - name: Run E2E Tests (Cypress)
       uses: cypress-io/github-action@v2

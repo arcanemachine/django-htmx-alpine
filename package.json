@@ -4,7 +4,8 @@
   "description": "A sandbox for using Django with HTMX.",
   "main": "index.js",
   "scripts": {
-    "jest": "jest ./jest/ --watch",
+    "jest": "jest -i ./jest/*.js",
+    "jest-watch": "jest ./jest/ --watch",
     "cypress": "cypress run"
   },
   "repository": {
