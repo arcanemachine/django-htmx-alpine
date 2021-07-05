@@ -3,7 +3,8 @@ name: End-to-end tests
 on:
   push:
     branches:
-      'testing'
+      - master
+      - testing
 
 jobs:
   build:
