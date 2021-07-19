@@ -1,22 +1,6 @@
 {% load static %}
 <script type="text/javascript"
         src="{% static 'js/status-message.js' %}"></script>
-
-<div class="status-message-container">
-  <button id="status-message"
-          data-cy="status-message"
-          x-ref="statusMessageEl"
-          class="status-message"
-          @click="handleStatusMessageClick('login-modal-enable')"
-          @status-message-display.window="statusMessageDisplay($event.detail)"
-          x-data="statusMessageComponent()"
-          x-show="show"
-          x-transition.opacity.duration.500ms
-          x-text="statusMessageText"
-          x-cloak>
-  </button>
-</div>
-
 <script>
   // display messages from server as status messages
   {% if messages %}
@@ -27,6 +11,21 @@
     {% endfor %}
   {% endif %}
 </script>
+
+<div class="status-message-container">
+  <button id="status-message"
+          data-cy="status-message"
+          x-ref="statusMessageEl"
+          class="status-message"
+          x-data="statusMessageComponent()"
+          x-show="show"
+          x-transition.opacity.duration.500ms
+          x-text="statusMessageText"
+          @click="handleStatusMessageClick('login-modal-enable')"
+          @status-message-display.window="statusMessageDisplay($event.detail)"
+          x-cloak>
+  </button>
+</div>
 
 <style>
 
@@ -47,7 +46,8 @@
   cursor: pointer;
   border: none;
   border-radius: 0.5rem;
-  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.2), 0 0px 0 1px rgba(10, 10, 10, 0.05);
+  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.5),
+              0 0px 0 1px rgba(10, 10, 10, 0.05);
 
   z-index: 100;
 }
