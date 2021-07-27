@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from urllib.parse import unquote as urllib_parse_unquote
 
 from .models import Task
-from project_folder import helpers as h, utility_views as uv
+from django_htmx_alpine import helpers as h, utility_views as uv
 
 UserModel = get_user_model()
 

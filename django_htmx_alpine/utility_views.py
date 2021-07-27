@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.middleware.csrf import get_token
 from django.views.decorators.http import require_http_methods
 
-from project_folder import helpers as h
+from . import helpers as h
 
 
 def dummy_view(request):

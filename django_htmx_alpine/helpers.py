@@ -44,7 +44,7 @@ def get_setting(val, default=None, cast=str, show_warning=False):
         env_result = os.environ[f'DJANGO_{val}']
     try:
         # check local_config.py
-        from project_folder import local_config  # noqa: 401
+        from . import local_config  # noqa: 401
         lc_result = eval(f"local_config.{val}")
         if env_result:
             # if setting exists in environment variable and local_config.py,
@@ -73,7 +73,7 @@ def get_setting(val, default=None, cast=str, show_warning=False):
 
 def get_debug():
     try:
-        from project_folder import local_config
+        from . import local_config
         return local_config.DEBUG
     except (ImportError, AttributeError):
         print("\nNote: You have not set a value for settings.DEBUG, so it "
@@ -83,7 +83,7 @@ def get_debug():
 
 def get_secret_key():
     try:
-        from project_folder import local_config
+        from . import local_config
         return local_config.SECRET_KEY
     except (ImportError, AttributeError):
         print("\nWarning: You are using the default SECRET_KEY. "
@@ -93,7 +93,7 @@ def get_secret_key():
 
 def get_static_root():
     try:
-        from project_folder import local_config
+        from . import local_config
         return local_config.STATIC_ROOT
     except (ImportError, AttributeError):
         return None
@@ -101,7 +101,7 @@ def get_static_root():
 
 def get_static_url():
     try:
-        from project_folder import local_config
+        from . import local_config
         return local_config.STATIC_URL
     except (ImportError, AttributeError):
         return '/static/'
@@ -109,7 +109,7 @@ def get_static_url():
 
 def get_staticfiles_dirs():
     try:
-        from project_folder import local_config
+        from . import local_config
         return local_config.STATICFILES_DIRS
     except (ImportError, AttributeError):
         return [os.path.join(BASE_DIR, 'static')]
@@ -117,7 +117,7 @@ def get_staticfiles_dirs():
 
 def get_user_analytics_script():
     try:
-        from project_folder import local_config
+        from . import local_config
         return local_config.USER_ANALYTICS_SCRIPT
     except (ImportError, AttributeError):
         return ''
@@ -125,7 +125,7 @@ def get_user_analytics_script():
 
 def get_captcha_flite_path():
     try:
-        from project_folder import local_config
+        from . import local_config
         return local_config.CAPTCHA_FLITE_PATH
     except (ImportError, AttributeError):
         return None

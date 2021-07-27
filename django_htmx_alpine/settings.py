@@ -1,4 +1,4 @@
-from project_folder import helpers as h
+from . import helpers as h
 
 BASE_DIR = h.BASE_DIR
 
@@ -13,7 +13,7 @@ The default values are set to allow for easy deployment.
 They may be overridden, and will be checked in the following order:
     - By using an environment variable that starts with 'DJANGO_'.
         - e.g. 'DJANGO_SECRET_KEY'
-    - In project_folder/local_config.py
+    - In django_htmx_alpine/local_config.py
         - An example template may be copied over from local_config.default.py
     - If setting exists in both environment variable and local_config.py,
       then the environment variable will be used.
@@ -77,7 +77,7 @@ TEMPLATES = [{'BACKEND': 'django.template.backends.django.DjangoTemplates',
                       'django.template.context_processors.request',
                       'django.contrib.auth.context_processors.auth',
                       'django.contrib.messages.context_processors.messages',
-                      'project_folder.context_processors.helpers']}}]
+                      'django_htmx_alpine.context_processors.helpers']}}]
 
 WSGI_APPLICATION = 'django_htmx_alpine.wsgi.application'
 
