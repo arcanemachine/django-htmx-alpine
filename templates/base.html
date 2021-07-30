@@ -42,7 +42,11 @@
             src="{% static 'js/alpine@3.2.1.js' %}"{% else %}
             src="https://unpkg.com/alpinejs@3.2.1/dist/cdn.min.js"{% endif %}
             defer></script>
-    {{ USER_ANALYTICS_SCRIPT|safe }}
+
+    {% if USER_ANALYTICS_SCRIPT %}
+      <script src="{{ USER_ANALYTICS_SCRIPT|safe }}"></script>
+    {% endif %}
+
     {% block head_end_script %}{% endblock head_end_script %}
 
   </head>
