@@ -22,8 +22,8 @@ p {
   margin-top: 1.5rem;
 }
 
-::placeholder {  /* more contrast */
-  opacity: 1;
+::placeholder {
+  opacity: 1; /* more contrast */
 }
 
 .box-close {
@@ -113,15 +113,14 @@ p {
   padding: 2rem 1.5rem; /* decrease bulma's giant section padding */
 }
 
-
 /* UTILITY */
 .button-unstyled {
-	background: none;
-	color: inherit;
-	border: none;
-	padding: 0;
-	font: inherit;
-	cursor: pointer;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
 }
 
 .cursor-pointer {
@@ -404,7 +403,6 @@ p {
 .w-min-50vw {
   min-width: 50vw;
 }
-
 
 .word-break-break-word {
   word-break: break-word;
