@@ -139,6 +139,26 @@
 
   <p>In short, using HTMX allows us to easily extend HTML to provide a modern web experience without getting bogged down in Javascript boilerplate. It can also help us to move our business logic onto the server, which can be useful for preventing sensitive data from being exposed (such as the API key used to access the weather service, or even the name of the weather service).</p>
 
+  <div class="mt-6 is-size-4 has-text-centered">Where's the Alpine?</div>
+  <p>Pretty much any fancy client-side stuff in this project was made with Alpine:</p>
+  <div class="mt-4 px-6 list">
+    <li class="list-item">The Alpine.JS demo above (duh)</li>
+    <li class="list-item">Toggling modals (including fade effects)</li>
+    <li class="list-item">Updating DOM elements in the task list when client-side-rendering is enabled.</li>
+    <li class="list-item">Status message popups (I had a lot of fun with these. Clicking them can dispatch events and toggle actions, and HTMX calls can cause status messages to appear with relevant messages from the Django server. Try creating a task when you aren't logged in, then click on the status message.)</li>
+  </div>
+  <p>A lot of the logic in the Alpine components could have just as easily been implemented in Vanilla JS, but I find it's just easier to use an Alpine component so Alpine's magic is available when you need it.</p>
+  <p><strong>Note:</strong> By default, the list of tasks is rendered server-side. This means that Django will retrieve the whole queryset and return it for each create/update/edit/update/destroy action, ie. complete server-side rendering (in a pretty inefficient manner, I may add... it was easier to implement). <em>However</em>, if you append <code>?is_csr=1</code> to the URL while viewing your tasks (e.g. <code>/tasks/?is_csr=1</code>), this will enable a more efficient mode that utilizes client-side rendering. Django will only return as much data as necessary, and Alpine will iterate over the data to create your task list.</p>
+
+  <div class="mt-6 is-size-4 has-text-centered">Where's the HTMX?</div>
+  <p>Anything that requires a network call without completely reloading the page uses HTMX (Basically anything other than clicking on links). This includes:</p>
+  <div class="mt-4 px-6 list">
+    <li class="list-item">The HTMX demo above (also duh)</li>
+    <li class="list-item">Fetching CAPTCHAs when the modals are opened, or when the CAPTCHA refresh button is clicked.</li>
+    <li class="list-item">Sending authentication credentials to the server and providing a relevant response</li>
+    <li class="list-item">Posting data to the server when tasks are created, updated, and destroyed.</li>
+  </div>
+
   <div class="mt-6 is-size-4 has-text-centered">Conclusion</div>
   <p>HTMX and Alpine.JS can be used to add interactivity and native app-like functionality to websites with a minimum of additional code. While this project could have been made without them, it showcases their usefulness, both by themselves, and also how they can be used together.</p>
 
