@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from urllib.parse import unquote as urllib_parse_unquote
 
 from .models import Task
-from django_htmx_alpine import helpers as h, utility_views as uv
+from django_htmx_alpine import helpers as h, utility_views
 
 UserModel = get_user_model()
 
@@ -40,7 +40,7 @@ def task_list_public(request):
 @require_http_methods(['POST'])
 def task_create(request):
     if not request.user.is_authenticated:
-        return uv.htmx_response_login_required(request)
+        return utility_views.htmx_response_login_required(request)
 
     context = {}
     if request.POST.get('description'):
@@ -48,7 +48,7 @@ def task_create(request):
             user=request.user,
             description=request.POST['description'])
     else:
-        return uv.htmx_response_content_unchanged(
+        return utility_views.htmx_response_content_unchanged(
             "Task description cannot be empty.")
 
     if request.POST.get('is_csr'):
