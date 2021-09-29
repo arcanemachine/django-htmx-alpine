@@ -57,7 +57,7 @@ function todoListComponent(baseUrl) {
       if (this.taskUpdateId !== id) {
         this.taskUpdateId = id;
         let descriptionText =
-          document.querySelector(`#task-description-${id}`).textContent;
+          document.querySelector(`#task-description-${id}`).innerText;
 
         this.$nextTick(() => {
           let descriptionInput =
