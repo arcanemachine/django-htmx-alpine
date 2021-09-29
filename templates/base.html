@@ -38,13 +38,13 @@
     {% block head_start_script %}{% endblock head_start_script %}
     <script type="text/javascript" src="{% static 'js/helpers.js' %}"></script>
 
-    <script type="text/javascript"{% if DEBUG_MODE %}
+    <script type="text/javascript" {% if DEBUG_MODE %}
             src="{% static 'js/alpine@3.2.1.js' %}"{% else %}
             src="https://unpkg.com/alpinejs@3.2.1/dist/cdn.min.js"{% endif %}
             defer></script>
 
     {% if USER_ANALYTICS_SCRIPT %}
-      <script src="{{ USER_ANALYTICS_SCRIPT|safe }}"></script>
+      {{ USER_ANALYTICS_SCRIPT|safe }}
     {% endif %}
 
     {% block head_end_script %}{% endblock head_end_script %}

@@ -24,7 +24,7 @@ STATIC_ROOT = None
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os_path_join(BASE_DIR, 'static')]
 
-# user analytics script URL, e.g. https://example.com/analytics.js
+# user analytics script, e.g. `<script src="analytics.js"></script>`
 USER_ANALYTICS_SCRIPT = ''
 
 # django-simple-captcha
