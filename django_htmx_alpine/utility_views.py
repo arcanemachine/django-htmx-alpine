@@ -26,24 +26,31 @@ def get_weather(request):
     city = request.POST.get('city')
     units = request.POST.get('units')
 
-    # build weather api url
+    # if the city name is blank, simulate HTTP response code 400 (Bad Request)
+    if not city:
+        return HttpResponse("Error 400: The city name cannot be blank.")
+
+    # build weather API url
     api_key = settings.WEATHER_API_KEY
     weather_api_url = 'https://api.openweathermap.org/data/2.5/weather'
     url = f'{weather_api_url}?q={city}&appid={api_key}&units={units}'
 
-    # get response
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
+    # get response from weather API server
+    api_response = requests.get(url)
+    if api_response.status_code == 200:
+        data = api_response.json()
         data = data['main']
         temperature = h.round_half_up(data['temp'], 1)
         units = 'Fahrenheit' if units == 'imperial' else 'Celsius'
         return HttpResponse(
             f'The temperature in {city} is {temperature} degrees {units}.')
     else:
-        if response.text:
-            return HttpResponse(f"Error {response.status_code}: "
-                                f"{json.loads(response.text)['message']}")
+        if api_response.text:
+            django_response = HttpResponse(
+                f"Error {api_response.status_code}: "
+                f"{json.loads(api_response.text)['message']}")
+            # django_response.status_code = api_response.status_code
+            return django_response
         else:
             return HttpResponse(
                 f'We could not find the temperature for {city}.')
