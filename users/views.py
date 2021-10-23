@@ -62,7 +62,6 @@ class UserRegisterView(CreateView):
             return render(self.request, self.template_name, context)
 
         self.object = form.save()
-        self.object.save()
 
         messages.success(
             self.request,
