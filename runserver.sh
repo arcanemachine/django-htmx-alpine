@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 stty sane  # prevent garbled text over ssh
 

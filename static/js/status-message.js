@@ -8,32 +8,32 @@ function statusMessageComponent() {
     colors: {},
     eventName: undefined,
     eventParams: {},
-    statusMessageText: '',
+    statusMessageText: "",
     statusMessageTimeout: undefined,
 
-    infoBackground: '#3E8ED0',
-    successBackground: '#48C78E',
-    warningBackground: '#FFE08A',
-    dangerBackground: '#F14668',
+    infoBackground: "#3E8ED0",
+    successBackground: "#48C78E",
+    warningBackground: "#FFE08A",
+    dangerBackground: "#F14668",
 
     // methods
     getColors(messageType) {
       let background;
       let text;
 
-      let infoText = successText = dangerText = 'white';
-      let warningText = 'black';
+      let infoText = (successText = dangerText = "white");
+      let warningText = "black";
 
-      if (messageType === 20 || messageType == 'info') {
+      if (messageType === 20 || messageType == "info") {
         background = this.infoBackground;
         text = infoText;
-      } else if (messageType === 25 || messageType == 'success') {
+      } else if (messageType === 25 || messageType == "success") {
         background = this.successBackground;
         text = successText;
-      } else if (messageType === 30 || messageType == 'warning') {
+      } else if (messageType === 30 || messageType == "warning") {
         background = this.warningBackground;
         text = warningText;
-      } else if (messageType === 40 || messageType == 'danger') {
+      } else if (messageType === 40 || messageType == "danger") {
         background = this.dangerBackground;
         text = dangerText;
       } else {
@@ -44,16 +44,17 @@ function statusMessageComponent() {
     },
     handleStatusMessageClick() {
       if (this.eventName) {
-        this.$nextTick(() => { hDispatch(this.eventName, this.eventParams); })
+        this.$nextTick(() => {
+          hDispatch(this.eventName, this.eventParams);
+        });
       }
       this.statusMessageClear();
     },
     processContext(context) {
       let result = {};
-      if (typeof(context) === 'string') {
+      if (typeof context === "string") {
         result.message = context;
-      }
-      else if (typeof(context) === 'object') {
+      } else if (typeof context === "object") {
         if (context.message === undefined) {
           console.error("Context must contain non-empty 'message'.");
           return false;
@@ -70,7 +71,7 @@ function statusMessageComponent() {
           this.eventName = undefined;
           this.eventParams = {};
         }
-      } else  {
+      } else {
         console.error("context must be object or string");
         return false;
       }
@@ -87,12 +88,12 @@ function statusMessageComponent() {
       this.show = false;
       setTimeout(() => {
         // clear the text
-        this.statusMessageText = '';
+        this.statusMessageText = "";
 
         // clear any events
-        this.eventName = '';
+        this.eventName = "";
         this.eventParams = {};
-      }, defaultTransitionDuration)
+      }, defaultTransitionDuration);
     },
     statusMessageDisplay(context) {
       let statusMessageEl = this.$refs.statusMessageEl;
@@ -127,12 +128,12 @@ function statusMessageComponent() {
         // clear the message
         this.statusMessageClear();
       }, timeout + defaultTransitionDuration);
-    }
-  }
+    },
+  };
 }
 
 try {
   module.exports = statusMessageComponent;
 } catch {
-  ; // eslint-disable-line
+  // eslint-disable-line
 }

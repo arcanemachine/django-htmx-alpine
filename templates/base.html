@@ -138,21 +138,21 @@
             integrity="sha384-1P2DfVFAJH2XsYTakfc6eNhTVtyio74YNA1tc6waJ0bO+IfaexSWXc2x62TgBcXe"
             crossorigin="anonymous"{% endif %}></script>
 
-    <script>
+    <!--script>
       // add CSRFToken to HTMX headers
-      document.body.addEventListener('htmx:configRequest', (event) => {
-        event.detail.headers['X-CSRFToken'] = '{{ csrf_token|safe }}';
-      })
+      // document.body.addEventListener('htmx:configRequest', (event) => {
+      //   event.detail.headers['X-CSRFToken'] = '{{ csrf_token|safe }}';
+      // })
 
       // if an htmx request returns 204 and contains a custom statusText,
       // then create a status message from the custom statusText
-      htmx.on('htmx:afterOnLoad', (e) => {
-        let response = e.detail.xhr;
-        if (response.status === 204 && response.statusText !== 'No Content') {
-          hStatusMessageDisplay(e.detail.xhr.statusText);
-        }
-      });
-    </script>
+      // htmx.on('htmx:afterOnLoad', (e) => {
+      //   let response = e.detail.xhr;
+      //   if (response.status === 204 && response.statusText !== 'No Content') {
+      //     helpers.statusMessageDisplay(e.detail.xhr.statusText);
+      //   }
+      // });
+    </script-->
 
     {% block body_end_script %}{% endblock body_end_script %}
 
