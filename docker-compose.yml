@@ -1,0 +1,24 @@
+---
+version: "3.8"
+
+services:
+  django:
+    build: .
+    environment:
+      PROJECT_NAME_PYTHON: "${PROJECT_NAME_PYTHON:?}"
+      PROJECT_PORT_INTERNAL: "${PROJECT_PORT_INTERNAL:?}"
+      SERVER_ENVIRONMENT: "${SERVER_ENVIRONMENT:?}"
+
+      SECRET_KEY: "${SECRET_KEY:?}"
+      WEATHER_API_KEY: "${WEATHER_API_KEY:?}"
+    networks:
+      - traefik-global-proxy
+    ports:
+      - "${PROJECT_PORT_INTERNAL}"
+    volumes:
+      - ./docker:/docker
+      - ./app:/app
+
+networks:
+  traefik-global-proxy:
+    external: true

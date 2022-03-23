@@ -1,0 +1,33 @@
+#!/bin/bash
+
+cd $(dirname "$0")/..
+root_dir=$(pwd)
+
+if [ "$PROJECT_NAME_PYTHON" == "" ]; then
+  echo "PROJECT_NAME_PYTHON not set. Aborting..."
+  exit 1
+fi
+
+project_root=${root_dir}/app
+cd $project_root/$PROJECT_NAME_PYTHON
+keys_file_path=$(pwd)/keys.py
+
+if [ -f "$keys_file_path" ] && [ "$DRY_RUN" != 1 ]; then
+  if [ "$OVERWRITE" == 1 ]; then
+    echo "Overwriting existing keys.py..."
+  else
+    echo "keys.py already exists: '${keys_file_path}/keys.py'. Skipping..."
+    exit 0
+  fi
+else
+  echo "Generating 'keys.py'..."
+fi
+
+cd ${root_dir}/docker
+output_string="$(./generate-keys--template)"
+
+if [ "$DRY_RUN" == 1 ]; then
+  echo "$output_string"
+else
+  echo "$output_string" > $keys_file_path
+fi

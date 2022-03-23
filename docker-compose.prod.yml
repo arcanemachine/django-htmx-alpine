@@ -1,0 +1,21 @@
+---
+version: "3.8"
+
+services:
+  nginx:
+    image: docker.io/nginx
+    depends_on:
+      - django
+    volumes:
+      - ./volumes/nginx/conf.d:/etc/nginx/conf.d
+      - ./app/staticfiles:/staticfiles:ro
+      - ./app/media:/media:ro
+    networks:
+      - traefik-global-proxy
+    expose:
+      - "${PROJECT_PORT_EXTERNAL}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${PROJECT_NAME}.rule=Host(`${DOMAIN_NAME}`)"
+      - "traefik.http.routers.${PROJECT_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.${PROJECT_NAME}.tls.certresolver=letsencrypt"

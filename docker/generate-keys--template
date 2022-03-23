@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "WEATHER_API_KEY = '${WEATHER_API_KEY}'
+USER_ANALYTICS_SCRIPT='<script async defer data-domain="django-htmx-alpine.nicholasmoen.com" src="https://pls.moendigitalservices.com/js/pl.js"></script>'"

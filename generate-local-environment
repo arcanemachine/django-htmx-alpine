@@ -1,0 +1,30 @@
+#!/bin/bash
+
+project_root=$(dirname "$0")
+cd $project_root
+
+local_environment_path="$(pwd)/.env.override"
+
+if [ -f "$local_environment_path" ]; then
+  if [ "$OVERWRITE" == 1 ]; then
+    echo "Overwriting existing file: '$local_environment_path'..."
+  elif [ "$DRY_RUN" != 1 ]; then
+    echo "File already exists: '$local_environment_path'. Skipping..."
+    exit 0
+  fi
+else
+  echo "Generating local environment: '$local_environment_path'..."
+fi
+
+if [ "$DRY_RUN" == 1 ]; then
+  echo "This is a DRY_RUN. Printing to stdout only..."
+  echo ""
+fi
+
+output_string="$(./generate-local-environment--template)"
+
+if [ "$DRY_RUN" == 1 ]; then
+  echo "$output_string"
+else
+  echo "$output_string" > $local_environment_path
+fi

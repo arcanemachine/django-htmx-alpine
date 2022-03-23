@@ -1,0 +1,160 @@
+{% load static %}<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block meta_description %}
+      <meta name="description"{% if meta_description_content %}
+            description="{{ meta_description_content|safe }}"{% else %}
+            description="A demo that demonstrates how HTMX and Alpine.JS can work together"{% endif %}>
+    {% endblock meta_description %}
+
+    {% block meta_robots %}
+      <meta name="robots"{% if norobots %}
+            content="noindex, nofollow"{% else %}
+            content="index, follow"{% endif %}>
+    {% endblock meta_robots %}
+
+    <link rel="shortcut icon"
+          type="image/png"
+          href="{% static 'img/favicon.ico' %}">
+
+    <title>{% block title %}{% endblock title %} - HTMX & Alpine.JS</title>
+
+    <!-- css -->
+    <link rel="stylesheet"
+          type="text/css"
+          href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'css/base.css' %}">
+
+    <style>
+      {% block style %}{% endblock style %}
+    </style>
+
+    <!-- javascript - head -->
+    {% block head_start_script %}{% endblock head_start_script %}
+    <script type="text/javascript" src="{% static 'js/helpers.js' %}"></script>
+
+    <script type="text/javascript" {% if DEBUG_MODE %}
+            src="{% static 'js/alpine@3.2.1.js' %}"{% else %}
+            src="https://unpkg.com/alpinejs@3.2.1/dist/cdn.min.js"{% endif %}
+            defer></script>
+
+    {% if USER_ANALYTICS_SCRIPT and not DEBUG_MODE %}
+      {{ USER_ANALYTICS_SCRIPT|safe }}
+    {% endif %}
+
+    {% block head_end_script %}{% endblock head_end_script %}
+
+  </head>
+
+  <body>
+    {% block body_start_script %}{% endblock body_start_script %}
+    <!-- alpine store -->
+    <script>
+      document.addEventListener('alpine:init', () => {
+        Alpine.store('config', {
+          userIsAuthenticated: {{ user.is_authenticated|yesno:'true,false' }}
+        })
+      });
+    </script>
+
+
+    <div id="page-container">
+
+      {% include 'navbar_main.html' %}
+
+      <!-- Internet Explorer 11 deprecation notice -->
+      <div id="ie-11-notice"
+           class="mb-4 py-4 is-size-5 is-hidden
+                  has-text-centered has-text-light has-background-danger">
+        This website does not support Internet Explorer 11.
+        Please upgrade to a modern web browser such as Chrome or Firefox.
+      </div>
+
+      <script>
+        let isIE11 = !(window.ActiveXObject) && "ActiveXObject" in window;
+        if (isIE11) {
+          document.querySelector('#ie-11-notice')
+            .classList.remove('is-hidden');
+        }
+      </script>
+
+      {% include 'status_message.html' %}
+
+      <noscript>
+        <div class="my-4 is-size-5 has-text-danger has-text-centered">
+          This page requires Javascript to function correctly.
+        </div>
+      </noscript>
+
+      <!-- content -->
+      <main class="w-100 container is-flex-grow-1 has-background-light-grey">
+        <section class="mt-4 has-text-centered" aria-label="title">
+          <h1 class="title">
+            {% block body_title %}{% endblock body_title %}
+          </h1>
+          <h2 class="subtitle">
+            {% block body_subtitle %}{% endblock body_subtitle %}
+          </h2>
+        </section>
+
+        <div class="pt-4 section" aria-label="content">
+          {% block content %}{% endblock content %}
+        </div>
+      </main>
+
+      <!-- footer -->
+      <footer class="pt-4 pb-5 has-background-grey-lighter has-text-centered">
+        <ul class="my-2 list-unstyled text-small">
+          <li>
+            <a href="https://github.com/arcanemachine/django-htmx-alpine/"
+               target="_blank">
+              <svg width="40"
+                   height="40"
+                   viewBox="0 0 1024 1024"
+                   fill="none"
+                   xmlns="http://www.w3.org/2000/svg"
+                   alt="GitHub Logo"
+                   title="GitHub Logo">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z" transform="scale(64)" fill="#1B1F23"/>
+              </svg>
+            </a>
+          </li>
+          <li>Licensed under <a class="font-weight-bold" href="https://choosealicense.com/licenses/mit/" target="_blank">MIT License</a>.</li>
+          <li class="mt-1">Check out <a class="font-weight-bold" href="https://github.com/arcanemachine/" target="_blank">my GitHub profile</a>, or take a look at <a href="https://nicholasmoen.com/" target="_blank">my other projects</a>!</li>
+        </ul>
+      </footer>
+
+    </div>
+
+    <!-- htmx -->
+    <script type="text/javascript"{% if DEBUG_MODE %}
+            src="{% static 'js/htmx@1.4.1.js' %}"{% else %}
+            src="https://unpkg.com/htmx.org@1.4.1"
+            integrity="sha384-1P2DfVFAJH2XsYTakfc6eNhTVtyio74YNA1tc6waJ0bO+IfaexSWXc2x62TgBcXe"
+            crossorigin="anonymous"{% endif %}></script>
+
+    <script>
+      // add CSRFToken to HTMX headers
+      document.body.addEventListener('htmx:configRequest', (event) => {
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token|safe }}';
+      })
+
+      // if an htmx request returns 204 and contains a custom statusText,
+      // then create a status message from the custom statusText
+      htmx.on('htmx:afterOnLoad', (e) => {
+        let response = e.detail.xhr;
+        if (response.status === 204 && response.statusText !== 'No Content') {
+          hStatusMessageDisplay(e.detail.xhr.statusText);
+        }
+      });
+    </script>
+
+    {% block body_end_script %}{% endblock body_end_script %}
+
+	</body>
+</html>

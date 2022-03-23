@@ -1,4 +1,6 @@
-# django-htmx-alpine 
+# This branch is not intended for public use! Use the master branch!
+
+## django-htmx-alpine 
 
 This project is just a basic todo list.
 

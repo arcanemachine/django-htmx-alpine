@@ -1,0 +1,91 @@
+#!/bin/bash
+
+cd $(dirname "$0")
+
+# source dotenv
+echo "Importing environment from '.env'..."
+set -o allexport; source .env; set +o allexport
+
+# source local dotenv
+if [ -f ".env.override" ]; then
+  echo "Importing environment from '.env.override'..."
+  set -o allexport; source .env.override; set +o allexport
+fi
+
+# use the name of the project directory as the name of the service
+service_name=$(basename $(pwd))
+service_file="$HOME/systemd/user/$service_name.service"
+
+if [ "$1" == "--help" ] || [ "$1" == "-h" ]; then
+  echo "This script generates a systemd service file.
+The output should be sent here: '$service_file'
+
+In order to start this service on boot, you must enabling lingering for this user:
+  - sudo loginctl enable-linger $USER
+
+Environment variables:
+  - SERVER_ENVIRONMENT: Must be one of: dev, test, prod
+
+To enable this service:
+  - systemctl --user enable $service_name.service
+
+To start this service:
+  - systemctl --user start $service_name.service"
+  exit 0
+fi
+
+# require SERVER_ENVIRONMENT to be set
+if [ "$SERVER_ENVIRONMENT" == "" ]; then
+  if [ "$1" == "dev" ] || [ "$1" == "test" ] || [ "$1" == "prod" ]; then
+    SERVER_ENVIRONMENT=$1
+  elif [ "$1" != "" ]; then
+    echo "SERVER_ENVIRONMENT must be one of: dev, test, prod"
+    exit 1
+  else
+    echo "SERVER_ENVIRONMENT must be one of: dev, test, prod"
+    echo "You must set it or pass the desired environment as the first argument."
+    exit 1
+  fi
+fi
+
+if [ "$DRY_RUN" == 1 ]; then
+  output_to=/dev/stdout
+else
+  output_to=~/.config/systemd/user/${service_name}.service
+fi
+
+echo "[Unit]
+Description=${service_name}
+Wants=network-online.target
+After=network-online.target
+Requires=podman.service
+RequiresMountsFor=/run/user/$(id -u)/containers
+
+[Service]
+# Environment=PODMAN_SYSTEMD_UNIT=%n
+Environment=COMPOSE_DOCKER_CLI_BUILD=0
+
+Environment=PROJECT_NAME_PYTHON=\"${PROJECT_NAME_PYTHON}\"
+Environment=PROJECT_PORT_INTERNAL=\"${PROJECT_PORT_INTERNAL}\"
+Environment=SERVER_ENVIRONMENT=\"${SERVER_ENVIRONMENT}\"
+
+Environment=SECRET_KEY=\"${SECRET_KEY}\"
+Environment=WEATHER_API_KEY=\"${WEATHER_API_KEY}\"
+
+Restart=on-failure
+WorkingDirectory=$(pwd)
+# Type=forking
+
+# Shutdown container (if running) when unit is started
+ExecStartPre=$(which docker-compose) -H unix:${XDG_RUNTIME_DIR}/podman/podman.sock -f docker-compose.yml -f docker-compose.${SERVER_ENVIRONMENT}.yml down
+
+# Start container when unit is started
+ExecStart=$(which docker-compose) -H unix:${XDG_RUNTIME_DIR}/podman/podman.sock -f docker-compose.yml -f docker-compose.${SERVER_ENVIRONMENT}.yml up --remove-orphans
+
+# Stop all services
+ExecStop=$(which docker-compose) -H unix:${XDG_RUNTIME_DIR}/podman/podman.sock -f docker-compose.yml -f docker-compose.${SERVER_ENVIRONMENT}.yml down
+
+[Install]
+WantedBy=default.target" > ${output_to}
+
+echo "done"

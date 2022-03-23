@@ -1,0 +1,42 @@
+#!/bin/bash
+
+cd $(dirname "$0")
+
+if [ "$PROJECT_NAME_PYTHON" == "" ]; then
+  echo "PROJECT_NAME_PYTHON not set. Aborting..."
+  exit 1
+fi
+
+keys_file_path="$(pwd)/app/$PROJECT_NAME_PYTHON/keys.py"
+if [ -f $keys_file_path ]; then
+  echo "Removing '$keys_file_path'..."
+  rm $keys_file_path
+else
+  echo "Not found: '$keys_file_path'. Skipping..."
+fi
+
+config_file_path="$(pwd)/app/$PROJECT_NAME_PYTHON/local_config.py"
+if [ -f $config_file_path ]; then
+  echo "Removing '$config_file_path'..."
+  rm $config_file_path
+else
+  echo "Not found: '$config_file_path'. Skipping..."
+fi
+
+static_files_path="$(pwd)/app/staticfiles"
+if [ -d $static_files_path ]; then
+  echo "Clearing contents of '$static_files_path'..."
+
+  # remove the directory
+  rm -rf $static_files_path
+
+  # re-add empty directory with a .gitignore to prevent anything in the
+  # directory from being committed to the repo
+  mkdir $static_files_path
+  echo "# Ignore everything in this directory except this .gitignore file
+*
+!.gitignore" > $static_files_path/.gitignore
+
+else
+  echo "Not found: '$static_files_path'. Skipping..."
+fi

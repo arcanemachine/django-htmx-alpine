@@ -1,40 +1,34 @@
-## Custom ##
-*~
-*.sw*
-data.dump
-geckodriver.log
+# config
 local_config.py
-secret_key.py
-keys.py
-gunicorn.sh 
-base_template.html
-menus/templatetags/
-local-scripts/
+postactivate
+
+# misc
+*~
+*.sw?
+celerybeat-schedule
 deleteme/
-deleteme
+geckodriver.log
+local-scripts/
+mediafiles/
+todo
+static/css/purge/min/*.css
+static/css/purge/min/cat/*.css
 
 # npm #
 node_modules/
-
-## local scripts
-# makenmigrate
-# migrate-all
-# runserver
-# runserver_insecure.sh
-# shell
 
 # Django #
 *.log
 *.pot
 *.pyc
 __pycache__
-# db.sqlite3
+data.dump
+db.sqlite3
+media/
 
-# temporary files
+# Backup files # 
+*.bak 
 *.del
-*.old
-*.new
-*.tmp
 
 # If you are using PyCharm # 
 .idea/**/workspace.xml 
@@ -58,11 +52,11 @@ __pycache__
 # Distribution / packaging 
 .Python build/ 
 develop-eggs/ 
-# dist/ 
+dist/ 
 downloads/ 
 eggs/ 
 .eggs/ 
-# lib/ 
+lib/ 
 lib64/ 
 parts/ 
 sdist/ 
@@ -103,8 +97,7 @@ celerybeat-schedule.*
 *.sage.py 
 
 # Environments 
-.env.local
-.env.override
+.env 
 .venv 
 env/ 
 venv/ 

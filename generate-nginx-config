@@ -1,0 +1,44 @@
+#!/bin/bash
+
+if [ "$PROJECT_PORT_INTERNAL" == "" ]; then
+  echo "PROJECT_PORT_INTERNAL not set. Aborting..."
+  exit 1
+fi
+
+root_dir=$(dirname "$0")
+cd $root_dir
+
+nginx_conf_path=./volumes/nginx/conf.d
+
+# ensure the config directory exists
+mkdir -p $nginx_conf_path
+
+echo "# first we declare our upstream server, which is our Gunicorn application
+upstream gunicorn_server {
+    # docker will automatically resolve this to the correct address
+    # because we use the same name as the service: 'django'
+    server django:${PROJECT_PORT_INTERNAL};
+}
+
+# now we declare our main server
+server {
+  listen 80;
+  server_name localhost;
+
+  location / {
+      # everything is passed to Gunicorn
+      proxy_pass http://gunicorn_server;
+      proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+      proxy_set_header Host \$host;
+      proxy_redirect off;
+  }
+  location /staticfiles/ {
+      autoindex on;
+      alias /staticfiles/;
+  }
+
+  location /media/ {
+      autoindex on;
+      alias /media/;
+  }
+}" > ${nginx_conf_path}/django-app.conf

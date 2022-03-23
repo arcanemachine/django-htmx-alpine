@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "SECRET_KEY=\"$(openssl rand -base64 48)\"
+WEATHER_API_KEY=\"${WEATHER_API_KEY}\""
