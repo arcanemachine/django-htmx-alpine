@@ -38,9 +38,6 @@ SHOW_WARNING = True  # set False to disable default config warnings on console
 
 # important stuff
 
-# analytics
-USER_ANALYTICS_SCRIPT = h.get_user_analytics_script()  # default: ''
-
 # *********************** END local config *********************** #
 
 
