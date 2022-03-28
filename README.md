@@ -10,6 +10,11 @@ A live demo can be seen [here](https://django-htmx-alpine.nicholasmoen.com/).
 
 ## Setup Instructions
 
+- Using `docker` and `docker-compose` (recommended):
+  - Clone the repo
+  - Navigate to the project's root directory
+  - Run `docker-compose -f docker-compose.yml -f docker-compose.dev.django-standalone up`
+
 - Create a virtualenv and install the required dependencies
   - Using [Poetry](https://python-poetry.org/docs/) (recommended):
     - Create a virtualenv and install the required dependencies

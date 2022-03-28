@@ -2,13 +2,6 @@
 version: "3.8"
 
 services:
-  nginx:
-    image: docker.io/nginx
-    depends_on:
-      - django
+  django:
     ports:
-      - "${PROJECT_PORT_EXTERNAL}:80"
-    volumes:
-      - ./volumes/nginx/conf.d:/etc/nginx/conf.d
-      - ./app/staticfiles:/staticfiles:ro
-      - ./app/media:/media:ro
+      - "${PROJECT_PORT_EXTERNAL}:${PROJECT_PORT_INTERNAL}"
